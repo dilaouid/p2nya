@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeBtnComponent } from './home/home-btn/home-btn.component';
 import { HomeHeadingComponent } from './home/home-heading/home-heading.component';
+import { HomeBtnContainerComponent } from './home/home-btn-container/home-btn-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeBtnComponent,
-    HomeHeadingComponent
+    HomeHeadingComponent,
+    HomeBtnContainerComponent
   ],
   imports: [
     BrowserModule,
