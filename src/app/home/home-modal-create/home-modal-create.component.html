@@ -3,28 +3,27 @@
         <div class="modal-header shadow" id="modalCreateHeader">
             <h4 class="modal-title">Créer un salon</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-            <p class="text-center glowUpText">Vous désirez créer un salon pour inviter vos amis ? Renseignez donc un mot de passe (obligatoire) pour y inviter vos amis, ainsi que vous nom d'utilisateur !</p>
-            
-            <form>
-                <label class="form-label text-white-50" for="usernameCreate">Nom d'utilisateur</label>
-                <input (keyup)="changeUsername($event.target)" class="shadow form-control inputForm" type="text" id="usernameCreate" name="username" placeholder="Nom d'utilisateur">
+        <form>
+            <div class="modal-body">
+                <p class="text-center glowUpText">Vous désirez créer un salon pour inviter vos amis ? Renseignez donc un mot de passe (obligatoire) pour y inviter vos amis, ainsi que vous nom d'utilisateur !</p>
                 
-                <label class="form-label text-white-50" for="passwordCreate">Mot de passe</label>
-                <input (keyup)="changePassword($event.target)" class="shadow form-control inputForm" type="text" id="passwordCreate" name="password" placeholder="Mot de passe">
-            </form>
+                    <label class="form-label text-white-50" for="usernameCreate">Nom d'utilisateur</label>
+                    <input [class.border-danger]="username.wrong" [class.border-success]="username.valid" (keyup)="changeUsername($event.target)" class="shadow form-control inputForm" type="text" id="usernameCreate" name="username" placeholder="Nom d'utilisateur">
+                    
+                    <label class="form-label text-white-50" for="passwordCreate">Mot de passe</label>
+                    <input [class.border-danger]="password.wrong" [class.border-success]="password.valid" (keyup)="changePassword($event.target)" class="shadow form-control inputForm" type="text" id="passwordCreate" name="password" placeholder="Mot de passe">
+                
 
-            <div class="alert alert-warning alert-dismissible" role="alert" *ngIf="displayAlert">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <span><strong>Oops!</strong>&nbsp;Tout les champs doivent être correctement remplis 😶 !&nbsp;</span>
+                <div class="alert alert-warning" role="alert" *ngIf="displayAlert">
+                    <span><strong>Oops!</strong>&nbsp;Tout les champs doivent être correctement remplis 😶 !&nbsp;</span>
+                </div>
+
+                <p class="fw-light text-center" id="footerPModalCreate">Notez qu'un salon se ferme automatiquement <span class="redText">30 minutes&nbsp;</span>après sa création et qu'il est limité à <span class="redText">8 participants</span>. La gratuité c'est cool, mais merci de ne pas bouffer ma bande passante :-°</p>
             </div>
-
-            <p class="fw-light text-center" id="footerPModalCreate">Notez qu'un salon se ferme automatiquement <span class="redText">30 minutes&nbsp;</span>après sa création et qu'il est limité à <span class="redText">8 participants</span>. La gratuité c'est cool, mais merci de ne pas bouffer ma bande passante :-°</p>
-        </div>
-        <div class="modal-footer shadow" id="modalCreateFooter">
-            <button class="btn btn-danger shadow" data-bss-hover-animate="jello" type="button" data-bs-dismiss="modal">Fermer</button>
-            <button class="btn btn-primary shadow" data-bss-hover-animate="pulse" type="button" [disabled]="!enabledButton" (click)="submit()">C'est parti&nbsp;✅</button>
-        </div>
-
+            <div class="modal-footer shadow" id="modalCreateFooter">
+                <button class="btn btn-danger shadow" data-bss-hover-animate="jello" type="button" data-bs-dismiss="modal">Fermer</button>
+                <button class="btn btn-primary shadow" data-bss-hover-animate="pulse" type="button" [disabled]="!enabledButton" (click)="submit()">C'est parti&nbsp;✅</button>
+            </div>
+        </form>
     </div>
 </div>

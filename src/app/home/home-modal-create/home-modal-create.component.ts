@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InputValidation } from '../models/home-modal-validation';
 
 @Component({
   selector: 'app-home-modal-create',
@@ -10,26 +11,42 @@ export class HomeModalCreateComponent {
   enabledButton: boolean;
   displayAlert: boolean;
   
-  username!: string;
-  password!: string;
+  username!: InputValidation;
+  password!: InputValidation;
 
 
   constructor() {
     this.enabledButton = false;
     this.displayAlert = false;
+    this.username = new InputValidation('', false, false);
+    this.password = new InputValidation('', false, false);
   }
 
   checkLength() {
-    return this.username?.length > 2 && this.password?.length > 2;
+    return this.username?.value?.length > 2 && this.password?.value?.length > 2;
   }
 
   changeUsername(username: any) {
-    this.username = username?.value?.trim();
+    this.username.value = username?.value?.trim();
+    if (this.username.value.length <= 2) {
+      this.username.wrong = this.username.value?.length > 0 ? true : false;
+      this.username.valid = false;
+    } else {
+      this.username.valid = true;
+      this.username.wrong = false;
+    }
     this.enabledButton = this.checkLength();
   }
 
   changePassword(password: any) {
-    this.password = password?.value?.trim();
+    this.password.value = password?.value?.trim();
+    if (this.password.value.length <= 2) {
+      this.password.wrong = this.password.value?.length > 0 ? true : false;;
+      this.password.valid = false;
+    } else {
+      this.password.valid = true;
+      this.password.wrong = false;
+    }
     this.enabledButton = this.checkLength();
   }
 
