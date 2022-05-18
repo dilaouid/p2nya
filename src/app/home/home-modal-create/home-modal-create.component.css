@@ -1,0 +1,8 @@
+#modalCreateHeader{background:var(--bs-red)}
+.glowUpText{text-shadow:0 0 1px}
+#footerPModalCreate{font-style:italic;font-size:13px;margin-top:20px;margin-bottom:0}
+.redText{color:var(--bs-red);font-weight:700}
+#modalCreateFooter{background:rgba(252,52,111,.34)}
+.inputForm {
+    margin-bottom: 22px;
+}

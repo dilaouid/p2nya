@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-heading.component.css']
 })
 export class HomeHeadingComponent implements OnInit {
-  // how many opened room
+  
+  /* How many opened room */
   room!: number;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.room = 7;
+    this.room = 0;
   }
 
 }

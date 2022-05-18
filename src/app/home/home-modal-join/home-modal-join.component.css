@@ -1,0 +1,16 @@
+#joinModalHeader {
+    background: var(--bs-blue);
+}
+
+#joinModalFooter {
+    background: rgba(52,144,252,0.34);
+}
+
+
+.glowUpText {
+    text-shadow: 0px 0px 1px;
+}
+
+.inputForm {
+    margin-bottom: 22px;
+  }
