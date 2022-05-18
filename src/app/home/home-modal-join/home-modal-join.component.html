@@ -7,13 +7,13 @@
             <p class="text-center glowUpText">Rejoindre le salon de votre ou de vos amis ? Rien de plus simple, saisissez le numéro de la room et son mot de passe, et vous y êtes !&nbsp;</p>
             <form>
                 <label for="usernameJoin" class="form-label text-muted">Nom d'utilisateur</label>
-                <input (keyup)="changeUsername($event.target)" id="usernameJoin" class="shadow form-control inputForm" type="text" name="username" placeholder="Nom d'utilisateur">
+                <input [class.border-danger]="username.wrong" [class.border-success]="username.valid" (keyup)="changeUsername($event.target)" id="usernameJoin" class="shadow form-control inputForm" type="text" name="username" placeholder="Nom d'utilisateur">
 
                 <label for="roomID" class="form-label text-muted">Numéro de room</label>
-                <input (keyup)="changeRoom($event.target)" id="roomID" class="shadow form-control inputForm" type="text" name="roomID" placeholder="Identifiant unique">
+                <input maxlength="18" [class.border-danger]="roomID.wrong" [class.border-success]="roomID.valid" (keyup)="changeRoom($event.target)" id="roomID" class="shadow form-control inputForm" type="text" name="roomID" placeholder="Identifiant unique">
                 
                 <label for="passwordJoin" class="form-label text-muted" id="passwordPlaceholder">Mot de passe</label>
-                <input (keyup)="changePassword($event.target)" id="passwordJoin" class="shadow form-control inputForm" type="text" name="password" placeholder="Mot de passe de la room">
+                <input [class.border-danger]="password.wrong" [class.border-success]="password.valid" (keyup)="changePassword($event.target)" id="passwordJoin" class="shadow form-control inputForm" type="text" name="password" placeholder="Mot de passe de la room">
             </form>
 
             <div class="alert alert-warning alert-dismissible" role="alert" *ngIf="displayAlert">
