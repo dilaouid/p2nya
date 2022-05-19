@@ -28,7 +28,7 @@ export class HomeModalCreateComponent {
 
   changeUsername(username: any) {
     this.username.value = username?.value?.trim();
-    if (this.username.value.length <= 2) {
+    if (this.username.value.length <= 2 || this.username.value.length > 18) {
       this.username.wrong = this.username.value?.length > 0 ? true : false;
       this.username.valid = false;
     } else {
@@ -40,7 +40,7 @@ export class HomeModalCreateComponent {
 
   changePassword(password: any) {
     this.password.value = password?.value?.trim();
-    if (this.password.value.length <= 2) {
+    if (this.password.value.length <= 2 || this.password.value.length > 18) {
       this.password.wrong = this.password.value?.length > 0 ? true : false;;
       this.password.valid = false;
     } else {

@@ -30,7 +30,7 @@ export class HomeModalJoinComponent {
   changeUsername(username: any) {
     this.username.value = username?.value?.trim();
     this.enabledButton = this.checkLength();
-    if (this.username.value.length <= 2) {
+    if (this.username.value.length <= 2 || this.username.value.length > 18) {
       this.username.wrong = this.username.value?.length > 0 ? true : false;
       this.username.valid = false;
     } else {
@@ -42,7 +42,7 @@ export class HomeModalJoinComponent {
   changeRoom(room: any) {
     this.roomID.value = room?.value?.trim();
     this.enabledButton = this.checkLength();
-    if (this.roomID.value.length < 18) {
+    if (this.roomID.value.length !== 18) {
       this.roomID.wrong = this.roomID.value?.length > 0 ? true : false;;
       this.roomID.valid = false;
     } else {
@@ -54,7 +54,7 @@ export class HomeModalJoinComponent {
   changePassword(password: any) {
     this.password.value = password?.value?.trim();
     this.enabledButton = this.checkLength();
-    if (this.password.value.length <= 2) {
+    if (this.password.value.length <= 2 || this.password.value.length > 18) {
       this.password.wrong = this.password.value?.length > 0 ? true : false;;
       this.password.valid = false;
     } else {
