@@ -8,6 +8,7 @@ import { HomeHeadingComponent } from './home/home-heading/home-heading.component
 import { HomeBtnContainerComponent } from './home/home-btn-container/home-btn-container.component';
 import { HomeModalCreateComponent } from './home/home-modal-create/home-modal-create.component';
 import { HomeModalJoinComponent } from './home/home-modal-join/home-modal-join.component';
+import { HomepageComponent } from './home/homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomeModalJoinComponent } from './home/home-modal-join/home-modal-join.c
     HomeHeadingComponent,
     HomeBtnContainerComponent,
     HomeModalCreateComponent,
-    HomeModalJoinComponent
+    HomeModalJoinComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
