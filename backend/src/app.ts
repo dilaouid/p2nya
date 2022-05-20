@@ -1,5 +1,5 @@
 import express, { Request, Response, Application } from "express";
-import db from "./sequelize/models"
+import db from "./Sequelize/models"
 
 require('dotenv').config();
 
