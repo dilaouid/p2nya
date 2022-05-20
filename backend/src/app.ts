@@ -1,12 +1,19 @@
-import express from 'express';
+import express, { Request, Response, Application } from "express";
+import db from "./sequelize/models"
 
-const app = express();
-const PORT = 8080;
+require('dotenv').config();
 
-app.get('/', (req, res) => {
+const app: Application = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.get('/', (req: Request, res: Response) => {
   res.send('Hello World');
 });
 
-app.listen(PORT, () => {
-    console.log(`Application listening at http://localhost:${PORT}`);
+db.sequelize.sync().then( () => {
+    app.listen(process.env.PORT, () => {
+        console.log(`Application listening at http://localhost:${process.env.PORT}`);
+    });
 });
