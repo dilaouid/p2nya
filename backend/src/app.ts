@@ -10,8 +10,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send(process.env);
+app.get('/seed', (req: Request, res: Response): void => {
+  users.map(user => {
+    db.User.create(user);
+  });
+  res.send('OK');
 });
 
 db.sequelize.sync().then( () => {
