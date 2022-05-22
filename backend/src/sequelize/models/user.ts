@@ -31,8 +31,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     username: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'User',
-    timestamps: false
+    modelName: 'User'
   });
   return User;
 };
