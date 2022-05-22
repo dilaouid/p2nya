@@ -1,13 +1,12 @@
 'use strict';
 
-const {
-  Model
-} = require('sequelize');
+import { Model } from 'sequelize';
 
 interface RoomAttributes {
   id: string;
   password: string;
   admin: string;
+  timeStamp: number;
 };
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -20,6 +19,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     id!: string;
     password!: string;
     admin!: string;
+    timeStamp!: number;
   };
   Room.init({
     id: {
