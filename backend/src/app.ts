@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
 import { verifyToken, writeToken, saveToken } from './utils/cookies';
 import { Sequelize } from "sequelize";
+import { send } from "./utils/response";
 
 /* [ Seeders ] -- To remove later */
 import { users } from './Sequelize/seeders/users';
@@ -32,11 +33,15 @@ app.get('/login-test', async (req: Request, res: Response): Promise<void> => {
   res.send('OK');
 });
 
+/** (GET) [ FIRST CALL ] >> Once the user comes to the homepage, this call is made -- Used to read or to create a new token for the user */
 app.get('/', async (req: Request, res: Response): Promise<void> => {
-  console.log(await verifyToken(req.cookies.token));
-  res.json(process.env);
+  const validToken: boolean = await verifyToken(req.cookies?.token);
+  if (validToken)
+    return send(200, 'OK', [], res)
+  return send(401, 'Wrong or empty token', [process.env], res)
 });
 
+/** [ [[ 404 ]] ] */
 app.get('*', (req: Request, res: Response): void => {
   res.status(404).send({
       statut: 404,
@@ -46,6 +51,7 @@ app.get('*', (req: Request, res: Response): void => {
   });
 });
 
+/** [ LISTENING ON PORT ] */
 db.sequelize.sync().then( () => {
     app.listen(process.env.PORT, () => {
         console.log(`Application listening at http://localhost:${process.env.PORT}`);
