@@ -1,6 +1,7 @@
 import express, { Request, Response, Application } from "express";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
+import { users } from './Sequelize/seeders/users';
 
 require('dotenv').config();
 
@@ -15,6 +16,15 @@ app.get('/seed', (req: Request, res: Response): void => {
     db.User.create(user);
   });
   res.send('OK');
+});
+
+app.get('*', (req: Request, res: Response): void => {
+  res.status(404).send({
+      statut: 404,
+      res: 'Not Found',
+      success: false,
+      data: []
+  });
 });
 
 db.sequelize.sync().then( () => {
