@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@types/sequelize": "^4.28.13",
+    "cookie-parser": "^1.4.6",
     "cron": "^2.0.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
