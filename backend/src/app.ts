@@ -1,7 +1,12 @@
 import express, { Request, Response, Application } from "express";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
+import { verifyToken, writeToken, saveToken } from './utils/cookies';
+import { Sequelize } from "sequelize";
+
+/* [ Seeders ] -- To remove later */
 import { users } from './Sequelize/seeders/users';
+/* [ [ end of Seeders ] ]*/
 
 require('dotenv').config();
 
@@ -16,6 +21,20 @@ app.get('/seed', (req: Request, res: Response): void => {
     db.User.create(user);
   });
   res.send('OK');
+});
+
+app.get('/login-test', async (req: Request, res: Response): Promise<void> => {
+  const user = await db.User.findOne({
+    order: [Sequelize.fn('RAND')]
+  });
+  const token = await writeToken(user);
+  saveToken(token, res);
+  res.send('OK');
+});
+
+app.get('/', async (req: Request, res: Response): Promise<void> => {
+  console.log(await verifyToken(req.cookies.token));
+  res.json(process.env);
 });
 
 app.get('*', (req: Request, res: Response): void => {
