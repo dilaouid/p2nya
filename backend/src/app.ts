@@ -18,7 +18,7 @@ app.get('/', async (req: Request, res: Response): Promise<void> => {
   const validToken: boolean = await verifyToken(req.cookies?.token);
   if (validToken)
     return send(200, 'OK', [], res)
-  return send(401, 'Wrong or empty token', [process.env], res)
+  return send(401, 'Wrong or empty token', [], res)
 });
 
 /** [ [[ 404 ]] ] */
