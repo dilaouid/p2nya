@@ -4,6 +4,7 @@ import db from "./Sequelize/models"
 import { verifyToken, writeToken, saveToken } from './utils/cookies';
 import { Sequelize } from "sequelize";
 import { send } from "./utils/response";
+import e = require('cors');
 
 /* [ Seeders ] -- To remove later */
 import { users } from './Sequelize/seeders/users';
@@ -16,6 +17,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(e({ credentials: true, origin: ['http://localhost:4200'] }));
 
 app.get('/seed', (req: Request, res: Response): void => {
   users.map(user => {
