@@ -5,7 +5,6 @@ import { verifyToken, writeToken } from './utils/cookies';
 import { send } from "./utils/response";
 import { mw } from 'request-ip';
 import { createUser } from "./API/initial/Token";
-import { UserAttributes } from "./Sequelize/models/user";
 import e = require('cors');
 
 require('dotenv').config();
@@ -21,6 +20,8 @@ app.use(mw());
 /** (GET) [ FIRST CALL ] >> Once the user comes to the homepage, this call is made -- Used to read or to create a new token for the user */
 app.get('/', async (req: Request, res: Response): Promise<void> => {
   const validToken: boolean = await verifyToken(req.cookies?.token, req.clientIp, res);
+
+  /* If the token is not valid , we have to create a new one, among with a new user in the database */
   if (validToken === false) {
     res.clearCookie('token', { domain: process.env.DOMAIN_NAME, secure: true, sameSite: false, httpOnly: false });
     await createUser(req.clientIp).then(async (data) => {

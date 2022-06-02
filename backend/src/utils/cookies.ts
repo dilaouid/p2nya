@@ -9,9 +9,12 @@ interface DecodedToken {
     uuid: string;
 };
 
-
+/* Verify if a token is valid or not , and acts consequently */
 export async function verifyToken (token: string, ip: string, res: Response): Promise<boolean> {
     const userWithSameIp = await db.User.findOne({where: {ip: ip}});
+
+    /* If the user IP is already registered in the database , pick up this registered user instead 
+    of creating a new one */
     if (userWithSameIp) {
         userWithSameIp.lastActive = new Date();
         await userWithSameIp.save();
@@ -21,6 +24,8 @@ export async function verifyToken (token: string, ip: string, res: Response): Pr
                     httpOnly: false });
         return true;
     }
+
+
     return verify(token, process.env.SECRET, async function (err, decoded: DecodedToken) {
         if (err || !decoded?.uuid || !decoded?.id)
             return (false);
@@ -31,11 +36,14 @@ export async function verifyToken (token: string, ip: string, res: Response): Pr
                 id: decoded?.id
             }
         }).then( async (user: any) => {
+
+            /* If an user is found , update his last activity so he wont get deleted with the cron */
             if (user !== null) {
                 user.lastActive = new Date();
                 await user.save();
                 return true;
             }
+
             return false;
         }).catch((err) => {
             console.log(err);
@@ -47,6 +55,7 @@ export async function verifyToken (token: string, ip: string, res: Response): Pr
     });
 };
 
+/* Write a token string (but does not write it into the client , it just returns a string) */
 export function writeToken (user: UserAttributes): string {
     const payload = { uuid: user.uuid, id: user.id };
     return sign(payload, process.env.SECRET);
