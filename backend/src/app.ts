@@ -20,7 +20,7 @@ app.use(mw());
 
 /** (GET) [ FIRST CALL ] >> Once the user comes to the homepage, this call is made -- Used to read or to create a new token for the user */
 app.get('/', async (req: Request, res: Response): Promise<void> => {
-  const validToken: boolean = await verifyToken(req.cookies?.token);
+  const validToken: boolean = await verifyToken(req.cookies?.token, req.clientIp, res);
   if (validToken === false) {
     res.clearCookie('token', { domain: process.env.DOMAIN_NAME, secure: true, sameSite: false, httpOnly: false });
     await createUser(req.clientIp).then(async (data) => {
