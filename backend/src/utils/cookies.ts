@@ -20,7 +20,7 @@ export function verifyToken (token: string): boolean {
                 id: decoded?.id
             }
         }).then( (data:any) => {
-            return (data !== undefined);
+            return (data !== null);
         }).catch(err => {
             console.log(err);
             return false;
