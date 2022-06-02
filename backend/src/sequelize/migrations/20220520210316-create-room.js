@@ -3,21 +3,21 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Rooms', {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true
       },
       password: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       admin: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       timeStamp: {
-        type: DataTypes.FLOAT,
+        type: Sequelize.FLOAT,
         allowNull: false
       }
     });

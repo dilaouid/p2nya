@@ -1,11 +1,14 @@
 'use strict';
 import { Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 export interface UserAttributes {
   id: number;
   uuid: string;
   ip: string;
   username: string;
+  inRoom: boolean;
+  lastActive: Date;
 };
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -19,6 +22,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     uuid!: string;
     ip!: string;
     username!: string
+    inRoom!: boolean;
+    lastActive!: Date;
     static associate(models) {
       // define association here
     }
@@ -36,7 +41,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
       allowNull: false,
     },
     ip: DataTypes.STRING,
-    username: DataTypes.STRING
+    username: DataTypes.STRING,
+    inRoom: DataTypes.TINYINT,
+    lastActive: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'User'
