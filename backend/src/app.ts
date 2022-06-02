@@ -1,9 +1,11 @@
 import express, { Request, Response, Application } from "express";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
-import { verifyToken } from './utils/cookies';
+import { verifyToken, writeToken } from './utils/cookies';
 import { send } from "./utils/response";
 import { mw } from 'request-ip';
+import { createUser } from "./API/initial/Token";
+import { UserAttributes } from "./Sequelize/models/user";
 import e = require('cors');
 
 require('dotenv').config();
@@ -19,9 +21,16 @@ app.use(mw());
 /** (GET) [ FIRST CALL ] >> Once the user comes to the homepage, this call is made -- Used to read or to create a new token for the user */
 app.get('/', async (req: Request, res: Response): Promise<void> => {
   const validToken: boolean = await verifyToken(req.cookies?.token);
-  if (validToken)
-    return send(200, 'OK', [], res)
-  return send(401, 'Wrong or empty token', [], res)
+  if (validToken === false) {
+    res.clearCookie('token', { domain: process.env.DOMAIN_NAME, secure: true, sameSite: false, httpOnly: false });
+    await createUser(req.clientIp).then(async (data) => {
+      const token = await writeToken(data);
+      res.cookie('token', token, { maxAge: 2 * 60 * 60 * 1000, domain: process.env.DOMAIN_NAME, secure: process.env.MODE == 'development' ? false : true,
+                                  sameSite: process.env.MODE == 'development' ? true : false,
+                                  httpOnly: false });
+    });
+  }
+  return send(200, 'OK', [], res)
 });
 
 /** [ [[ 404 ]] ] */
