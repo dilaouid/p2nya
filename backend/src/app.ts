@@ -5,6 +5,7 @@ import { verifyToken, writeToken } from './utils/cookies';
 import { send } from "./utils/response";
 import { mw } from 'request-ip';
 import { createUser } from "./API/initial/Token";
+import api from './API/routes';
 import e = require('cors');
 
 require('dotenv').config();
@@ -33,6 +34,8 @@ app.get('/', async (req: Request, res: Response): Promise<void> => {
   }
   return send(200, 'OK', [], res)
 });
+
+app.use('/api', api);
 
 /** [ [[ 404 ]] ] */
 app.get('*', (req: Request, res: Response): void => {
