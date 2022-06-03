@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
-const app = express();
+import { send } from "../../utils/response";
+import db from "../../Sequelize/models";
 
-if (process.env.MODE === 'development') {
-    /* Get all the available Rooms (only available on development mode) */
-    app.get('/', async (req:Request, res:Response) => {
-        
-    });
-}
+const rooms = express();
 
+/* Count all the active rooms ( where attributes to changes [todo] ) */
+rooms.get('/count', async (req: Request, res: Response) => {
+    return send(200, 'OK', await db.Room.count({}), res);
+});
+
+export default rooms;
