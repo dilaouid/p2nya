@@ -6,7 +6,7 @@
         <form>
             <div class="modal-body">
                 <p class="text-center glowUpText">Vous désirez créer un salon pour inviter vos amis ? Renseignez donc un mot de passe (obligatoire) pour y inviter vos amis !</p>
-                    <label class="form-label text-white-50" for="passwordCreate">Mot de passe</label>
+                    <label class="form-label" [class.text-danger]="password.wrong" [class.text-white-50]="password.wrong === false"  for="passwordCreate">Mot de passe</label>
                     <input maxlength="18" [class.border-danger]="password.wrong" [class.border-success]="password.valid" (keyup)="changePassword($event.target)" class="shadow form-control inputForm" type="text" id="passwordCreate" name="password" placeholder="Mot de passe">
                 
 
