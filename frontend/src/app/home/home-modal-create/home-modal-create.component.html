@@ -5,11 +5,7 @@
         </div>
         <form>
             <div class="modal-body">
-                <p class="text-center glowUpText">Vous désirez créer un salon pour inviter vos amis ? Renseignez donc un mot de passe (obligatoire) pour y inviter vos amis, ainsi que vous nom d'utilisateur !</p>
-                
-                    <label class="form-label text-white-50" for="usernameCreate">Nom d'utilisateur</label>
-                    <input maxlength="18" [class.border-danger]="username.wrong" [class.border-success]="username.valid" (keyup)="changeUsername($event.target)" class="shadow form-control inputForm" type="text" id="usernameCreate" name="username" placeholder="Nom d'utilisateur">
-                    
+                <p class="text-center glowUpText">Vous désirez créer un salon pour inviter vos amis ? Renseignez donc un mot de passe (obligatoire) pour y inviter vos amis !</p>
                     <label class="form-label text-white-50" for="passwordCreate">Mot de passe</label>
                     <input maxlength="18" [class.border-danger]="password.wrong" [class.border-success]="password.valid" (keyup)="changePassword($event.target)" class="shadow form-control inputForm" type="text" id="passwordCreate" name="password" placeholder="Mot de passe">
                 

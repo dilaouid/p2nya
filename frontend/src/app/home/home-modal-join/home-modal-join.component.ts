@@ -11,32 +11,18 @@ export class HomeModalJoinComponent {
   enabledButton: boolean;
   displayAlert: boolean;
   
-  username!: InputValidation;
   password!: InputValidation;
   roomID!: InputValidation;
 
   constructor() {
     this.enabledButton = false;
     this.displayAlert = false;
-    this.username = new InputValidation('', false, false);
     this.password = new InputValidation('', false, false);
     this.roomID = new InputValidation('', false, false);
   }
 
   checkLength() {
-    return this.username?.value?.length > 2 && this.password?.value?.length > 2 && this.roomID?.value?.length === 18;
-  }
-
-  changeUsername(username: any) {
-    this.username.value = username?.value?.trim();
-    this.enabledButton = this.checkLength();
-    if (this.username.value.length <= 2 || this.username.value.length > 18) {
-      this.username.wrong = this.username.value?.length > 0 ? true : false;
-      this.username.valid = false;
-    } else {
-      this.username.valid = true;
-      this.username.wrong = false;
-    }
+    return this.password?.value?.length > 2 && this.roomID?.value?.length === 18;
   }
 
   changeRoom(room: any) {
