@@ -6,7 +6,7 @@ const rooms = express();
 
 /* Count all the active rooms ( where attributes to changes [todo] ) */
 rooms.get('/count', async (req: Request, res: Response) => {
-    return send(200, 'OK', await db.Room.count({}), res);
+    return send(200, 'OK', [await db.Room.count({})], res);
 });
 
 export default rooms;
