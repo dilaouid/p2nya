@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InitUser } from 'src/app/API/Users';
 
 @Component({
   selector: 'app-homepage',
@@ -12,6 +13,7 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    InitUser();
   }
 
 }

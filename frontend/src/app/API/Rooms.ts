@@ -1,11 +1,6 @@
 import axios from "axios";
 import { environment } from 'src/environments/environment';
-
-interface ResponseAPI {
-    data: Array<any>;
-    statut: number;
-    message: string;
-};
+import { ResponseAPI } from "./Interface";
 
 export const CreateRoom = (uuid: string): Promise<ResponseAPI> => {
     return axios.post(environment.api + '/api/rooms', {uuid}, {
