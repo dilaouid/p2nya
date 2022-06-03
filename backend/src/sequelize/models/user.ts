@@ -1,6 +1,5 @@
 'use strict';
 import { Model } from 'sequelize';
-import { DataTypes } from 'sequelize';
 
 export interface UserAttributes {
   id: number;
@@ -30,7 +29,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
   }
   User.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true

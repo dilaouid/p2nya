@@ -5,8 +5,8 @@ import { Model } from 'sequelize';
 interface RoomAttributes {
   id: string;
   password: string;
-  admin: string;
   timeStamp: number;
+  users: string;
 };
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -18,8 +18,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
      */
     id!: string;
     password!: string;
-    admin!: string;
     timeStamp!: number;
+    users!: string;
   };
   Room.init({
     id: {
@@ -32,12 +32,12 @@ module.exports = (sequelize: any, DataTypes: any) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    admin: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     timeStamp: {
       type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    users: {
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {
