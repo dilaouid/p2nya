@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { InitUser } from 'src/app/API/Users';
 
 @Component({
   selector: 'app-homepage',
@@ -9,11 +8,9 @@ import { InitUser } from 'src/app/API/Users';
 export class HomepageComponent implements OnInit {
 
   constructor() { 
-    
   }
 
   ngOnInit(): void {
-    InitUser();
   }
 
 }
