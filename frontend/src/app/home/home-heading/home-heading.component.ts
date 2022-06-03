@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CountRooms } from 'src/app/API/Rooms';
 
 @Component({
   selector: 'app-home-heading',
@@ -12,8 +13,9 @@ export class HomeHeadingComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.room = 0;
-  }
+  async ngOnInit(): Promise<void> {
+    const apiCountRooms = await CountRooms();
+    this.room = apiCountRooms.data[0];
+  };
 
 }
