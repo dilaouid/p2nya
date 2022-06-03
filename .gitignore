@@ -1,2 +1,4 @@
 
 backend/src/sequelize/config/config.js
+
+backend/src/Sequelize/migrations/
