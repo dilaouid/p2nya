@@ -2,8 +2,8 @@ import axios from "axios";
 import { environment } from 'src/environments/environment';
 import { ResponseAPI } from "./Interface";
 
-export const CreateRoom = (uuid: string): Promise<ResponseAPI> => {
-    return axios.post(environment.api + '/api/rooms', {uuid}, {
+export const CreateRoom = (password: string): Promise<ResponseAPI> => {
+    return axios.post(environment.api + '/api/rooms', {password}, {
         withCredentials: true
     }).then(d => {
         return (d.data);

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { InputValidation } from '../models/home-modal-validation';
+import * as APIRoom from '../../API/Rooms';
 
 @Component({
   selector: 'app-home-modal-create',
@@ -35,6 +36,10 @@ export class HomeModalCreateComponent {
     }
     this.enabledButton = this.checkLength();
   }
+
+  createRoom() {
+    APIRoom.CreateRoom(this.password.value);
+  };
 
   submit() {
     if ( !this.checkLength() ) {
