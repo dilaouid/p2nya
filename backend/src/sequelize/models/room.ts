@@ -5,8 +5,11 @@ import { Model } from 'sequelize';
 interface RoomAttributes {
   id: string;
   password: string;
-  timeStamp: number;
+  timeStamp: Date;
   users: string;
+  usersInVocal: string;
+  lastAuthor: string;
+  lastMessageTime: Date;
 };
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -18,8 +21,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
      */
     id!: string;
     password!: string;
-    timeStamp!: number;
+    timeStamp!: Date;
     users!: string;
+    usersInVocal!: string;
+    lastAuthor!: string;
+    lastMessageTime!: Date;
   };
   Room.init({
     id: {
@@ -33,13 +39,25 @@ module.exports = (sequelize: any, DataTypes: any) => {
       allowNull: false
     },
     timeStamp: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DATE,
       allowNull: false
     },
     users: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    usersInVocal: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastAuthor: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastMessageTime: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'Room',
