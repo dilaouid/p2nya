@@ -45,6 +45,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     lastActive: DataTypes.DATE
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'User'
   });
   return User;
