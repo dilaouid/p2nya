@@ -44,9 +44,14 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
 rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
     const uuid: string = req.params.uuid;
     const userId: number = await getUserID(req.cookies.token);
-    const room = await db.Room.findByPk(uuid);
+    const room = await db.Room.findByPk(uuid, {
+        attributes: {
+            exclude: ['id', 'password']
+        }
+    });
+    room.users = room.users.split('%');
     if (!room) return send(404, 'No Room Found', [], res);
-    const userIn: Boolean = room.users.split('%').includes(userId.toString());
+    const userIn: Boolean = room.users.includes(userId.toString());
     if (!userIn) return send(401, 'Not authorized', [], res);
     return send(200, 'OK', room, res);
 });
