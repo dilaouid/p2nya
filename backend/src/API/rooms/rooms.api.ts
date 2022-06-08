@@ -42,17 +42,34 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
 
 /* Check if the logged user is in a specific room and returns details */
 rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
-    const uuid: string = req.params.uuid;
+    const uuid: string = req.params.uuid || null;
     const userId: number = await getUserID(req.cookies.token);
     const room = await db.Room.findByPk(uuid, {
         attributes: {
             exclude: ['id', 'password']
         }
+    }).catch( e => {
+        console.log(e);
     });
-    room.users = room.users.split('%');
-    if (!room) return send(404, 'No Room Found', [], res);
-    const userIn: Boolean = room.users.includes(userId.toString());
-    if (!userIn) return send(401, 'Not authorized', [], res);
+
+    // If the room does not exists, or if the user is not inside of it, return a 404 (security reason)
+    if (!room || room?.users.includes(userId) === false) return send(404, 'No Room Found', [], res);
+    
+    // Otherwise, print the uuid and not the id of the users (security reason)
+    room.usersInVocal = room.usersInVocal ? room.usersInVocal.split('%').map(i => Number(i)) : [];
+    room.users = room.users.split('%').map(i => Number(i));
+    for (let i = 0; i < room.users.length; i++) {
+        let j: number = room.usersInVocal.indexOf(room.users[i]);
+        room.users[i] = await db.User.findByPk(room.users[i], {
+            attributes: ['uuid']
+        }).then(d => {
+            if (d) return d.uuid;
+        }).catch(e => {
+            console.log(e);
+        });
+        room.usersInVocal[j] = room.users[i];
+    }
+    
     return send(200, 'OK', room, res);
 });
 
