@@ -9,6 +9,11 @@ import { HomeBtnContainerComponent } from './home/home-btn-container/home-btn-co
 import { HomeModalCreateComponent } from './home/home-modal-create/home-modal-create.component';
 import { HomeModalJoinComponent } from './home/home-modal-join/home-modal-join.component';
 import { HomepageComponent } from './home/homepage/homepage.component';
+import { ChatroomNavbarComponent } from './chatroom/chatroom-navbar/chatroom-navbar.component';
+import { ChatroomContentComponent } from './chatroom/chatroom-content/chatroom-content.component';
+import { ChatroomCallboxComponent } from './chatroom/chatroom-callbox/chatroom-callbox.component';
+import { ChatroomActivityboxComponent } from './chatroom/chatroom-activitybox/chatroom-activitybox.component';
+import { ChatroomChatboxComponent } from './chatroom/chatroom-chatbox/chatroom-chatbox.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,12 @@ import { HomepageComponent } from './home/homepage/homepage.component';
     HomeBtnContainerComponent,
     HomeModalCreateComponent,
     HomeModalJoinComponent,
-    HomepageComponent
+    HomepageComponent,
+    ChatroomNavbarComponent,
+    ChatroomContentComponent,
+    ChatroomCallboxComponent,
+    ChatroomActivityboxComponent,
+    ChatroomChatboxComponent
   ],
   imports: [
     BrowserModule,
