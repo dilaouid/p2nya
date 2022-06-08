@@ -21,6 +21,13 @@ export const isAuthentified = async (req: Request, res: Response, next): Promise
     next();
 };
 
+export const getUserUUID = async (token: string): Promise<string> => {
+    return await verify(token, process.env.SECRET, async function(err, decoded) {
+        if (err) console.log(err);
+        return err ? null : decoded.uuid;
+    });
+};
+
 export const getUserID = async (token: string): Promise<number> => {
     return await verify(token, process.env.SECRET, async function(err, decoded) {
         if (err) console.log(err);
