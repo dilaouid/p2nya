@@ -1,0 +1,28 @@
+#emojiNavbar {
+    width: 30px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.navItemChatRoom {
+    margin-right: 21px;
+}
+
+.profilPictureTop {
+    cursor: pointer;
+    opacity: .5;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    margin: 10px;
+}
+
+.yourProfilPicture {
+    opacity: 100;
+}

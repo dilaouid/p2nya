@@ -1,1 +1,21 @@
-<p>chatroom-navbar works!</p>
+<nav class="navbar navbar-light navbar-expand-md sticky-top bg-dark" data-aos="fade-down" id="navbar">
+    <div class="container-fluid">
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol">
+            <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol">
+
+            <!-- <ul class="navbar-nav me-auto">
+                <li *ngFor="let user of users" class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
+                    <div class="profilPictureTop" [class.yourProfilPicture]="user.isMe" style="background-image: url('{{BACK_URL}}/api/users/picture/{{user.uuid}}');" [attr.data-bs-target]="user.isMe ? '#edit-profile' : null" [attr.data-bs-toggle]="user.isMe ? 'modal' : null"></div>
+                </li>
+            </ul> -->
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
+                    <img data-bss-hover-animate="rubberBand" id="emojiNavbar" src="assets/img/emojis/teeth_smile.png" data-bs-target="#edit-emoji" data-bs-toggle="modal">
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
