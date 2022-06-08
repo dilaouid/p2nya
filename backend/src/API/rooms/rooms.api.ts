@@ -40,4 +40,15 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
     }
 });
 
+/* Check if the logged user is in a specific room and returns details */
+rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
+    const uuid: string = req.params.uuid;
+    const userId: number = await getUserID(req.cookies.token);
+    const room = await db.Room.findByPk(uuid);
+    if (!room) return send(404, 'No Room Found', [], res);
+    const userIn: Boolean = room.users.split('%').includes(userId.toString());
+    if (!userIn) return send(401, 'Not authorized', [], res);
+    return send(200, 'OK', room, res);
+});
+
 export default rooms;
