@@ -26,9 +26,10 @@ export const JoinRoom = (uuid: string, password: string): Promise<ResponseAPI> =
     });
 };
 
-export const IsInRoom = (uuid: string): Promise<Boolean> => {
+export const GetRoomInfo = (uuid: string): Promise<ResponseAPI> => {
     return axios.get(environment.api + '/api/rooms/' + uuid, {
         withCredentials: true
-    }).then(d => { return (true); })
-    .catch(e => { return (false); });
+    }).then(d => {
+        return (d.data);
+    });
 };

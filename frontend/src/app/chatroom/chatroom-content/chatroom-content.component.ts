@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import { IsInRoom } from 'src/app/API/Rooms';
+import { ActivatedRoute, Router } from "@angular/router";
+import { GetRoomInfo } from 'src/app/API/Rooms';
 
 @Component({
   selector: 'app-chatroom-content',
@@ -10,14 +10,20 @@ import { IsInRoom } from 'src/app/API/Rooms';
 export class ChatroomContentComponent implements OnInit {
 
   uuid: string | null;
+  room: any;
 
-  constructor(private route: ActivatedRoute) {
-    this.uuid = null;
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.uuid = '';
     this.route.paramMap.subscribe( (params) => { this.uuid = params.get('id') });
-  }
+  };
 
   ngOnInit(): void {
-    console.log(this.uuid);
-  }
+    GetRoomInfo(this.uuid + '').then(d => {
+      this.room = d.data;
+      console.log(this.room);
+    }).catch(e => {
+      this.router.navigate(['/']);
+    });
+  };
 
 }
