@@ -19,15 +19,14 @@ users.get('/picture/:uuid', isAuthentified, (req: Request, res: Response): void 
     let i: number = 0;
     let fileExists: boolean = false;
     let file: string;
-    while (i < allowedExtension.length && fileExists === false) {
+    while (i++ < allowedExtension.length && !fileExists) {
         let path: string = `./src/uploads/profile/${uuid}/picture.${allowedExtension[i]}`;
         if (fs.existsSync(path) === true) {
             fileExists = true;
             file = fs.readFileSync(path);
         }
-        i++;
     }
-    if (fileExists === false)
+    if (!fileExists)
         file = fs.readFileSync(`./src/uploads/profile/default.jpg`);
     res.contentType(fileExists ? `image/${allowedExtension[i]}` : 'image/jpg');
     res.send(file);
