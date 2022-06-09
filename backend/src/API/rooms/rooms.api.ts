@@ -58,6 +58,8 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
     // Otherwise, print the uuid and not the id of the users (security reason)
     room.usersInVocal = room.usersInVocal ? room.usersInVocal.split('%').map(i => Number(i)) : [];
     room.users = room.users.split('%').map(i => Number(i));
+    room.users.splice(room.users.indexOf(userId), 1);
+    room.users.splice(0, 0, userId);
     for (let i = 0; i < room.users.length; i++) {
         let j: number = room.usersInVocal.indexOf(room.users[i]);
         room.users[i] = await db.User.findByPk(room.users[i], {
