@@ -5,11 +5,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navcol">
 
-            <!-- <ul class="navbar-nav me-auto">
-                <li *ngFor="let user of users" class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
-                    <div class="profilPictureTop" [class.yourProfilPicture]="user.isMe" style="background-image: url('{{BACK_URL}}/api/users/picture/{{user.uuid}}');" [attr.data-bs-target]="user.isMe ? '#edit-profile' : null" [attr.data-bs-toggle]="user.isMe ? 'modal' : null"></div>
+            <ul class="navbar-nav me-auto">
+                <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
+                    <div class="profilPictureTop" [class.yourProfilPicture]="first" style="background-image: url('{{api}}/api/users/picture/{{user}}');" [attr.data-bs-target]="first ? '#edit-profile' : null" [attr.data-bs-toggle]="first ? 'modal' : null"></div>
                 </li>
-            </ul> -->
+            </ul>
 
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
