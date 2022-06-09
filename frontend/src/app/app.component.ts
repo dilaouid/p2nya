@@ -8,7 +8,8 @@ import { InitUser } from './API/Users';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    api = environment.api
+    api: string = environment.api
+    title: any;
     
     constructor() {
       InitUser();

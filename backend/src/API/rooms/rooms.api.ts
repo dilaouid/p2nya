@@ -7,7 +7,7 @@ import db from "../../Sequelize/models";
 const rooms = express();
 interface NewRoomBody {
     password: string;
-}
+};
 
 /* Count all the active rooms ( where attributes to changes [todo] ) */
 rooms.get('/count', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
@@ -36,7 +36,7 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
         });
     } catch(e) {
         console.log(e);
-        return send(400, 'Error Occured', [], res);
+        return send(500, 'Error Occured', [], res);
     }
 });
 
@@ -71,7 +71,7 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
         });
         room.usersInVocal[j] = room.users[i];
     }
-    
+
     return send(200, 'OK', room, res);
 });
 
