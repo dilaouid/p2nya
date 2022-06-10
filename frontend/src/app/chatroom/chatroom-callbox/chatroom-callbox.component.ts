@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-chatroom-callbox',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatroomCallboxComponent implements OnInit {
 
+  @Input() inCall: any[] | undefined;
+
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

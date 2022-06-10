@@ -1,0 +1,23 @@
+.topRoxCallBox {
+    padding-top: 45px;
+}
+
+.notJoinedCall {
+    filter: blur(3px) saturate(0%);
+    opacity: .3;
+}
+
+.BtnRowCallBox {
+    margin-top: 10vh;
+}
+
+.joinCallBtn {
+    width: 45%;
+}
+
+.callBox {
+    height: 40vh;
+    background: var(--bs-gray-dark);
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+}
