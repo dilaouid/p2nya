@@ -9,3 +9,11 @@ export const InitUser = (): Promise<ResponseAPI> => {
         return (d.data);
     });
 };
+
+export const GetMe = (): Promise<any> => {
+    return axios.get(environment.api + '/api/users/me', {
+        withCredentials: true
+    }).then(d => {
+        return (d.data);
+    });
+};
