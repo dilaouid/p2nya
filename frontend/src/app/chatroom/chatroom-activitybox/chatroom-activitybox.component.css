@@ -1,0 +1,21 @@
+#wipActivity {
+    margin-top: 15%;
+    font-weight: bold;
+    font-size: 24px;
+    color: #ffffff3b;
+    text-align: center;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.activityBox {
+    position: relative;
+    height: 40vh;
+    background: var(--bs-gray-900);
+    border-top-left-radius: 35px;
+    margin: 22px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+}
