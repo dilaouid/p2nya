@@ -1,8 +1,7 @@
 <div class="shadow-lg callBox">
     <div class="row justify-content-center topRoxCallBox">
-        <div class="col-auto">
-            <!-- NgFor for each user in the call
-            <div class="profilPictureCall notJoinedCall" style="background-image: url('uuid picture');"></div> -->
+        <div class="col-auto" *ngFor="let user of inCall;">
+            <div [class.notJoinedCall]="!userInCall" class="profilPictureCall" style="background-image: url('{{api}}/api/users/picture/{{user}}');"></div>
         </div>
     </div>
     <div class="row g-0 text-center BtnRowCallBox">
