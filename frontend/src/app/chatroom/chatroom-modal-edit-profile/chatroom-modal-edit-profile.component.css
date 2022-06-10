@@ -1,0 +1,50 @@
+.paragraphOverlayProfilPicture {
+    color: #ffffff;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#usernameEdit {
+    font-family: Alatsi, sans-serif;
+    font-size: 46px;
+    margin-bottom: 0px;
+}
+
+#alertEditProfile {
+    margin-top: 30px;
+}
+
+.overlayProfilPictureChange {
+    height: 183px;
+    width: 183px;
+    margin-top: -183px;
+    margin-left: 126px;
+    cursor: pointer;
+    box-shadow: inset 0px 0px 11px rgba(0,0,0,0.41);
+    position: absolute;
+    transition: .5s ease;
+    background: rgba(0,0,0,0.76);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.overlayProfilPictureChange:hover {
+    opacity: 1;
+}
+
+#avatarEdit {
+    width: 183px;
+}
+
+#iconEditAvatar {
+    font-size: 27px;
+}
+
+[contenteditable] {
+    outline: 0px solid transparent;
+}

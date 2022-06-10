@@ -14,6 +14,7 @@ import { ChatroomContentComponent } from './chatroom/chatroom-content/chatroom-c
 import { ChatroomCallboxComponent } from './chatroom/chatroom-callbox/chatroom-callbox.component';
 import { ChatroomActivityboxComponent } from './chatroom/chatroom-activitybox/chatroom-activitybox.component';
 import { ChatroomChatboxComponent } from './chatroom/chatroom-chatbox/chatroom-chatbox.component';
+import { ChatroomModalEditProfileComponent } from './chatroom/chatroom-modal-edit-profile/chatroom-modal-edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ChatroomChatboxComponent } from './chatroom/chatroom-chatbox/chatroom-c
     ChatroomContentComponent,
     ChatroomCallboxComponent,
     ChatroomActivityboxComponent,
-    ChatroomChatboxComponent
+    ChatroomChatboxComponent,
+    ChatroomModalEditProfileComponent
   ],
   imports: [
     BrowserModule,
