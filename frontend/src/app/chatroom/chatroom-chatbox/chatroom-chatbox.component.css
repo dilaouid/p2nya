@@ -1,0 +1,13 @@
+.msgBox {
+    padding: 16px;
+    overflow-y: scroll;
+    height: 75vh;
+    background: var(--bs-gray-100);
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+}
+
+.userMessagesBoxChat {
+    margin-bottom: 15px;
+}
