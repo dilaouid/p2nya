@@ -10,12 +10,14 @@ import { GetRoomInfo } from 'src/app/API/Rooms';
 export class ChatroomContentComponent implements OnInit {
 
   uuid: string | null;
-  users: Array<string>
+  users: string[];
+  inCall: string[];
   room: any;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.uuid = '';
     this.users = [];
+    this.inCall = [];
     this.route.paramMap.subscribe( (params) => { this.uuid = params.get('id') });
   };
 
@@ -23,6 +25,7 @@ export class ChatroomContentComponent implements OnInit {
     GetRoomInfo(this.uuid + '').then(d => {
       this.room = d.data;
       this.users = this.room.users;
+      this.inCall = this.room.usersInVocal
       console.log(this.room);
     }).catch(e => {
       this.router.navigate(['/']);
