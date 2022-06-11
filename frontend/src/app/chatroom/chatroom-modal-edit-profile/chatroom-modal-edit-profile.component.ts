@@ -23,7 +23,7 @@ export class ChatroomModalEditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
 }

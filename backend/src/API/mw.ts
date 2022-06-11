@@ -29,6 +29,7 @@ export const getUserUUID = async (token: string): Promise<string> => {
 };
 
 export const getUserID = async (token: string): Promise<number> => {
+    if (!token) return (0);
     return await verify(token, process.env.SECRET, async function(err, decoded) {
         if (err) console.log(err);
         return err ? 0 : decoded.id;

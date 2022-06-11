@@ -29,7 +29,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/chatroom_modal.js"
+            ]
           },
           "configurations": {
             "production": {
