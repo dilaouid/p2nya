@@ -2,6 +2,13 @@ import axios from "axios";
 import { environment } from 'src/environments/environment';
 import { ResponseAPI } from "./Interface";
 
+interface EditUserInput {
+    username: string;
+    picture: string;
+}
+
+const url = environment.api + '/api/users';
+
 export const InitUser = (): Promise<ResponseAPI> => {
     return axios.get(environment.api + '/', {
         withCredentials: true
@@ -11,7 +18,15 @@ export const InitUser = (): Promise<ResponseAPI> => {
 };
 
 export const GetMe = (): Promise<any> => {
-    return axios.get(environment.api + '/api/users/me', {
+    return axios.get(url + '/me', {
+        withCredentials: true
+    }).then(d => {
+        return (d.data);
+    });
+};
+
+export const EditUser = (input: EditUserInput) => {
+    return axios.put(url, input, {
         withCredentials: true
     }).then(d => {
         return (d.data);

@@ -7,7 +7,7 @@
 
             <ul class="navbar-nav me-auto">
                 <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
-                    <div class="profilPictureTop" [class.yourProfilPicture]="first" style="background-image: url('{{api}}/api/users/picture/{{user}}');" [attr.data-bs-target]="first ? '#edit-profile' : null" [attr.data-bs-toggle]="first ? 'modal' : null"></div>
+                    <div class="profilPictureTop" (click)="first && resetUsername()" [class.yourProfilPicture]="first" style="background-image: url('{{api}}/api/users/picture/{{user}}');" [attr.data-bs-target]="first ? '#edit-profile' : null" [attr.data-bs-toggle]="first ? 'modal' : null"></div>
                 </li>
             </ul>
 

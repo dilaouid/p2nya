@@ -17,6 +17,7 @@ interface Me {
 
 export class ChatroomContentComponent implements OnInit {
   me: Me;
+  username: string;
   uuid: string | null;
   users: string[];
   inCall: string[];
@@ -29,6 +30,7 @@ export class ChatroomContentComponent implements OnInit {
     this.userInCall = false;
     this.me = {id: 0, uuid: '', username: ''};
     this.inCall = [];
+    this.username = '';
     this.route.paramMap.subscribe( (params) => { this.uuid = params.get('id') });
   };
 
@@ -36,6 +38,7 @@ export class ChatroomContentComponent implements OnInit {
 
     GetMe().then( (d) => {
       this.me = d.data;
+      this.username = this.me.username;
     }).catch(e => {
       console.log(e);
     });
@@ -49,6 +52,7 @@ export class ChatroomContentComponent implements OnInit {
     }).catch(e => {
       this.router.navigate(['/']);
     });
+
   };
 
 }
