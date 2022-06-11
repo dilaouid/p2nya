@@ -1,12 +1,7 @@
 $( document ).ready(function() {
-    var username;
-    
-    $('#edit-profile').on('show.bs.modal', function (event) {
-        username = $('#usernameEdit').text();
+    $('#usernameEdit').on('keydown paste', function(event) {
+        if($(this).text().length === 17 && event.keyCode != 8) { 
+          event.preventDefault();
+        }
     });
-
-    $('#edit-profile').on('hidden.bs.modal', function lol () {
-        $('#usernameEdit').text(username);
-    });
-
 });

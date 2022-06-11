@@ -53,14 +53,14 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
     const userId: number = await getUserID(req.cookies.token);
     update.username = update?.username?.trim() || null;
     if (update.username) {
-        if (update.username.length < 2 || update.username.length > 20) {
+        if (update.username.length < 2 || update.username.length > 17) {
             return send(400, "Le nom d'utilisateur saisit est incorrect", [], res);
         }
     }
     return db.User.findOne({
         where: {
             id: userId
-        }, attributes: ['username']
+        }, attributes: ['id', 'username']
     }).then(async (data) => {
         if (update.username) data.username = update.username
         await data.save().catch(e => {
