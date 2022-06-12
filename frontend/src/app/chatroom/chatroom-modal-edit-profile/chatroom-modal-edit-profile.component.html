@@ -1,28 +1,24 @@
-<div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Personnalisation du profil</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col text-center"><img class="rounded-circle img-fluid" id="avatarEdit" src="{{api}}/api/users/picture/{{ me.uuid }}">
-                    <div data-bss-hover-animate="pulse" class="overlayProfilPictureChange">
-                        <p class="paragraphOverlayProfilPicture">
-                            <i class="far fa-image" id="iconEditAvatar"></i><br>Changer la<br>photo</p>
-                    </div>
-                </div>
+<div class="modal-header">
+    <h4 class="modal-title">Personnalisation du profil</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col text-center"><img class="rounded-circle img-fluid" id="avatarEdit" src="{{api}}/api/users/picture/{{ me.uuid }}">
+            <div data-bss-hover-animate="pulse" class="overlayProfilPictureChange">
+                <p class="paragraphOverlayProfilPicture">
+                    <i class="far fa-image" id="iconEditAvatar"></i><br>Changer la<br>photo</p>
             </div>
-            <div class="row" style="margin-top: 28px;">
-                <div class="col text-center">
-                    <p id="usernameEdit" contenteditable="true" (keyup)="changeUsername($event.target)">{{ username }}</p>
-                </div>
-            </div>
-            <div *ngIf="alert.display" class="alert alert-danger" role="alert" id="alertEditProfile"><span>{{ alert.message }}</span></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Fermer</button>
-            <button (click)="submit()" class="btn btn-primary" type="button" data-bs-dismiss="modal">Sauvegarder</button>
         </div>
     </div>
+    <div class="row" style="margin-top: 28px;">
+        <div class="col text-center">
+            <p id="usernameEdit" contenteditable="true" (keyup)="changeUsername($event.target)">{{ username }}</p>
+        </div>
+    </div>
+    <div *ngIf="alert.display" class="alert alert-danger" role="alert" id="alertEditProfile"><span>{{ alert.message }}</span></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-light" type="button" data-bs-dismiss="modal">Fermer</button>
+    <button (click)="submit()" class="btn btn-primary" type="button" data-bs-dismiss="modal">Sauvegarder</button>
 </div>

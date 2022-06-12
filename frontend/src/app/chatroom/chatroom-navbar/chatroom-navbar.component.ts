@@ -1,5 +1,6 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 interface Me {
   id: number;
@@ -14,13 +15,14 @@ interface Me {
 })
 export class ChatroomNavbarComponent implements OnInit {
 
+  closeResult = '';
   api: string;
 
   @Input() users: any[] | undefined;
-  @Input() username: string | undefined;
+  @Input() username!: string;
   @Input() me: Me | undefined;
 
-  constructor() {
+  constructor(private modalService: NgbModal) {
     this.api = environment.api;
   }
 
@@ -28,7 +30,25 @@ export class ChatroomNavbarComponent implements OnInit {
   }
 
   resetUsername() {
-    this.username = this.me?.username;
+    this.username = this.me?.username || '';
+  }
+
+  open(content: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 }

@@ -1,3 +1,7 @@
+<ng-template #editProfile let-modal>
+    <app-chatroom-modal-edit-profile [me]="me" [username]="username"></app-chatroom-modal-edit-profile>
+</ng-template>
+
 <nav class="navbar navbar-light navbar-expand-md sticky-top bg-dark" data-aos="fade-down" id="navbar">
     <div class="container-fluid">
         <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol">
@@ -7,7 +11,7 @@
 
             <ul class="navbar-nav me-auto">
                 <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
-                    <div class="profilPictureTop" (click)="first && resetUsername()" [class.yourProfilPicture]="first" style="background-image: url('{{api}}/api/users/picture/{{user}}');" [attr.data-bs-target]="first ? '#edit-profile' : null" [attr.data-bs-toggle]="first ? 'modal' : null"></div>
+                    <div class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first" style="background-image: url('{{api}}/api/users/picture/{{user}}');"></div>
                 </li>
             </ul>
 

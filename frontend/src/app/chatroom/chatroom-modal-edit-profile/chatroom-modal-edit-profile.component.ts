@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { EditUser, GetMe } from '../../API/Users';
 
@@ -22,7 +23,7 @@ export class ChatroomModalEditProfileComponent implements OnInit {
   api: string;
   alert: AlertModal;
 
-  constructor() {
+  constructor(private modalService: NgbModal) {
     this.api = environment.api;
     this.alert = { display: false, message: '', success: false };
   }
