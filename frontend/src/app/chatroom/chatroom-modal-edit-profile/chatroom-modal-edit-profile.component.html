@@ -13,12 +13,12 @@
     </div>
     <div class="row" style="margin-top: 28px;">
         <div class="col text-center">
-            <p id="usernameEdit" contenteditable="true" (keyup)="changeUsername($event.target)">{{ me.username }}</p>
+            <p #usernameEdit id="usernameEdit" contenteditable="true" (keyup)="changeUsername($event.target)">{{ me.username }}</p>
         </div>
     </div>
     <div *ngIf="alert.display" [class.alert-danger]="!alert.success" [class.alert-success]="alert.success" class="alert" role="alert" id="alertEditProfile"><span>{{ alert.message }}</span></div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-light" type="button" data-bs-dismiss="modal">Fermer</button>
-    <button (click)="submit()" class="btn btn-primary" type="button" data-bs-dismiss="modal">Sauvegarder</button>
+    <button class="btn btn-light" type="button">Fermer</button>
+    <button (click)="submit()" class="btn btn-primary" type="button">Sauvegarder</button>
 </div>

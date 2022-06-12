@@ -26,12 +26,7 @@ export class ChatroomNavbarComponent implements OnInit {
     this.api = environment.api;
   }
 
-  ngOnInit(): void {
-  }
-
-  resetUsername() {
-    this.username = this.me?.username || '';
-  }
+  ngOnInit(): void { }
 
   open(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -39,7 +34,7 @@ export class ChatroomNavbarComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-  }
+  };
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -49,6 +44,6 @@ export class ChatroomNavbarComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
-  }
+  };
 
 }
