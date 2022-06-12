@@ -27,6 +27,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/bootstrap.quartz.min.css",
               "src/styles.css"
             ],
             "scripts": [
