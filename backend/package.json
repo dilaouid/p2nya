@@ -23,6 +23,7 @@
   "dependencies": {
     "@types/request-ip": "0.0.37",
     "@types/sequelize": "^4.28.13",
+    "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cron": "^2.0.0",

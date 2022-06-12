@@ -1,4 +1,5 @@
 import express, { Request, Response, Application } from "express";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
 import { send } from "./utils/response";
@@ -11,8 +12,9 @@ require('dotenv').config();
 
 const app: Application = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
+app.use(bodyParser.json({ limit: '100mb' }));
 app.use(cookieParser());
 app.use(e({ credentials: true, origin: ['http://localhost:4200'] }));
 app.use(mw());
