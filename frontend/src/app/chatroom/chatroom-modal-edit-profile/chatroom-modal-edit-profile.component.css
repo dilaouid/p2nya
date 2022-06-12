@@ -13,6 +13,11 @@
     font-family: Alatsi, sans-serif;
     font-size: 46px;
     margin-bottom: 0px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    width: 100%;
 }
 
 #alertEditProfile {
@@ -45,6 +50,6 @@
     font-size: 27px;
 }
 
-[contenteditable] {
+input:focus {
     outline: 0px solid transparent;
 }

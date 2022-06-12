@@ -29,8 +29,9 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
     this.alert = { display: false, message: '', success: false };
   }
 
-  changeUsername(username: any) {
-    if (username.innerText.length < 18) this.username = username.innerText?.trim();
+  changeUsername(event: any) {
+    let input = event.target.value;
+    this.username = input?.trim();
   };
 
   async submit() {

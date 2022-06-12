@@ -13,7 +13,7 @@
     </div>
     <div class="row" style="margin-top: 28px;">
         <div class="col text-center">
-            <p #usernameEdit id="usernameEdit" contenteditable="true" (keyup)="changeUsername($event.target)">{{ me.username }}</p>
+            <input type="text" id="usernameEdit" #usernameEdit value="{{ me.username }}" maxlength="18" (keyup)="changeUsername($event)" >
         </div>
     </div>
     <div *ngIf="alert.display" [class.alert-danger]="!alert.success" [class.alert-success]="alert.success" class="alert" role="alert" id="alertEditProfile"><span>{{ alert.message }}</span></div>
