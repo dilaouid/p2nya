@@ -30,7 +30,7 @@ export class ChatroomModalEditProfileComponent implements OnInit {
 
   changeUsername(username: any) {
     if (username.innerText.length < 18) this.username = username.innerText?.trim();
-  }
+  };
 
   submit() {
     EditUser({username: this.username, picture: ''}).then( async d => {
@@ -44,7 +44,7 @@ export class ChatroomModalEditProfileComponent implements OnInit {
       this.alert.display = true;
       this.alert.message = e.response.data.message;
     });
-  }
+  };
 
   ngOnInit(): void {
 
