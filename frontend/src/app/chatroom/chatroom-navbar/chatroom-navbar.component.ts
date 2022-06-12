@@ -1,6 +1,6 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 interface Me {
   id: number;

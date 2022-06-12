@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h4 class="modal-title">Personnalisation du profil</h4>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+    <button type="button" class="btn-close" (click)="closeModal()" aria-label="Fermer"></button>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -19,6 +19,6 @@
     <div *ngIf="alert.display" [class.alert-danger]="!alert.success" [class.alert-success]="alert.success" class="alert" role="alert" id="alertEditProfile"><span>{{ alert.message }}</span></div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-light" type="button">Fermer</button>
+    <button (click)="closeModal()" class="btn btn-light" type="button">Fermer</button>
     <button (click)="submit()" class="btn btn-primary" type="button">Sauvegarder</button>
 </div>

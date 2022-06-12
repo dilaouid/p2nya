@@ -50,6 +50,12 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
     this.p.nativeElement.innerText = this.me.username;
   } 
 
-  ngOnInit(): void { }
+  closeModal() {
+    this.modalService.dismissAll();
+  }
+
+  ngOnInit(): void {
+    
+  }
 
 }
