@@ -4,7 +4,8 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col text-center"><img class="rounded-circle img-fluid" id="avatarEdit" src="{{api}}/api/users/picture/{{ me.uuid }}">
+        <div class="col text-center" (click)="picture.click()">
+            <img #avatar class="rounded-circle img-fluid" id="avatarEdit" src="{{api}}/api/users/picture/{{ me.uuid }}">
             <div data-bss-hover-animate="pulse" class="overlayProfilPictureChange">
                 <p class="paragraphOverlayProfilPicture">
                     <i class="far fa-image" id="iconEditAvatar"></i><br>Changer la<br>photo</p>
@@ -13,7 +14,8 @@
     </div>
     <div class="row" style="margin-top: 28px;">
         <div class="col text-center">
-            <input type="text" id="usernameEdit" #usernameEdit value="{{ me.username }}" maxlength="18" (keyup)="changeUsername($event)" >
+            <input type="text" id="usernameEdit" #usernameEdit value="{{ me.username }}" maxlength="18" (keyup)="changeUsername($event)">
+            <input accept="image/*" type="file" style="display: none;" (change)="updateAvatarPreview(picture.files)" #picture>
         </div>
     </div>
     <div *ngIf="alert.display" [class.alert-danger]="!alert.success" [class.alert-success]="alert.success" class="alert" role="alert" id="alertEditProfile"><span>{{ alert.message }}</span></div>

@@ -19,7 +19,8 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   @Input() me: any | undefined;
   @Input() username!: string;
   @ViewChild('usernameEdit') p!: ElementRef;
-  profilePicture!: string;
+  @ViewChild('avatar') img!: ElementRef;
+  profilePicture!: string | ArrayBuffer | null;
 
   api: string;
   alert: AlertModal;
@@ -35,7 +36,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   };
 
   async submit() {
-    await EditUser({username: this.username, picture: ''}).then( async d => {
+    await EditUser({username: this.username, picture: this.profilePicture}).then( async d => {
       this.alert.success = true;
       this.alert.display = true;
       this.alert.message = d.message;
@@ -55,8 +56,21 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
     this.modalService.dismissAll();
   }
 
-  ngOnInit(): void {
-    
+  updateAvatarPreview(files: any) {
+    if (files.length === 0)
+      return;
+    var mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.profilePicture = reader.result;
+      this.img.nativeElement.src = reader.result; 
+    }
   }
+
+  ngOnInit(): void { }
 
 }

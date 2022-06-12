@@ -48,7 +48,6 @@ export class ChatroomContentComponent implements OnInit {
       this.users = this.room.users;
       this.inCall = this.room.usersInVocal
       this.userInCall = this.inCall.includes(this.users[0]);
-      console.log(this.room);
     }).catch(e => {
       this.router.navigate(['/']);
     });

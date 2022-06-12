@@ -44,6 +44,10 @@
 
 #avatarEdit {
     width: 183px;
+    height: 183px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+
 }
 
 #iconEditAvatar {
