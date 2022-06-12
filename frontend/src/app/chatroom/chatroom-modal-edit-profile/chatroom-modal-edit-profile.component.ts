@@ -20,7 +20,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   @Input() username!: string;
   @ViewChild('usernameEdit') p!: ElementRef;
   @ViewChild('avatar') img!: ElementRef;
-  profilePicture!: string | ArrayBuffer | null;
+  profilePicture!: string | undefined | null;
 
   api: string;
   alert: AlertModal;

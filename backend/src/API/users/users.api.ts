@@ -8,7 +8,7 @@ import db from "../../Sequelize/models";
 const users = express();
 interface UpdateUser {
     username: string;
-    picture: string;
+    picture: string | undefined | null;
 };
 
 /* Return the profile picture of a specific user */

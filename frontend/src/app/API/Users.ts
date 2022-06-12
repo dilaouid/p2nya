@@ -4,7 +4,7 @@ import { ResponseAPI } from "./Interface";
 
 interface EditUserInput {
     username: string;
-    picture: string | ArrayBuffer | null;
+    picture: string | undefined | null;
 }
 
 const url = environment.api + '/api/users';
