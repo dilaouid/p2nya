@@ -1,3 +1,7 @@
+<ng-template #notYet let-modal>
+    <app-chatroom-modal-not-yet></app-chatroom-modal-not-yet>
+</ng-template>
+
 <div class="shadow-lg callBox">
     <div class="row justify-content-center topRoxCallBox">
         <div class="col-auto" *ngFor="let user of inCall;">
@@ -6,7 +10,7 @@
     </div>
     <div class="row g-0 text-center BtnRowCallBox">
         <div class="col">
-            <button class="btn btn-success shadow joinCallBtn" data-bss-hover-animate="pulse" type="button" data-bs-target="#not-implemented-yet" data-bs-toggle="modal">
+            <button class="btn btn-success shadow joinCallBtn" data-bss-hover-animate="pulse" type="button" (click)="open(notYet)">
                 <i class="fas fa-phone-alt"></i> Rejoindre le salon vocal 
             </button>
         </div>
