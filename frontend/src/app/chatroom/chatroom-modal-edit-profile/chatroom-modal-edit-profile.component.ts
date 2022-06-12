@@ -66,7 +66,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
     var reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
-      this.profilePicture = reader.result;
+      this.profilePicture = reader.result?.toString();
       this.img.nativeElement.src = reader.result; 
     }
   }

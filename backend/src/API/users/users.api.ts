@@ -2,7 +2,8 @@ import express, { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
 import { send } from "../../utils/response";
 import * as fs from 'fs-extra';
-import { getUserID, isAuthentified } from "../mw";
+import { getUserID, getUserUUID, isAuthentified } from "../mw";
+import { getExtensionFile } from "../../utils/files";
 import db from "../../Sequelize/models";
 
 const users = express();
@@ -50,13 +51,33 @@ users.get('/me', isAuthentified, async (req: Request, res: Response): Promise<Re
 /* Update the logged user information (username and profil picture) */
 users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Response> => {
     const update: UpdateUser = req.body;
-    const userId: number = await getUserID(req.cookies.token);
+    const token: string = req.cookies.token;
+
+    const userId: number = await getUserID(token);
+    const userUuid: string = await getUserUUID(token);
+
+    // Update username if in the body
     update.username = update?.username?.trim() || null;
     if (update.username) {
         if (update.username.length < 2 || update.username.length > 17) {
             return send(400, "Le nom d'utilisateur saisit est incorrect", [], res);
         }
     }
+
+    // Update profile picture if in the body
+    update.picture = update?.picture || null;
+    if (update.picture) {
+        let ext = getExtensionFile(update.picture);
+        let regx = `data:image\/${ext};base64,`;
+        if (['png', 'jpg', 'jpeg', 'gif'].includes(ext) == false)
+            return send(400, "L'extension de la photo de profil est incorrect. Formats acceptés: png, jpg, jpeg, gif", [], res);
+        else if ((update.picture.length * (3 / 4)) - 2 > 5242880)
+            return send(400, "La photo de profil est trop lourde. Taille maximale: 5 MB", [], res);
+        fs.mkdirSync(`./src/uploads/profile/${userUuid}`, { recursive: true });
+        fs.writeFileSync(`./src/uploads/profile/${userUuid}/picture.${ext}`, update.picture.replace(regx, ""), 'base64');
+    }
+
+
     return db.User.findOne({
         where: {
             id: userId
@@ -66,7 +87,7 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
         await data.save().catch(e => {
             console.log(e);
         });
-        return send(200, 'OK', [], res);
+        return send(200, "Le profil a été modifié avec succès !", [], res);
     });
 });
 
