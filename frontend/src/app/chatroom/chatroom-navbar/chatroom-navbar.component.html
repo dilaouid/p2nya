@@ -10,8 +10,8 @@
         <div class="collapse navbar-collapse" id="navcol">
 
             <ul class="navbar-nav me-auto">
-                <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
-                    <div class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first" style="background-image: url('{{api}}/api/users/picture/{{user}}');"></div>
+                <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom">
+                    <img src="{{api}}/api/users/picture/{{user}}" class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first"/>
                 </li>
             </ul>
 
