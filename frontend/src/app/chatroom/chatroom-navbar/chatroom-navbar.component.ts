@@ -1,4 +1,4 @@
-import { Component, OnInit, Input  } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,6 +20,7 @@ export class ChatroomNavbarComponent implements OnInit {
 
   @Input() users: any[] | undefined;
   @Input() username!: string;
+  @ViewChildren('userlist') userlist!: QueryList<ElementRef>;
   @Input() me: Me | undefined;
 
   constructor(private modalService: NgbModal) {
@@ -35,6 +36,12 @@ export class ChatroomNavbarComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   };
+
+  public updateProfilPicture(uuid: any) {
+    let nd = new Date().getTime();
+    var correctDOM: ElementRef<any> = this.userlist.filter( t => t.nativeElement.attributes.user.value === uuid)[0];
+    correctDOM.nativeElement.src = correctDOM.nativeElement.src + '?t=' + nd;
+  }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

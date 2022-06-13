@@ -1,5 +1,5 @@
 <ng-template #editProfile let-modal>
-    <app-chatroom-modal-edit-profile [me]="me" [username]="username"></app-chatroom-modal-edit-profile>
+    <app-chatroom-modal-edit-profile [me]="me" [username]="username" (updateProfilPicture)="updateProfilPicture($event)"></app-chatroom-modal-edit-profile>
 </ng-template>
 
 <nav class="navbar navbar-light navbar-expand-md sticky-top bg-dark" data-aos="fade-down" id="navbar">
@@ -11,13 +11,13 @@
 
             <ul class="navbar-nav me-auto">
                 <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom">
-                    <img src="{{api}}/api/users/picture/{{user}}" class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first"/>
+                    <img (blur)="first" [attr.user]="user" src="{{api}}/api/users/picture/{{user}}" class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first" #userlist/>
                 </li>
             </ul>
 
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
-                    <img data-bss-hover-animate="rubberBand" id="emojiNavbar" src="./assets/img/chatroom/dotted_face.png" data-bs-target="#edit-emoji" data-bs-toggle="modal">
+                    <img data-bss-hover-animate="rubberBand" id="emojiNavbar" src="./assets/img/chatroom/dotted_face.png" (click)="updateProfilPicture('aa')">
                 </li>
             </ul>
         </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, AfterViewInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
-import { EditUser, GetMe } from '../../API/Users';
+import { EditUser } from '../../API/Users';
+import { ChatroomNavbarComponent } from '../chatroom-navbar/chatroom-navbar.component';
 
 interface AlertModal {
   display: boolean;
@@ -16,17 +17,24 @@ interface AlertModal {
 })
 export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(ChatroomNavbarComponent, { static: false }) child!: ChatroomNavbarComponent;
+
   @Input() me: any | undefined;
   @Input() username!: string;
+  @Input() navbar!: any;
+  @Output() updateProfilPicture = new EventEmitter<any>();
+
   @ViewChild('usernameEdit') p!: ElementRef;
   @ViewChild('avatar') img!: ElementRef;
   profilePicture!: string | undefined | null;
 
   api: string;
   alert: AlertModal;
+  timestamp!: number;
 
   constructor(private modalService: NgbModal) {
     this.api = environment.api;
+    this.timestamp = new Date().getTime();
     this.alert = { display: false, message: '', success: false };
   }
 
@@ -41,6 +49,8 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.alert.display = true;
       this.alert.message = d.message;
       this.me.username = this.username;
+      this.updateProfilPicture.emit(this.me.uuid);
+      this.img.nativeElement.src = environment.api + '/api/users/picture/' + this.me.uuid + '?t=' + new Date().getTime();
     }).catch(e => {
       this.alert.success = false;
       this.alert.display = true;
@@ -53,6 +63,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   } 
 
   closeModal() {
+    this.updateProfilPicture.emit(this.me.uuid);
     this.modalService.dismissAll();
   }
 

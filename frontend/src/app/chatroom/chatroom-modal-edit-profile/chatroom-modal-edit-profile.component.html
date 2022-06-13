@@ -5,7 +5,7 @@
 <div class="modal-body">
     <div class="row">
         <div class="col text-center" (click)="picture.click()">
-            <img #avatar class="rounded-circle img-fluid" id="avatarEdit" src="{{api}}/api/users/picture/{{ me.uuid }}">
+            <img #avatar class="rounded-circle img-fluid" id="avatarEdit" src="{{api}}/api/users/picture/{{ me.uuid }}?t={{ timestamp }}">
             <div data-bss-hover-animate="pulse" class="overlayProfilPictureChange">
                 <p class="paragraphOverlayProfilPicture">
                     <i class="far fa-image" id="iconEditAvatar"></i><br>Changer la<br>photo</p>
