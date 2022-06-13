@@ -44,6 +44,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   };
 
   async submit() {
+    if (!this.username && !this.profilePicture) return;
     await EditUser({username: this.username, picture: this.profilePicture}).then( async d => {
       this.alert.success = true;
       this.alert.display = true;
@@ -51,6 +52,8 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.me.username = this.username;
       this.updateProfilPicture.emit(this.me.uuid);
       this.img.nativeElement.src = environment.api + '/api/users/picture/' + this.me.uuid + '?t=' + new Date().getTime();
+      this.username = '';
+      this.profilePicture = '';
     }).catch(e => {
       this.alert.success = false;
       this.alert.display = true;
