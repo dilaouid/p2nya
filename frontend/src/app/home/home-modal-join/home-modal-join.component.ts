@@ -24,13 +24,13 @@ export class HomeModalJoinComponent {
   }
 
   checkLength() {
-    return this.password?.value?.length > 2 && this.roomID?.value?.length === 18;
+    return this.password?.value?.length > 2 && this.roomID?.value?.length === 36;
   }
 
   changeRoom(room: any) {
     this.roomID.value = room?.value?.trim();
     this.enabledButton = this.checkLength();
-    if (this.roomID.value.length !== 18) {
+    if (this.roomID.value.length !== 36) {
       this.roomID.wrong = this.roomID.value?.length > 0 ? true : false;;
       this.roomID.valid = false;
     } else {

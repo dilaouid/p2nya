@@ -61,7 +61,7 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
     // Update username if in the body
     update.username = update?.username?.trim() || null;
     if (update.username) {
-        if (update.username.length < 2 || update.username.length > 17) {
+        if (update.username.length < 2 || update.username.length > 18) {
             return send(400, "Le nom d'utilisateur saisit est incorrect", [], res);
         }
     }
