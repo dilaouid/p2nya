@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { JoinRoom } from 'src/app/API/Rooms';
 import { InputValidation } from '../models/home-modal-validation';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home-modal-join',
@@ -16,7 +17,7 @@ export class HomeModalJoinComponent {
   password!: InputValidation;
   roomID!: InputValidation;
 
-  constructor(private route:Router) {
+  constructor(private route:Router, private modalService: NgbModal) {
     this.enabledButton = false;
     this.displayAlert = false;
     this.password = new InputValidation('', false, false);
@@ -51,11 +52,16 @@ export class HomeModalJoinComponent {
     }
   }
 
+  close() {
+    this.modalService.dismissAll();
+  }
+
   submit() {
     if ( !this.checkLength() ) {
       this.displayAlert = true;
     } else this.displayAlert = false;
     JoinRoom(this.roomID.value, this.password.value).then(a => {
+      this.close();
       this.route.navigateByUrl(`/room/${this.roomID.value}`);
     }).catch(e => {
       console.log(e);

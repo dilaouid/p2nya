@@ -37,12 +37,6 @@ export class ChatroomNavbarComponent implements OnInit {
     });
   };
 
-  public updateProfilPicture(uuid: any) {
-    let nd = new Date().getTime();
-    var correctDOM: ElementRef<any> = this.userlist.filter( t => t.nativeElement.attributes.user.value === uuid)[0];
-    correctDOM.nativeElement.src = correctDOM.nativeElement.src + '?t=' + nd;
-  }
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -52,5 +46,11 @@ export class ChatroomNavbarComponent implements OnInit {
       return `with: ${reason}`;
     }
   };
+
+  public updateProfilPicture(uuid: any) {
+    let nd = new Date().getTime();
+    var correctDOM: ElementRef<any> = this.userlist.filter( t => t.nativeElement.attributes.user.value === uuid)[0];
+    correctDOM.nativeElement.src = correctDOM.nativeElement.src + '?t=' + nd;
+  }
 
 }

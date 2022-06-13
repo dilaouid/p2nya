@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeBtn } from '../models/home-btn.model';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home-btn-container',
@@ -8,16 +9,16 @@ import { HomeBtn } from '../models/home-btn.model';
 })
 export class HomeBtnContainerComponent implements OnInit {
 
+  closeResult: string = '';
   createBtn!: HomeBtn;
   joinBtn!: HomeBtn;
   
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.createBtn = new HomeBtn(
       "Créer un salon",
       "primary",
-      "#create",
       'flip-left',
       0
     );
@@ -25,10 +26,28 @@ export class HomeBtnContainerComponent implements OnInit {
     this.joinBtn = new HomeBtn(
       "Rejoindre un salon",
       "info",
-      "#join",
       'flip-right',
       100
     );
   }
+
+  
+  open(content: any) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  };
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  };
 
 }

@@ -1,6 +1,14 @@
+<ng-template #createModal let-modal>
+    <app-home-modal-create></app-home-modal-create>
+</ng-template>
+
+<ng-template #joinModal let-modal>
+    <app-home-modal-join></app-home-modal-join>
+</ng-template>
+
 <div class="container" id="buttonContain">
     <div class="row g-0 justify-content-center align-items-center">
-        <app-home-btn class="col text-center align-self-center" [homeBtn]="createBtn"></app-home-btn>
-        <app-home-btn class="col text-center align-self-center" [homeBtn]="joinBtn"></app-home-btn>
+        <app-home-btn class="col text-center align-self-center" [homeBtn]="createBtn" (click)="open(createModal)"></app-home-btn>
+        <app-home-btn class="col text-center align-self-center" [homeBtn]="joinBtn" (click)="open(joinModal)"></app-home-btn>
     </div>
 </div>

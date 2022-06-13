@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { InputValidation } from '../models/home-modal-validation';
 import * as APIRoom from '../../API/Rooms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-modal-create',
@@ -15,7 +17,7 @@ export class HomeModalCreateComponent {
   password!: InputValidation;
 
 
-  constructor() {
+  constructor(private modalService: NgbModal) {
     this.enabledButton = false;
     this.displayAlert = false;
     this.password = new InputValidation('', false, false);
@@ -37,14 +39,17 @@ export class HomeModalCreateComponent {
     this.enabledButton = this.checkLength();
   }
 
-  createRoom() {
-    APIRoom.CreateRoom(this.password.value);
-  };
-
-  submit() {
-    if ( !this.checkLength() ) {
-      this.displayAlert = true;
-    } else this.displayAlert = false;
+  close() {
+    this.modalService.dismissAll();
   }
+  
+  createRoom() {
+    APIRoom.CreateRoom(this.password.value).then(d => {
+      console.log(d);
+      this.close();
+    }).catch(e => {
+      console.log(e);
+    })
+  };
 
 }

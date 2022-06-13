@@ -1,27 +1,24 @@
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-        <div class="modal-header shadow" id="joinModalHeader">
-            <h4 class="modal-title">Rejoindre un salon</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p class="text-center glowUpText">Rejoindre le salon de votre ou de vos amis ? Rien de plus simple, saisissez le numéro de la room et son mot de passe, et vous y êtes !&nbsp;</p>
-            <form>
-                <label for="roomID" class="form-label text-muted">Numéro de room</label>
-                <input maxlength="36" [class.border-danger]="roomID.wrong" [class.border-success]="roomID.valid" (keyup)="changeRoom($event.target)" id="roomID" class="shadow form-control inputForm" type="text" name="roomID" placeholder="Identifiant unique">
-                
-                <label for="passwordJoin" class="form-label text-muted" id="passwordPlaceholder">Mot de passe</label>
-                <input maxlength="18" [class.border-danger]="password.wrong" [class.border-success]="password.valid" (keyup)="changePassword($event.target)" id="passwordJoin" class="shadow form-control inputForm" type="text" name="password" placeholder="Mot de passe de la room">
-            </form>
+<div class="modal-header shadow" id="joinModalHeader">
+    <h4 class="modal-title">Rejoindre un salon</h4>
+    <button type="button" class="btn-close" aria-label="Fermer" (click)="close()"></button>
+</div>
+<div class="modal-body">
+    <p class="text-center glowUpText">Rejoindre le salon de votre ou de vos amis ? Rien de plus simple, saisissez le numéro de la room et son mot de passe, et vous y êtes !&nbsp;</p>
+    <form>
+        <label for="roomID" class="form-label text-muted">Numéro de room</label>
+        <input maxlength="36" [class.border-danger]="roomID.wrong" [class.border-success]="roomID.valid" (keyup)="changeRoom($event.target)" id="roomID" class="shadow form-control inputForm" type="text" name="roomID" placeholder="Identifiant unique">
+        
+        <label for="passwordJoin" class="form-label text-muted" id="passwordPlaceholder">Mot de passe</label>
+        <input maxlength="18" [class.border-danger]="password.wrong" [class.border-success]="password.valid" (keyup)="changePassword($event.target)" id="passwordJoin" class="shadow form-control inputForm" type="text" name="password" placeholder="Mot de passe de la room">
+    </form>
 
-            <div class="alert alert-warning alert-dismissible" role="alert" *ngIf="displayAlert">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <span><strong>Bizarre...</strong>&nbsp;Aucune room ne corresponds aux informations renseignées ... 🤔</span>
-            </div>
-
-        </div>
-        <div class="modal-footer shadow" id="joinModalFooter">
-            <button class="btn btn-danger shadow" data-bss-hover-animate="jello" type="button" data-bs-dismiss="modal">Fermer</button>
-            <button class="btn btn-info shadow" data-bss-hover-animate="pulse" type="button" [disabled]="!enabledButton" (click)="submit()">Toc toc&nbsp;😼</button>
-        </div>
+    <div class="alert alert-warning alert-dismissible" role="alert" *ngIf="displayAlert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span><strong>Bizarre...</strong>&nbsp;Aucune room ne corresponds aux informations renseignées ... 🤔</span>
     </div>
+
+</div>
+<div class="modal-footer shadow" id="joinModalFooter">
+    <button class="btn btn-danger shadow" data-bss-hover-animate="jello" type="button" (click)='close()'>Fermer</button>
+    <button class="btn btn-info shadow" data-bss-hover-animate="pulse" type="button" [disabled]="!enabledButton" (click)="submit()">Toc toc&nbsp;😼</button>
 </div>
