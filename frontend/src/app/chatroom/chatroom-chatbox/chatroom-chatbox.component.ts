@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-chatroom-chatbox',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatroomChatboxComponent implements OnInit {
 
-  constructor() { }
+  constructor(private socket: Socket) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  socketTest() {
+    this.socket.emit('test', "this is a test");
   }
 
 }
