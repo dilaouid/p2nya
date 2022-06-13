@@ -42,4 +42,6 @@ testem.log
 Thumbs.db
 
 package-lock.json
+/src/API/uploads/profile/*
+!/src/API/uploads/profile/default.jpg
 .env
