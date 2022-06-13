@@ -20,12 +20,13 @@ users.get('/picture/:uuid', isAuthentified, (req: Request, res: Response): void 
     let i: number = 0;
     let fileExists: boolean = false;
     let file: string;
-    while (i++ < allowedExtension.length && !fileExists) {
+    while (i < allowedExtension.length && !fileExists) {
         let path: string = `./src/uploads/profile/${uuid}/picture.${allowedExtension[i]}`;
         if (fs.existsSync(path) === true) {
             fileExists = true;
             file = fs.readFileSync(path);
         }
+        i += 1;
     }
     if (!fileExists)
         file = fs.readFileSync(`./src/uploads/profile/default.jpg`);
@@ -68,14 +69,20 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
     // Update profile picture if in the body
     update.picture = update?.picture || null;
     if (update.picture) {
+        const allowedExtension:string[] = ['png', 'jpg', 'jpeg', 'gif'];
+        const path: string = `./src/uploads/profile/${userUuid}`;
         ext = getExtensionFile(update.picture);
         let regx = `data:image\/${ext};base64,`;
-        if (['png', 'jpg', 'jpeg', 'gif'].includes(ext) == false)
+        if (allowedExtension.includes(ext) == false)
             return send(400, "L'extension de la photo de profil est incorrect. Formats acceptés: png, jpg, jpeg, gif", [], res);
         else if ((update.picture.length * (3 / 4)) - 2 > 5242880)
             return send(400, "La photo de profil est trop lourde. Taille maximale: 5 MB", [], res);
-        fs.mkdirSync(`./src/uploads/profile/${userUuid}`, { recursive: true });
-        fs.writeFileSync(`./src/uploads/profile/${userUuid}/picture.${ext}`, update.picture.replace(regx, ""), 'base64');
+        for (let i = 0; i < allowedExtension.length; i++) {
+            if (fs.existsSync(`${path}/picture.${allowedExtension[i]}`))
+                fs.unlinkSync(`${path}/picture.${allowedExtension[i]}`);
+        }
+        fs.mkdirSync(path, { recursive: true });
+        fs.writeFileSync(`${path}/picture.${ext}`, update.picture.replace(regx, ""), 'base64');
     }
 
 
