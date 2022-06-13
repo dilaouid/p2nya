@@ -30,11 +30,9 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
         return db.Room.create({
             id: uuidv4(),
             password: body.password,
-            timeStamp: new Date().getTime(),
             users: id
         }).then(d => {
-            console.log(d);
-            return send(200, 'Created Room', [], res);
+            return send(200, 'Created Room', {id: d.id}, res);
         }).catch(e => {
             console.log(e);
             return send(400, 'Error Occured', [], res);

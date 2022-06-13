@@ -26,7 +26,7 @@ export class HomeModalJoinComponent {
 
   checkLength() {
     return this.password?.value?.length > 2 && this.roomID?.value?.length === 36;
-  }
+  };
 
   changeRoom(room: any) {
     this.roomID.value = room?.value?.trim();
@@ -38,7 +38,7 @@ export class HomeModalJoinComponent {
       this.roomID.valid = true;
       this.roomID.wrong = false;
     }
-  }
+  };
 
   changePassword(password: any) {
     this.password.value = password?.value?.trim();
@@ -50,11 +50,11 @@ export class HomeModalJoinComponent {
       this.password.valid = true;
       this.password.wrong = false;
     }
-  }
+  };
 
   close() {
     this.modalService.dismissAll();
-  }
+  };
 
   submit() {
     if ( !this.checkLength() ) {
@@ -66,7 +66,7 @@ export class HomeModalJoinComponent {
     }).catch(e => {
       console.log(e);
     });
-  }
+  };
 
 
 }

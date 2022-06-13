@@ -17,15 +17,15 @@ export class HomeModalCreateComponent {
   password!: InputValidation;
 
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private route:Router) {
     this.enabledButton = false;
     this.displayAlert = false;
     this.password = new InputValidation('', false, false);
-  }
+  };
 
   checkLength() {
     return this.password?.value?.length > 2;
-  }
+  };
 
   changePassword(password: any) {
     this.password.value = password?.value?.trim();
@@ -37,19 +37,19 @@ export class HomeModalCreateComponent {
       this.password.wrong = false;
     }
     this.enabledButton = this.checkLength();
-  }
+  };
 
   close() {
     this.modalService.dismissAll();
-  }
+  };
   
   createRoom() {
-    APIRoom.CreateRoom(this.password.value).then(d => {
-      console.log(d);
+    APIRoom.CreateRoom(this.password.value).then( (d):any => {
       this.close();
+      this.route.navigateByUrl(`/room/${d.data.id}`);
     }).catch(e => {
       console.log(e);
-    })
+    });
   };
 
 }

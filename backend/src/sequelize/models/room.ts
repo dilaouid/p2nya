@@ -1,6 +1,7 @@
 'use strict';
 
-import { Model } from 'sequelize';
+import { NOW } from 'sequelize';
+import { Model, Sequelize } from 'sequelize';
 
 interface RoomAttributes {
   id: string;
@@ -40,23 +41,21 @@ module.exports = (sequelize: any, DataTypes: any) => {
     },
     timeStamp: {
       type: DataTypes.DATE,
-      allowNull: false
+      defaultValue: NOW
     },
     users: {
       type: DataTypes.STRING,
       allowNull: false
     },
     usersInVocal: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
     lastAuthor: {
       type: DataTypes.STRING,
-      allowNull: false
+      defaultValue: 0
     },
     lastMessageTime: {
-      type: DataTypes.DATE,
-      allowNull: false
+      type: DataTypes.DATE
     },
   }, {
     sequelize,
