@@ -52,6 +52,7 @@ users.get('/me', isAuthentified, async (req: Request, res: Response): Promise<Re
 users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Response> => {
     const update: UpdateUser = req.body;
     const token: string = req.cookies.token;
+    var ext: string = '';
 
     const userId: number = await getUserID(token);
     const userUuid: string = await getUserUUID(token);
@@ -67,7 +68,7 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
     // Update profile picture if in the body
     update.picture = update?.picture || null;
     if (update.picture) {
-        let ext = getExtensionFile(update.picture);
+        ext = getExtensionFile(update.picture);
         let regx = `data:image\/${ext};base64,`;
         if (['png', 'jpg', 'jpeg', 'gif'].includes(ext) == false)
             return send(400, "L'extension de la photo de profil est incorrect. Formats acceptés: png, jpg, jpeg, gif", [], res);
@@ -87,7 +88,7 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
         await data.save().catch(e => {
             console.log(e);
         });
-        return send(200, "Le profil a été modifié avec succès !", [], res);
+        return send(200, "Le profil a été modifié avec succès !", { updatedProfilePicture: update.picture !== null, extension: ext }, res);
     });
 });
 
