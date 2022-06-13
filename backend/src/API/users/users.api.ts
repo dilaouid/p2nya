@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { send } from "../../utils/response";
 import * as fs from 'fs-extra';
 import { getUserID, getUserUUID, isAuthentified } from "../mw";
-import { getExtensionFile } from "../../utils/files";
+import { deleteIfExists, getExtensionFile } from "../../utils/files";
 import db from "../../Sequelize/models";
 
 const users = express();
@@ -73,14 +73,16 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
         const path: string = `./src/uploads/profile/${userUuid}`;
         ext = getExtensionFile(update.picture);
         let regx = `data:image\/${ext};base64,`;
+
+        // Check extension and file size
         if (allowedExtension.includes(ext) == false)
             return send(400, "L'extension de la photo de profil est incorrect. Formats acceptés: png, jpg, jpeg, gif", [], res);
         else if ((update.picture.length * (3 / 4)) - 2 > 5242880)
             return send(400, "La photo de profil est trop lourde. Taille maximale: 5 MB", [], res);
-        for (let i = 0; i < allowedExtension.length; i++) {
-            if (fs.existsSync(`${path}/picture.${allowedExtension[i]}`))
-                fs.unlinkSync(`${path}/picture.${allowedExtension[i]}`);
-        }
+
+        // Delete previous profile picture
+        for (let i = 0; i < allowedExtension.length; i++)
+            deleteIfExists(`${path}/picture.${allowedExtension[i]}`);
         fs.mkdirSync(path, { recursive: true });
         fs.writeFileSync(`${path}/picture.${ext}`, update.picture.replace(regx, ""), 'base64');
     }
