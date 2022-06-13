@@ -9,6 +9,11 @@ interface NewRoomBody {
     password: string;
 };
 
+interface JoinRoomBody {
+    uuid: string;
+    password: string;
+};
+
 /* Count all the active rooms ( where attributes to changes [todo] ) */
 rooms.get('/count', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
     return send(200, 'OK', [await db.Room.count({})], res);
@@ -38,6 +43,43 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
         console.log(e);
         return send(500, 'Error Occured', [], res);
     }
+});
+
+/* Join a Room */
+rooms.put('/', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const body: JoinRoomBody = req.body;
+        const token: string = req.cookies.token;
+        const userId: number = await getUserID(token);
+
+        const uuid: string = body.uuid || '';
+        const password: string = body.password || '';
+        
+        return db.Room.findOne({
+            where: {
+                id: uuid,
+                password: password
+            },
+            attributes: ['id', 'users', 'password']
+        }).then( async (d:any) => {
+            if (!d) return send(404, "Ce salon de discussion n'existe pas", [], res);
+            var usersIn: number[] = d.users.split('%').map(i => Number(i));
+            if (usersIn.length === 2 && !usersIn.includes(userId)) return send(400, "Ce salon de discussion est complet", [], res);
+            else if (!usersIn.includes(userId)) {
+                usersIn.push(userId);
+                d.users = usersIn.join('%');
+                await d.save().catch(e => {
+                    console.log(e);
+                });
+            }
+            return send(200, "OK", [], res);
+        }).catch( e => {
+            console.log(e);
+        })
+    } catch(e) {
+        console.log(e);
+        return send(500, 'Error Occured', [], res);
+    };
 });
 
 /* Check if the logged user is in a specific room and returns details */

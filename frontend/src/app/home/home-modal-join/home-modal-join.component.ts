@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { JoinRoom } from 'src/app/API/Rooms';
 import { InputValidation } from '../models/home-modal-validation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-modal-join',
@@ -14,7 +16,7 @@ export class HomeModalJoinComponent {
   password!: InputValidation;
   roomID!: InputValidation;
 
-  constructor() {
+  constructor(private route:Router) {
     this.enabledButton = false;
     this.displayAlert = false;
     this.password = new InputValidation('', false, false);
@@ -53,6 +55,11 @@ export class HomeModalJoinComponent {
     if ( !this.checkLength() ) {
       this.displayAlert = true;
     } else this.displayAlert = false;
+    JoinRoom(this.roomID.value, this.password.value).then(a => {
+      this.route.navigateByUrl(`/room/${this.roomID.value}`);
+    }).catch(e => {
+      console.log(e);
+    });
   }
 
 
