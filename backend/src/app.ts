@@ -34,6 +34,6 @@ app.get('*', (req: Request, res: Response): Response => {
 /** [ LISTENING ON PORT ] */
 db.sequelize.sync().then( () => {
     app.listen(process.env.PORT, () => {
-        console.log(`Application listening at http://localhost:${process.env.PORT}`);
+        console.log(`Application listening at ${process.env.PROTOCOL}://${process.env.DOMAIN_NAME}:${process.env.PORT}`);
     });
 });
