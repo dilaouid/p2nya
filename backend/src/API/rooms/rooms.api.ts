@@ -103,15 +103,14 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
     for (let i = 0; i < room.users.length; i++) {
         let j: number = room.usersInVocal.indexOf(room.users[i]);
         room.users[i] = await db.User.findByPk(room.users[i], {
-            attributes: ['uuid']
+            attributes: ['uuid', 'username']
         }).then(d => {
-            if (d) return d.uuid;
+            if (d) return {uuid: d.uuid, username: d.username};
         }).catch(e => {
             console.log(e);
         });
         room.usersInVocal[j] = room.users[i];
     }
-
     return send(200, 'OK', room, res);
 });
 
