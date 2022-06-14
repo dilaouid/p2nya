@@ -44,10 +44,13 @@ app.get('*', (req: Request, res: Response): Response => {
 
 /* [ [[ SOCKETS.IO ]] ] */
 io.on('connection', async (socket) => {
-
+    let previousUuid: string;
     // Join a specific room
     socket.on('join', (uuid: string) => {
-        socket.join(`room-${uuid}`);
+        socket.leave(`room-${previousUuid}`);
+        // Cookies stored in socket.handshake.headers.cookie
+        socket.join(`room-${previousUuid}`);
+        previousUuid = uuid;
         console.log(`An user joined the room ${uuid}`);
         socket.on('message', (uuid: string, content: string, emoji?: string) => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
@@ -59,10 +62,6 @@ io.on('connection', async (socket) => {
           console.log(`An user leaved the room ${uuid}`);
           socket.leave(`room-${uuid}`);
         });
-    });
-
-    socket.on('test', (data: any) => {
-      console.log(data);
     });
 });
 

@@ -21,7 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule }   from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: environment.api, options: {} };
+const config: SocketIoConfig = { url: environment.api, options: {withCredentials: true} };
 @NgModule({
   declarations: [
     AppComponent,

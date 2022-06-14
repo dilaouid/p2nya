@@ -6,6 +6,8 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: './chatroom-chatbox.component.html',
   styleUrls: ['./chatroom-chatbox.component.css']
 })
+
+@Injectable()
 export class ChatroomChatboxComponent implements OnInit {
 
   stack: any[] = [];
