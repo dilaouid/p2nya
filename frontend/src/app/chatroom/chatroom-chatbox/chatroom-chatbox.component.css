@@ -8,6 +8,10 @@
     border-bottom-left-radius: 35px;
 }
 
+.msgBox::-webkit-scrollbar {
+    display: none;
+}
+
 .userMessagesBoxChat {
     margin-bottom: 15px;
 }
