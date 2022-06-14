@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, QueryList, AfterViewChecked } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { updateProfilPictureLive } from 'src/app/utils/helpers';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,7 @@ interface MessagesHistory {
   templateUrl: './chatroom-chatbox.component.html',
   styleUrls: ['./chatroom-chatbox.component.css']
 })
-export class ChatroomChatboxComponent implements OnInit {
+export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
 
   stack: any[] = [];
   message: string = '';
@@ -34,6 +34,7 @@ export class ChatroomChatboxComponent implements OnInit {
   @Input() users!: any;
   @ViewChild('input') inp!: ElementRef;
   @ViewChildren('profilPicture') profilPicture!: QueryList<ElementRef>;
+  @ViewChild('msgBox') private msgBox!: ElementRef;
   api: string = environment.api;
 
   constructor(private socket: Socket) { }
@@ -70,6 +71,7 @@ export class ChatroomChatboxComponent implements OnInit {
           stack: [stackElement]
         });
       }
+      this.scrollToBottom();
     });
 
     this.socket.on('picture-updated', (uuid: string) => {
@@ -81,6 +83,19 @@ export class ChatroomChatboxComponent implements OnInit {
   writeMessage(event: any): void {
     this.message = event.target.innerText?.trim();
   };
+
+  
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  } ;
+
+  scrollToBottom(): void {
+    try {
+        this.msgBox.nativeElement.scrollTop = this.msgBox.nativeElement.scrollHeight + 400000;
+    } catch(e) {
+      console.log(e);
+    }                 
+  }
 
   send() {
     this.message = this.message?.trim();
