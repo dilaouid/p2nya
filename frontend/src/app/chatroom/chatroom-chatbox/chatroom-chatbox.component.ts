@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { updateProfilPictureLive } from 'src/app/utils/helpers';
 import { environment } from 'src/environments/environment';
 
 interface UserInformation {
@@ -31,6 +32,7 @@ export class ChatroomChatboxComponent implements OnInit {
   @Input() uuid!: string | null;
   @Input() users!: any;
   @ViewChild('input') inp!: ElementRef;
+  @ViewChildren('profilPicture') profilPicture!: QueryList<ElementRef>;
   api: string = environment.api;
 
   constructor(private socket: Socket) { }
@@ -39,6 +41,11 @@ export class ChatroomChatboxComponent implements OnInit {
     this.socket.on('message-sent', (content: string, author: string) => {
         console.log(content);
     });
+
+    this.socket.on('picture-updated', (uuid: string) => {
+      updateProfilPictureLive(uuid, this.profilPicture);
+    });
+
   };
 
   writeMessage(event: any): void {

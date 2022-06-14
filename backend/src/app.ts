@@ -66,7 +66,7 @@ io.on('connection', async (socket) => {
         });
 
         socket.on('update-picture', (userUUID: string) => {
-          socket.broadcast.to(`room-${uuid}`).emit('picture-updated', userUUID);
+          io.to(`room-${uuid}`).emit('picture-updated', userUUID);
         });
 
         // When leaving the room

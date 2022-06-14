@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ElementRef, ViewChildren, QueryList } from '@
 import { environment } from 'src/environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Socket } from 'ngx-socket-io';
+import { updateProfilPictureLive } from '../../utils/helpers'
 
 interface Me {
   id: number;
@@ -30,7 +31,7 @@ export class ChatroomNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket.on('picture-updated', (uuid: string) => {
-      this.updateProfilPicture(uuid);
+      updateProfilPictureLive(uuid, this.userlist);
     });
   }
 
@@ -53,9 +54,7 @@ export class ChatroomNavbarComponent implements OnInit {
   };
 
   public updateProfilPicture(uuid: any) {
-    let nd = new Date().getTime();
-    var correctDOM: ElementRef<any> = this.userlist.filter( t => t.nativeElement.attributes.user.value === uuid)[0];
-    correctDOM.nativeElement.src = correctDOM.nativeElement.src + '?t=' + nd;
+    updateProfilPictureLive(uuid, this.userlist);
   }
 
 }
