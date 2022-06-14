@@ -29,6 +29,7 @@ export class ChatroomChatboxComponent implements OnInit {
   stack: any[] = [];
   message: string = '';
   history: MessagesHistory[] = [];
+  timestamp: number = new Date().getTime();
   @Input() uuid!: string | null;
   @Input() users!: any;
   @ViewChild('input') inp!: ElementRef;
@@ -47,6 +48,7 @@ export class ChatroomChatboxComponent implements OnInit {
       const d = new Date();
       const h = ('0'+d.getHours()  ).slice(-2);
       const min = ('0'+d.getMinutes()  ).slice(-2);
+      this.timestamp = new Date().getTime();
 
       const stackElement = {
         date: `${d.toLocaleDateString("fr", {year: "2-digit", month: 'numeric', day: "numeric"})} ${h}:${min}`,

@@ -7,7 +7,7 @@
         <div class="row g-0 userInformationRowChatbox">
             <!-- Start: Author Profile Picture -->
             <div class="col-auto">
-                <img [attr.user]="his.author.uuid" class="profilPictureMessage" src="{{api}}/api/users/picture/{{his.author.uuid}}" #profilPicture/>
+                <img [attr.user]="his.author.uuid" class="profilPictureMessage" src="{{api}}/api/users/picture/{{ his.author.uuid }}?t={{ timestamp }}" #profilPicture/>
             </div>
             <!-- End: Author Profile Picture -->
 
