@@ -20,7 +20,7 @@
         <!-- End: User information -->
 
         <!-- Start: Message -->
-        <div class="row messageRowChatbox" *ngFor="let message for his.stack">
+        <div class="row messageRowChatbox" *ngFor="let message of his.stack">
             <div class="col-2">
                 <p class="fw-light text-black-50 sendDateMessage">{{ message.date }}</p>
             </div>
@@ -31,7 +31,7 @@
         </div>
         <!-- End: Message -->
 
-        <hr *ngIf="first === false && last === false">
+        <hr *ngIf="last === false">
 
     </div>
 </div>
