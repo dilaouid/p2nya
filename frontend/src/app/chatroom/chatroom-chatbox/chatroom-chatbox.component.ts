@@ -38,8 +38,36 @@ export class ChatroomChatboxComponent implements OnInit {
   constructor(private socket: Socket) { }
 
   ngOnInit(): void {
-    this.socket.on('message-sent', (content: string, author: string) => {
-        console.log(content);
+    this.socket.on('message-sent', (message: string, author: UserInformation, picture: boolean) => {
+      if (!picture) picture = false;
+      
+      const length = this.history.length;
+
+      // Formating date
+      const d = new Date();
+      const h = ('0'+d.getHours()  ).slice(-2);
+      const min = ('0'+d.getMinutes()  ).slice(-2);
+
+      const stackElement = {
+        date: `${d.toLocaleDateString("fr", {year: "2-digit", month: 'numeric', day: "numeric"})} ${h}:${min}`,
+        content: message,
+        picture: picture
+      };
+      const authorElement = {
+        uuid: author.uuid,
+        username: author.username
+      };
+
+      // If the last author is this actual one, add to his stack the received message
+      if (length > 0 && this.history[length - 1].author.uuid === author.uuid) {
+        this.history[length - 1].stack.push(stackElement);
+      } else {
+        // Otherwise, push a new element to history
+        this.history.push({
+          author: authorElement,
+          stack: [stackElement]
+        });
+      }
     });
 
     this.socket.on('picture-updated', (uuid: string) => {
