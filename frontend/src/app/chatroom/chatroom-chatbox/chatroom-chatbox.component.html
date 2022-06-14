@@ -1,6 +1,38 @@
 <div class="shadow-lg msgBox">
-    <div class="userMessagesBoxChat" #messageList>
-        <!-- Messages will be displayed inside this div -->
+    
+    <!-- Messages will be displayed inside this div -->
+    <div class="userMessagesBoxChat" *ngFor="let his of history; let first = first; let last = last">
+
+        <!-- Start: User information -->
+        <div class="row g-0 userInformationRowChatbox">
+            <!-- Start: Author Profile Picture -->
+            <div class="col-auto">
+                <div class="profilPictureMessage" style="background-image: url('{{api}}/api/users/picture/{{his.author.uuid}}');"></div>
+            </div>
+            <!-- End: Author Profile Picture -->
+
+            <!-- Start: Author Username -->
+            <div class="col-auto align-self-center">
+                <p class="fw-bolder text-primary"><strong>{{ his.author.username }}</strong><br></p>
+            </div>
+            <!-- End: Author Username -->
+        </div>
+        <!-- End: User information -->
+
+        <!-- Start: Message -->
+        <div class="row messageRowChatbox" *ngFor="let message for his.stack">
+            <div class="col-2">
+                <p class="fw-light text-black-50 sendDateMessage">{{ message.date }}</p>
+            </div>
+            <div class="col-10 align-self-stretch">
+                <p class="text-dark message" *ngIf="message.picture === false">{{ message.content }}</p>
+                <img data-bss-hover-animate="pulse" class="thumbnailPictureChat" src="{{ message.content }}" *ngIf="message.picture === true">
+            </div>
+        </div>
+        <!-- End: Message -->
+
+        <hr *ngIf="first === false && last === false">
+
     </div>
 </div>
 

@@ -56,3 +56,42 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+.profilPictureMessage {
+    box-shadow: 3px -2px 8px #00000024;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+}
+
+.messageRowChatbox {
+    padding-top: 5px;
+    /*margin-bottom: 10px;*/
+}
+
+.messageRowChatbox:hover {
+    transition: .3s;
+    background-color: #e6e6e6;
+}
+
+.sendDateMessage {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.thumbnailPictureChat {
+    cursor: zoom-in;
+    max-width: 350px;
+}
+
+hr {
+    color: var(--bs-purple);
+}

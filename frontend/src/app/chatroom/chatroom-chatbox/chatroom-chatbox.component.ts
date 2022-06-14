@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 
 interface UserInformation {
   uuid: string;
@@ -14,7 +15,7 @@ interface MessageStack {
 
 interface MessagesHistory {
   author: UserInformation;
-  history: MessageStack[];
+  stack: MessageStack[];
 };
 
 @Component({
@@ -30,6 +31,7 @@ export class ChatroomChatboxComponent implements OnInit {
   @Input() uuid!: string | null;
   @Input() users!: any;
   @ViewChild('input') inp!: ElementRef;
+  api: string = environment.api;
 
   constructor(private socket: Socket) { }
 
