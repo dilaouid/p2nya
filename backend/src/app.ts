@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
 import { send } from "./utils/response";
+import { getUserUUIDByHandshake } from './utils/rooms';
 import { mw } from 'request-ip';
 import { isAuthentified } from "./API/mw";
 import api from './API/routes';
@@ -46,21 +47,24 @@ app.get('*', (req: Request, res: Response): Response => {
 io.on('connection', async (socket) => {
     let previousUuid: string;
     // Join a specific room
-    socket.on('join', (uuid: string) => {
+    socket.on('join', async (uuid: string) => {
+        const userUUID: string = await getUserUUIDByHandshake(socket.handshake.headers.cookie);
         socket.leave(`room-${previousUuid}`);
-        // Cookies stored in socket.handshake.headers.cookie
         socket.join(`room-${uuid}`);
+        socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID);
         previousUuid = uuid;
         console.log(`An user joined the room ${uuid}`);
         socket.on('message', (uuid: string, content: string, emoji?: string) => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
+          console.log('inside message sent ' + content);
           socket.broadcast.to(`room-${uuid}`).emit('message-sent', content?.trim());
         });
-        // Leave the room
-        socket.on('leave', (uuid: string) => {
-          console.log(`An user leaved the room ${uuid}`);
-          socket.leave(`room-${uuid}`);
+
+        // When leaving the room
+        socket.on('disconnect', async () => {
+            socket.broadcast.to(`room-${uuid}`).emit('leave', userUUID);
+            socket.leave(`room-${uuid}`);
         });
     });
 });
