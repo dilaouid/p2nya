@@ -58,6 +58,7 @@
 }
 
 .profilPictureMessage {
+    background-color: red;
     box-shadow: 3px -2px 8px #00000024;
     margin-right: 10px;
     width: 50px;
@@ -66,6 +67,7 @@
     background-position: center;
     background-size: 100% auto;
     background-repeat: no-repeat;
+    object-fit: cover;
 }
 
 .messageRowChatbox {
