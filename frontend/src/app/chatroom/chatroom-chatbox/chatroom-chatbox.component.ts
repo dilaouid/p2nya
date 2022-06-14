@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 
 @Component({
@@ -8,12 +8,18 @@ import { Socket } from 'ngx-socket-io';
 })
 export class ChatroomChatboxComponent implements OnInit {
 
+  stack: any[] = [];
+  message: string = '';
+  @Input() uuid!: string | null;
+
+
   constructor(private socket: Socket) { }
 
   ngOnInit(): void { }
 
-  socketTest() {
-    this.socket.emit('test', "this is a test");
-  }
+  send() {
+    // Need to store emojis :-°
+    this.socket.emit('message', this.uuid, 'test');
+  };
 
 }

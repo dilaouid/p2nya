@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { GetRoomInfo } from 'src/app/API/Rooms';
 import { GetMe } from 'src/app/API/Users';
+import { Socket } from 'ngx-socket-io';
 
 interface Me {
   id: number;
@@ -24,7 +25,7 @@ export class ChatroomContentComponent implements OnInit {
   userInCall: boolean;
   room: any;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private socket: Socket) {
     this.uuid = '';
     this.users = [];
     this.userInCall = false;
@@ -48,6 +49,7 @@ export class ChatroomContentComponent implements OnInit {
       this.users = this.room.users;
       this.inCall = this.room.usersInVocal
       this.userInCall = this.inCall.includes(this.users[0]);
+      this.socket.emit('join', this.uuid);
     }).catch(e => {
       this.router.navigate(['/']);
     });

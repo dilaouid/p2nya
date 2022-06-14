@@ -18,6 +18,7 @@ import { ChatroomChatboxComponent } from './chatroom/chatroom-chatbox/chatroom-c
 import { ChatroomModalEditProfileComponent } from './chatroom/chatroom-modal-edit-profile/chatroom-modal-edit-profile.component';
 import { ChatroomModalNotYetComponent } from './chatroom/chatroom-modal-not-yet/chatroom-modal-not-yet.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule }   from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 const config: SocketIoConfig = { url: environment.api, options: {} };
@@ -42,6 +43,7 @@ const config: SocketIoConfig = { url: environment.api, options: {} };
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [],

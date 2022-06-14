@@ -44,7 +44,24 @@ app.get('*', (req: Request, res: Response): Response => {
 
 /* [ [[ SOCKETS.IO ]] ] */
 io.on('connection', async (socket) => {
-    socket.on('test', (data) => {
+
+    // Join a specific room
+    socket.on('join', (uuid: string) => {
+        socket.join(`room-${uuid}`);
+        console.log(`An user joined the room ${uuid}`);
+        socket.on('message', (uuid: string, content: string, emoji?: string) => {
+          // First phase of testing - no emoji managment and security checks yet -- Do no take this
+          // version seriously !!
+          socket.broadcast.to(`room-${uuid}`).emit('message-sent', content?.trim());
+        });
+        // Leave the room
+        socket.on('leave', (uuid: string) => {
+          console.log(`An user leaved the room ${uuid}`);
+          socket.leave(`room-${uuid}`);
+        });
+    });
+
+    socket.on('test', (data: any) => {
       console.log(data);
     });
 });
