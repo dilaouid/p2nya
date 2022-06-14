@@ -37,6 +37,7 @@ users.get('/picture/:uuid', isAuthentified, (req: Request, res: Response): void 
 /* Return the profile of the logged user */
 users.get('/me', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
     const userId: number = await getUserID(req.cookies.token) || 0;
+    if (userId === 0) return send(500, 'An error occured', [], res);
     const me = await db.User.findByPk(userId, {
         attributes: ['id', 'uuid', 'username']
     }).then(data => {

@@ -48,5 +48,8 @@ export const createUser = (ip: string): Promise<UserAttributes> => {
         ip: ip,
         inRoom: false,
         lastActive: new Date()
+    }).catch(e => {
+        console.log(e);
+        return (false);
     });
 };
