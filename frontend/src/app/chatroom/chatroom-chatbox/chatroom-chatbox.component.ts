@@ -40,12 +40,15 @@ export class ChatroomChatboxComponent implements OnInit {
   };
 
   writeMessage(event: any): void {
-    this.message = event.target.innerHTML?.trim();
+    this.message = event.target.innerText?.trim();
   };
 
   send() {
+    this.message = this.message?.trim();
+    if (this.message.length === 0) return;
+    
     // Need to store emojis :-°
-    this.socket.emit('message', this.uuid, this.message.replace('<div><br></div>', ''));
+    this.socket.emit('message', this.uuid, this.message);
     this.inp.nativeElement.innerText = '';
     this.message = '';
   };
