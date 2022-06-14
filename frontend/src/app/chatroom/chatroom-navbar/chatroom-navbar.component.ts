@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Socket } from 'ngx-socket-io';
 
 interface Me {
   id: number;
@@ -23,11 +24,15 @@ export class ChatroomNavbarComponent implements OnInit {
   @ViewChildren('userlist') userlist!: QueryList<ElementRef>;
   @Input() me: Me | undefined;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private socket: Socket) {
     this.api = environment.api;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.socket.on('picture-updated', (uuid: string) => {
+      this.updateProfilPicture(uuid);
+    });
+  }
 
   open(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

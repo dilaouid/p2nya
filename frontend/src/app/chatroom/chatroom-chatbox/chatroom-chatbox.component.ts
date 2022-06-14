@@ -34,7 +34,6 @@ export class ChatroomChatboxComponent implements OnInit {
   constructor(private socket: Socket) { }
 
   ngOnInit(): void {
-    console.log(this.users);
     this.socket.on('message-sent', (content: string, author: string) => {
         console.log(content);
     });

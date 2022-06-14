@@ -54,11 +54,16 @@ io.on('connection', async (socket) => {
         socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID);
         previousUuid = uuid;
         console.log(`An user joined the room ${uuid}`);
+
         socket.on('message', (uuid: string, content: string, emoji?: string) => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
           console.log('inside message sent ' + content);
           socket.broadcast.to(`room-${uuid}`).emit('message-sent', content?.trim());
+        });
+
+        socket.on('update-picture', (userUUID: string) => {
+          socket.broadcast.to(`room-${uuid}`).emit('picture-updated', userUUID);
         });
 
         // When leaving the room

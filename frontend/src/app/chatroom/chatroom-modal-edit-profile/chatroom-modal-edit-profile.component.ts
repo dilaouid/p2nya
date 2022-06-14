@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { EditUser } from '../../API/Users';
 import { ChatroomNavbarComponent } from '../chatroom-navbar/chatroom-navbar.component';
+import { Socket } from 'ngx-socket-io';
 
 interface AlertModal {
   display: boolean;
@@ -32,7 +33,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   alert: AlertModal;
   timestamp!: number;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private socket: Socket) {
     this.api = environment.api;
     this.timestamp = new Date().getTime();
     this.alert = { display: false, message: '', success: false };
@@ -53,6 +54,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.updateProfilPicture.emit(this.me.uuid);
       this.img.nativeElement.src = environment.api + '/api/users/picture/' + this.me.uuid + '?t=' + new Date().getTime();
       this.username = '';
+      this.socket.emit('update-picture', this.me.uuid);
       this.profilePicture = '';
     }).catch(e => {
       this.alert.success = false;
