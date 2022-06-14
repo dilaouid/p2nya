@@ -54,6 +54,16 @@ export class ChatroomContentComponent implements OnInit {
       this.router.navigate(['/']);
     });
 
+    this.socket.on('joined', (uuid: string) => {
+      if (this.users.includes(uuid) === false)
+        this.users.push(uuid);
+    });
+
+    this.socket.on('leave', (uuid: string) => {
+      const i = this.users.indexOf(uuid);
+      this.users.splice(i, 1);
+    });
+
   };
 
 }
