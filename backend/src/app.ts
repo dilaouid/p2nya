@@ -49,7 +49,7 @@ io.on('connection', async (socket) => {
     socket.on('join', (uuid: string) => {
         socket.leave(`room-${previousUuid}`);
         // Cookies stored in socket.handshake.headers.cookie
-        socket.join(`room-${previousUuid}`);
+        socket.join(`room-${uuid}`);
         previousUuid = uuid;
         console.log(`An user joined the room ${uuid}`);
         socket.on('message', (uuid: string, content: string, emoji?: string) => {
