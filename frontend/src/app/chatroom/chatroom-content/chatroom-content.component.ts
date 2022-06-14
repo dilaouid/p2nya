@@ -4,6 +4,11 @@ import { GetRoomInfo } from 'src/app/API/Rooms';
 import { GetMe } from 'src/app/API/Users';
 import { Socket } from 'ngx-socket-io';
 
+interface UserInformation {
+  uuid: string;
+  username: string;
+};
+
 interface Me {
   id: number;
   uuid: string;
@@ -20,7 +25,7 @@ export class ChatroomContentComponent implements OnInit {
   me: Me;
   username: string;
   uuid: string | null;
-  users: string[];
+  users: UserInformation[];
   inCall: string[];
   userInCall: boolean;
   room: any;
@@ -49,19 +54,24 @@ export class ChatroomContentComponent implements OnInit {
       this.room = d.data;
       this.users = this.room.users;
       this.inCall = this.room.usersInVocal
-      this.userInCall = this.inCall.includes(this.users[0]);
+      this.userInCall = this.inCall.includes(this.users[0].uuid);
       this.socket.emit('join', this.uuid);
     }).catch(e => {
       this.router.navigate(['/']);
     });
 
-    this.socket.on('joined', (uuid: string) => {
-      if (this.users.includes(uuid) === false)
-        this.users.push(uuid);
+    this.socket.on('joined', (uuid: string, username: string) => {
+      const i = this.users.findIndex(o => {
+        return o.uuid === uuid;
+      });
+      if (i < 0)
+        this.users.push({uuid: uuid, username: username});
     });
 
     this.socket.on('leave', (uuid: string) => {
-      const i = this.users.indexOf(uuid);
+      const i = this.users.findIndex(o => {
+        return o.uuid === uuid;
+      });
       this.users.splice(i, 1);
     });
 

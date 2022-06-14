@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
 import { send } from "./utils/response";
+import { getUserByUUID } from "./utils/users";
 import { getUserUUIDByHandshake } from './utils/rooms';
 import { mw } from 'request-ip';
 import { isAuthentified } from "./API/mw";
@@ -49,9 +50,11 @@ io.on('connection', async (socket) => {
     // Join a specific room
     socket.on('join', async (uuid: string) => {
         const userUUID: string = await getUserUUIDByHandshake(socket.handshake.headers.cookie);
+        const joinedUser = await getUserByUUID(userUUID, ['username']);
+        if (!joinedUser) return ;
         socket.leave(`room-${previousUuid}`);
         socket.join(`room-${uuid}`);
-        socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID);
+        socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID, joinedUser.username);
         previousUuid = uuid;
         console.log(`An user joined the room ${uuid}`);
 
