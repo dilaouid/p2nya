@@ -42,6 +42,7 @@ export class ChatroomContentComponent implements OnInit {
       this.username = this.me.username;
     }).catch(e => {
       console.log(e);
+      this.router.navigate(['/']);
     });
 
     GetRoomInfo(this.uuid + '').then(d => {
