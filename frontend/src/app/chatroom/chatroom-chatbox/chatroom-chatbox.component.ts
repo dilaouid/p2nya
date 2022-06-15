@@ -41,6 +41,14 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   constructor(private socket: Socket) { }
 
   ngOnInit(): void {
+
+    var ce = document.querySelector('[contenteditable]');
+    ce?.addEventListener('paste', function (e:any) {
+      e.preventDefault();
+      var text = e.clipboardData.getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+
     this.socket.on('message-sent', (message: string, author: UserInformation, picture: boolean) => {
       if (!picture) picture = false;
       
