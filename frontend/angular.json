@@ -30,9 +30,7 @@
               "src/assets/css/bootstrap.quartz.min.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "src/assets/js/chatroom_modal.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
