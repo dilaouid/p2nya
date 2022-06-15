@@ -33,6 +33,11 @@ export class ChatroomNavbarComponent implements OnInit {
     this.socket.on('picture-updated', (uuid: string) => {
       updateProfilPictureLive(uuid, this.userlist);
     });
+    this.socket.on('username-updated', (uuid: string, username: string) => {
+      this.users?.map( (el, i: number) => {
+        if (el.uuid === uuid) el.username = username;
+      });
+    });
   }
 
   open(content: any) {

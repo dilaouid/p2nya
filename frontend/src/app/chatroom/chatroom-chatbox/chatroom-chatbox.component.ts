@@ -32,6 +32,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   timestamp: number = new Date().getTime();
   @Input() uuid!: string | null;
   @Input() users!: any;
+  @Input() me!: any;
   @ViewChild('input') inp!: ElementRef;
   @ViewChildren('profilPicture') profilPicture!: QueryList<ElementRef>;
   @ViewChild('msgBox') private msgBox!: ElementRef;
@@ -79,6 +80,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
     });
 
     this.socket.on('username-updated', (uuid: string, username: string) => {
+      if (this.me.uuid === uuid) this.me.username = username;
       this.history.map( (el, i: number) => {
         if (el.author.uuid === uuid) el.author.username = username;
       });
