@@ -68,6 +68,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
     object-fit: cover;
+    margin-bottom: 20px;
 }
 
 .messageRowChatbox {

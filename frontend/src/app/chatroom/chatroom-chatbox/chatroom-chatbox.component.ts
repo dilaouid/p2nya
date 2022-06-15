@@ -78,6 +78,12 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       updateProfilPictureLive(uuid, this.profilPicture);
     });
 
+    this.socket.on('username-updated', (uuid: string, username: string) => {
+      this.history.map( (el, i: number) => {
+        if (el.author.uuid === uuid) el.author.username = username;
+      });
+    });
+
   };
 
   writeMessage(event: any): void {

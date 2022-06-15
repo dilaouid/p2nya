@@ -59,7 +59,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.profilePicture = '';
 
       // If the user updated the username : live reload for every users in the room
-      if (this.username) this.socket.emit('update-username', this.me.username);
+      if (this.username) this.socket.emit('update-username', this.me.uuid, this.me.username);
       this.username = '';
 
     }).catch(e => {

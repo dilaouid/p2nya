@@ -45,7 +45,7 @@ app.get('*', (req: Request, res: Response): Response => {
 });
 
 /* [ [[ SOCKETS.IO ]] ] */
-io.on('connection', async (socket) => {
+io.on('connection', async (socket): Promise<void> => {
     let previousUuid: string;
     // Join a specific room
     socket.on('join', async (uuid: string) => {
@@ -56,12 +56,10 @@ io.on('connection', async (socket) => {
         socket.join(`room-${uuid}`);
         socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID, joinedUser.username);
         previousUuid = uuid;
-        console.log(`An user joined the room ${uuid}`);
 
         socket.on('message', (uuid: string, content: string, picture?: boolean) => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
-          console.log('inside message sent ' + content);
           io.to(`room-${uuid}`).emit('message-sent', content, {uuid: userUUID, username: joinedUser.username}, picture);
         });
 
@@ -71,8 +69,8 @@ io.on('connection', async (socket) => {
         });
 
         // Socket on user updated their username
-        socket.on('update-username', (username: string) => {
-          io.to(`room-${uuid}`).emit('username-updated', username);
+        socket.on('update-username', (userUUID: string, username: string) => {
+          io.to(`room-${uuid}`).emit('username-updated', userUUID, username);
         });
 
         // When leaving the room
