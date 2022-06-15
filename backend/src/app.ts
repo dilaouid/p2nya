@@ -70,6 +70,7 @@ io.on('connection', async (socket): Promise<void> => {
 
         // Socket on user updated their username
         socket.on('update-username', (userUUID: string, username: string) => {
+          joinedUser.username = username?.trim();
           io.to(`room-${uuid}`).emit('username-updated', userUUID, username);
         });
 
