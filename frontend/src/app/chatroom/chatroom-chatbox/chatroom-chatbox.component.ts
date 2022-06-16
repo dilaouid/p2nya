@@ -40,6 +40,10 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
 
   constructor(private socket: Socket) { }
 
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  };
+
   ngOnInit(): void {
 
     var ce = document.querySelector('[contenteditable]');
@@ -97,13 +101,8 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   };
 
   writeMessage(event: any): void {
-    this.message = event.target.innerText?.trim();
+    this.message = event.target.innerHTML?.trim();
   };
-
-  
-  ngAfterViewChecked() {        
-    this.scrollToBottom();        
-  } ;
 
   scrollToBottom(): void {
     try {
@@ -111,7 +110,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
     } catch(e) {
       console.log(e);
     }                 
-  }
+  };
 
   send() {
     this.message = this.message?.trim();
