@@ -62,7 +62,7 @@ rooms.put('/', isAuthentified, async (req: Request, res: Response): Promise<Resp
         }).then( async (d:any) => {
             if (!d) return send(404, "Ce salon de discussion n'existe pas", [], res);
             var usersIn: number[] = d.users.split('%').map(i => Number(i));
-            if (usersIn.length === 2 && !usersIn.includes(userId)) return send(400, "Ce salon de discussion est complet", [], res);
+            if (usersIn.length === parseInt(process.env.ROOM_LIMIT) && !usersIn.includes(userId)) return send(400, "Ce salon de discussion est complet", [], res);
             else if (!usersIn.includes(userId)) {
                 usersIn.push(userId);
                 d.users = usersIn.join('%');
