@@ -60,6 +60,17 @@ io.on('connection', async (socket): Promise<void> => {
         socket.on('message', (uuid: string, content: string, picture?: boolean) => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
+          let type: string = '';
+          if (!picture && content.substring(0, 5) === '/asmr') {
+            type = 'asmr';
+            if (content.length === 5)
+              content = '𝙄 𝙣𝙚𝙚𝙙 𝙮𝙤𝙪𝙧 𝙖𝙩𝙩𝙚𝙣𝙩𝙞𝙤𝙣';
+            else
+              content = content.substring(5, content.length);
+          } else if (!picture) {
+            type = 'message';
+          }
+          socket.broadcast.to(`room-${uuid}`).emit('notification', type);
           io.to(`room-${uuid}`).emit('message-sent', content, {uuid: userUUID, username: joinedUser.username}, picture);
         });
 

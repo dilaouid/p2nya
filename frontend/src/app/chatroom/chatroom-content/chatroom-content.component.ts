@@ -68,6 +68,10 @@ export class ChatroomContentComponent implements OnInit {
         this.users.push({uuid: uuid, username: username});
     });
 
+    this.socket.on('notification', (type: string) => {
+      this.playAudio('notification_' + type);
+    });
+
     this.socket.on('leave', (uuid: string) => {
       const i = this.users.findIndex(o => {
         return o.uuid === uuid;
@@ -75,6 +79,13 @@ export class ChatroomContentComponent implements OnInit {
       this.users.splice(i, 1);
     });
 
+  };
+
+  playAudio(name: string): void {
+    const audio = new Audio();
+    audio.src = './assets/sounds/' + name + '.mp3';
+    audio.load();
+    audio.play();
   };
 
 }
