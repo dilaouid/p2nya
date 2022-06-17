@@ -20,6 +20,7 @@ import { ChatroomModalNotYetComponent } from './chatroom/chatroom-modal-not-yet/
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule }   from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ChatroomModalEmojisComponent } from './chatroom/chatroom-modal-emojis/chatroom-modal-emojis.component';
 
 const config: SocketIoConfig = { url: environment.api, options: {withCredentials: true} };
 @NgModule({
@@ -37,7 +38,8 @@ const config: SocketIoConfig = { url: environment.api, options: {withCredentials
     ChatroomActivityboxComponent,
     ChatroomChatboxComponent,
     ChatroomModalEditProfileComponent,
-    ChatroomModalNotYetComponent
+    ChatroomModalNotYetComponent,
+    ChatroomModalEmojisComponent
   ],
   imports: [
     BrowserModule,

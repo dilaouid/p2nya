@@ -2,6 +2,10 @@
     <app-chatroom-modal-edit-profile [me]="me" [username]="username" (updateProfilPicture)="updateProfilPicture($event)"></app-chatroom-modal-edit-profile>
 </ng-template>
 
+<ng-template #editEmojis let-modal>
+    <app-chatroom-modal-emojis></app-chatroom-modal-emojis>
+</ng-template>
+
 <nav class="navbar navbar-light navbar-expand-md sticky-top bg-dark" data-aos="fade-down" id="navbar">
     <div class="container-fluid">
         <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol">
@@ -16,7 +20,7 @@
             </ul>
 
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item navItemChatRoom" data-bss-hover-animate="pulse">
+                <li class="nav-item navItemChatRoom" data-bss-hover-animate="pulse" (click)="open(editEmojis)">
                     <img data-bss-hover-animate="rubberBand" id="emojiNavbar" src="./assets/img/chatroom/dotted_face.png">
                 </li>
             </ul>
