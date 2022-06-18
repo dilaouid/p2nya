@@ -61,7 +61,16 @@ io.on('connection', async (socket): Promise<void> => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
           let type: string = '';
-          content = content?.trim()?.substring(0, content.length - 15);
+          let substr = 0;
+          if (content.substring(content.length - 15, content.length) === '<div><br></div>') {
+            substr = 15;
+          }
+          content = content?.trim()?.substring(0, content.length - substr);
+          if (content === '<div><br></div>') return;
+          if (content.substring(0, 5) === '<div>' && content.substring(content.length - 6, content.length) === '</div>') {
+            content = content.substring(0, content.length - 6);
+            content = content.substring(5, content.length);
+          }
           if (!picture && content.substring(0, 5) === '/asmr') {
             type = 'asmr';
             if (content.length === 5)

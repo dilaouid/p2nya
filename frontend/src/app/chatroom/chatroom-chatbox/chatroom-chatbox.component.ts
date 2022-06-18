@@ -114,10 +114,11 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
 
   send() {
     this.message = this.message?.trim();
+    this.message = this.message.replace('&nbsp;', '');
     if (this.message.length === 0) return;
     
     // Need to store emojis :-°
-    this.socket.emit('message', this.uuid, this.message, false);
+    this.socket.emit('message', this.uuid, this.message.replace('&nbsp;', ' '), false);
     this.inp.nativeElement.innerText = '';
     this.message = '';
   };
