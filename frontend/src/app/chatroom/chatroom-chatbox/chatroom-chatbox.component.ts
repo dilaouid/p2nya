@@ -97,8 +97,29 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
         if (el.author.uuid === uuid) el.author.username = username;
       });
     });
-
   };
+
+  sendThumb(files: any) {
+    if (files.length === 0)
+      return;
+    var mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      alert('Votre fichier doit être une image');
+      return;
+    }
+    else if (files[0].size / 1000000 > 5) {
+      alert('Le fichier doit faire au maximum 5 MB');
+      return;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      const b64 = reader.result?.toString()?.trim();
+      console.log(b64);
+      
+      this.socket.emit('message', this.uuid, b64, true);
+    }
+  }
 
   writeMessage(event: any): void {
     this.message = event.target.innerHTML?.trim();

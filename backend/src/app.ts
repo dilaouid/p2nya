@@ -61,6 +61,7 @@ io.on('connection', async (socket): Promise<void> => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
           let type: string = '';
+          if (content === null || content?.trim()?.length === 0) return;
           let substr = 0;
           if (content.substring(content.length - 15, content.length) === '<div><br></div>') {
             substr = 15;
@@ -79,7 +80,7 @@ io.on('connection', async (socket): Promise<void> => {
               content = content.substring(5, content.length);
           } else if (!picture) {
             type = 'message';
-          }
+          } else type = 'image'
           socket.broadcast.to(`room-${uuid}`).emit('notification', type);
           io.to(`room-${uuid}`).emit('message-sent', content, {uuid: userUUID, username: joinedUser.username}, picture);
         });

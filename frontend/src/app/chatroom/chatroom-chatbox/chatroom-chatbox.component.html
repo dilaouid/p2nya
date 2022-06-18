@@ -40,9 +40,10 @@
 <div class="row g-0 rubberBand animated InputBtnRowChat">
     <div class="col-8" (keyup.enter)="send()">
         <div #input class="messageInput" contenteditable="true" (keyup)="writeMessage($event)"></div>
+        <input accept="image/*" type="file" style="display: none;" (change)="sendThumb(thumb.files)" #thumb>
     </div>
     <div class="col-1">
-        <button class="btn btn-info btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center chatBtnMessage" id="sendThumb">
+        <button (click)="thumb.click()" class="btn btn-info btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center chatBtnMessage" id="sendThumb">
             <i class="fas fa-paperclip btnIconSend"></i>
         </button>
     </div>
