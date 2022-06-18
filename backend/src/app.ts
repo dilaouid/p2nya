@@ -21,7 +21,8 @@ const io = require('socket.io')(server, {
       origin: process.env.FRONT_URL,
       methods: ["GET", "POST"],
       credentials: true
-  }
+  },
+  maxHttpBufferSize: 6e6
 });
 
 app.use(express.json({ limit: '100mb' }));
