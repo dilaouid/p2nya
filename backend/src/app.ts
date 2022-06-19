@@ -22,7 +22,7 @@ const io = require('socket.io')(server, {
       methods: ["GET", "POST"],
       credentials: true
   },
-  maxHttpBufferSize: 6e6
+  maxHttpBufferSize: process.env.MAX_HTTPBUFFERSIZE
 });
 
 app.use(express.json({ limit: '100mb' }));
@@ -64,15 +64,18 @@ io.on('connection', async (socket): Promise<void> => {
           let type: string = '';
           if (content === null || content?.trim()?.length === 0) return;
           let substr = 0;
-          if (content.substring(content.length - 15, content.length) === '<div><br></div>') {
+          if (content.substring(content.length - 15, content.length) === '<div><br></div>')
             substr = 15;
-          }
           content = content?.trim()?.substring(0, content.length - substr);
           if (content === '<div><br></div>') return;
           if (content.substring(0, 5) === '<div>' && content.substring(content.length - 6, content.length) === '</div>') {
             content = content.substring(0, content.length - 6);
             content = content.substring(5, content.length);
           }
+          
+          const matchFormattedText = content.match(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs);
+          if (matchFormattedText)
+          content = content.replace(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs, "<$1>$2</$1>");
           if (!picture && content.substring(0, 5) === '/asmr') {
             type = 'asmr';
             if (content.length === 5)
