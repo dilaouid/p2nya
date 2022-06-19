@@ -88,6 +88,10 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       this.scrollToBottom();
     });
 
+    this.socket.on('clear', () => {
+      this.history = [];
+    })
+
     this.socket.on('picture-updated', (uuid: string) => {
       updateProfilPictureLive(uuid, this.profilPicture);
     });

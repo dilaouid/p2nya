@@ -106,13 +106,11 @@ const emojis = [
 ];
 
 export const convertAliasToEmojis = (message: string): string => {
-    var str: string = message;
     emojis.map ( (el:any) => {
         for (let k in el.name) {
             if (message.includes(el.name[k]))
                 message = message.replace(el.name[k], `<img src="${el.img}" class="emoji">`)
         }
     });
-    str = message;
-    return (str);
+    return (message);
 };
