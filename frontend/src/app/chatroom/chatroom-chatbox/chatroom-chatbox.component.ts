@@ -137,6 +137,9 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
     this.message = this.message?.trim();
     this.message = this.message.replace('&nbsp;', '');
     if (this.message.length === 0) return;
+    const matchFormattedText = this.message.match(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs);
+    if (matchFormattedText)
+      this.message = this.message.replace(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs, "<$1>$2</$1>");
     
     // Need to store emojis :-°
     this.socket.emit('message', this.uuid, this.message.replace('&nbsp;', ' '), false);
