@@ -62,11 +62,11 @@ io.on('connection', async (socket): Promise<void> => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
           const bbCodeMatch = /\[(b|i|u|s)\](.*?)\[\/\1\]/gs;
-          const XSSMatch = /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig
+          const XSSMatch = /[<]*<[\s\u200B]*script[\s\u200B]*>.*[/]*[<]*<[\s\u200B]*\/[\s\u200B]*script[\s\u200B]*>/ig;
 
           let type: string = '';
           let substr = 0;
-          
+
           if (!picture) {
             if (content === null || content?.trim()?.length === 0) return;
             if (content.substring(content.length - 15, content.length) === '<div><br></div>')

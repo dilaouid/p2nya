@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+.emoji {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    width: 17px;
+    margin-top: -3px;
+}

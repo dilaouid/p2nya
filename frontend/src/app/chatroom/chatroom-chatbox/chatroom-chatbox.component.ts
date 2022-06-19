@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, QueryLis
 import { Socket } from 'ngx-socket-io';
 import { updateProfilPictureLive } from 'src/app/utils/helpers';
 import { environment } from 'src/environments/environment';
+import { convertAliasToEmojis } from 'src/app/utils/emojis';
 
 interface UserInformation {
   uuid: string;
@@ -136,6 +137,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   send() {
     this.message = this.message?.trim();
     this.message = this.message.replace('&nbsp;', '');
+    this.message = convertAliasToEmojis(this.message);
     if (this.message.length === 0) return;
     
     // Need to store emojis :-°
