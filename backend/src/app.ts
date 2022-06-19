@@ -61,23 +61,31 @@ io.on('connection', async (socket): Promise<void> => {
         socket.on('message', (uuid: string, content: string, picture?: boolean) => {
           // First phase of testing - no emoji managment and security checks yet -- Do no take this
           // version seriously !!
+          const bbCodeMatch = /\[(b|i|u|s)\](.*?)\[\/\1\]/gs;
+          const XSSMatch = /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig
+
           let type: string = '';
-          if (content === null || content?.trim()?.length === 0) return;
           let substr = 0;
-          if (content.substring(content.length - 15, content.length) === '<div><br></div>')
-            substr = 15;
-          content = content?.trim()?.substring(0, content.length - substr);
-          if (content === '<div><br></div>') return;
-          if (content.substring(0, 5) === '<div>' && content.substring(content.length - 6, content.length) === '</div>') {
-            content = content.substring(0, content.length - 6);
-            content = content.substring(5, content.length);
-          }
+          
           if (!picture) {
-            const matchFormattedText = content.match(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs);
-            if (matchFormattedText)
-              content = content.replace(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs, "<$1>$2</$1>");
-            content = content.replace(/(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig, process.env.LILHACKER);
+            if (content === null || content?.trim()?.length === 0) return;
+            if (content.substring(content.length - 15, content.length) === '<div><br></div>')
+              substr = 15;
+            content = content?.trim()?.substring(0, content.length - substr);
+            if (content === '<div><br></div>') return;
+            if (content.substring(0, 5) === '<div>' && content.substring(content.length - 6, content.length) === '</div>') {
+              content = content.substring(0, content.length - 6);
+              content = content.substring(5, content.length);
+            }
+            const matchFormattedText = content.match(bbCodeMatch);
+            if (matchFormattedText && matchFormattedText[0].length > 7)
+              content = content.replace(bbCodeMatch, "<$1>$2</$1>");
+            else if (matchFormattedText && matchFormattedText[0].length === 7)
+              content = content.replace(bbCodeMatch, "");
+            content = content.replace(XSSMatch, process.env.LILHACKER);
+            if (content.length === 0) return;
           }
+
           if (!picture && content.substring(0, 5) === '/asmr') {
             type = 'asmr';
             if (content.length === 5)
