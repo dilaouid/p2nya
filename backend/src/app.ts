@@ -72,10 +72,12 @@ io.on('connection', async (socket): Promise<void> => {
             content = content.substring(0, content.length - 6);
             content = content.substring(5, content.length);
           }
-          
-          const matchFormattedText = content.match(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs);
-          if (matchFormattedText)
-          content = content.replace(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs, "<$1>$2</$1>");
+          if (!picture) {
+            const matchFormattedText = content.match(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs);
+            if (matchFormattedText)
+              content = content.replace(/\[(b|i|u|s)\](.*?)\[\/\1\]/gs, "<$1>$2</$1>");
+            content = content.replace(/(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig, process.env.LILHACKER);
+          }
           if (!picture && content.substring(0, 5) === '/asmr') {
             type = 'asmr';
             if (content.length === 5)
