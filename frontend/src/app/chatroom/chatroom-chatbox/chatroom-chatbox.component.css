@@ -99,6 +99,12 @@
 .thumbnailPictureChat {
     cursor: zoom-in;
     max-width: 350px;
+    transition: all .5s ease;
+}
+
+.thumbnailPictureChat:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 hr {
