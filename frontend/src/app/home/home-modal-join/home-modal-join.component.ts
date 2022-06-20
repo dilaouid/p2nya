@@ -64,6 +64,7 @@ export class HomeModalJoinComponent {
       this.close();
       this.route.navigateByUrl(`/room/${this.roomID.value}`);
     }).catch(e => {
+      this.displayAlert = true;
       console.log(e);
     });
   };
