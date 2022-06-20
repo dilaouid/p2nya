@@ -26,7 +26,7 @@
             </div>
             <div class="col-10 align-self-stretch">
                 <p class="text-dark message" *ngIf="message.picture === false" [innerHTML]="message.content">{{ message.content }}</p>
-                <img style="z-index: {{ index + 1 }}" class="thumbnailPictureChat" src="{{ message.content }}" *ngIf="message.picture === true">
+                <img class="thumbnailPictureChat" src="{{ message.content }}" *ngIf="message.picture === true">
             </div>
         </div>
         <!-- End: Message -->
