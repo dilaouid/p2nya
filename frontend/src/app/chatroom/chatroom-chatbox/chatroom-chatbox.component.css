@@ -6,6 +6,8 @@
     border-top-right-radius: 35px;
     border-bottom-right-radius: 35px;
     border-bottom-left-radius: 35px;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: none;
 }
 
 .msgBox::-webkit-scrollbar {
@@ -38,6 +40,8 @@
     padding-top: 10px;
     word-break: break-all;
     overflow-y: scroll;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: none;
 }
 
 .messageInput::-webkit-scrollbar {
@@ -75,11 +79,6 @@
     background-repeat: no-repeat;
     object-fit: cover;
     margin-bottom: 20px;
-}
-
-.messageRowChatbox {
-    /*padding-top: 5px;*/
-    /*margin-bottom: 10px;*/
 }
 
 .messageRowChatbox:hover {
