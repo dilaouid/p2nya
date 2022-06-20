@@ -1,7 +1,7 @@
 import { getUserUUID } from '../API/mw'
 
 export const parseCookies = (cookies: string): string => {
-    var list: string[] = cookies.split(';');
+    var list: string[] = cookies.split(';') || [];
     var token: string;
     for (let i = 0; i < list?.length; i++) {
         const el = list[i].split('=');
@@ -14,6 +14,6 @@ export const parseCookies = (cookies: string): string => {
 };
 
 export const getUserUUIDByHandshake = async (handshake: string): Promise<string> => {
-    let token = parseCookies(handshake);
-    return await getUserUUID(token);
+    let token = parseCookies(handshake) || '';
+    return token ? await getUserUUID(token) : '';
 };

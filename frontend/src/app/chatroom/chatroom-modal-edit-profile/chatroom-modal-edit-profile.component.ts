@@ -50,7 +50,6 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.alert.success = true;
       this.alert.display = true;
       this.alert.message = d.message;
-      this.me.username = this.username?.trim();
       this.updateProfilPicture.emit(this.me.uuid);
       this.img.nativeElement.src = environment.api + '/api/users/picture/' + this.me.uuid + '?t=' + new Date().getTime();
 
@@ -59,8 +58,9 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.profilePicture = '';
 
       // If the user updated the username : live reload for every users in the room
-      if (this.username) this.socket.emit('update-username', this.me.uuid, this.me.username);
-      this.username = '';
+      if (this.p.nativeElement.value !== this.me.username && this.username?.trim().length > 0) {
+        this.socket.emit('update-username', this.me.uuid, this.username);
+      }
 
     }).catch(e => {
       this.alert.success = false;
@@ -70,7 +70,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
   };
 
   ngAfterViewInit(){
-    this.p.nativeElement.innerText = this.me.username;
+    this.p.nativeElement.value = this.me.username;
   } 
 
   closeModal() {
