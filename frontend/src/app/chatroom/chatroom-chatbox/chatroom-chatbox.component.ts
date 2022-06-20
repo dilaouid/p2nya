@@ -74,6 +74,9 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
         uuid: author.uuid,
         username: author.username
       };
+      if (Notification.permission !== 'denied' && author.uuid !== this.me.uuid) {
+        new Notification('Nouveau message de ' + author.username, { body: picture ? "A envoyé une image" : message, icon: environment.api + '/api/users/picture/' + author.uuid });
+      }
 
       // If the last author is this actual one, add to his stack the received message
       if (length > 0 && this.history[length - 1].author.uuid === author.uuid) {
