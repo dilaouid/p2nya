@@ -6,7 +6,6 @@ import { send } from "./utils/response";
 import { getUserByUUID } from "./utils/users";
 import { getUserUUIDByHandshake } from './utils/rooms';
 import { mw } from 'request-ip';
-import { isAuthentified } from "./API/mw";
 import api from './API/routes';
 import { Server } from "http";
 import e = require('cors');
@@ -32,11 +31,6 @@ app.use(cookieParser());
 app.use(e({ credentials: true, origin: [process.env.FRONT_URL] }));
 app.set('socketio', io);
 app.use(mw());
-
-/** (GET) [ FIRST CALL ] >> Once the user comes to the homepage, this call is made -- Used to read or to create a new token for the user */
-app.get('/', isAuthentified, (req: Request, res: Response): Response => {
-  return send(200, 'OK', [], res)
-});
 
 app.use('/api', api);
 

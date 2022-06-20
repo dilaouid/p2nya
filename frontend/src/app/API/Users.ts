@@ -7,10 +7,10 @@ interface EditUserInput {
     picture: string | undefined | null;
 }
 
-const url = environment.api + '/api/users';
+const url = environment.api + '/users';
 
 export const InitUser = (): Promise<ResponseAPI> => {
-    return axios.get(environment.api + '/', {
+    return axios.get(environment.api, {
         withCredentials: true
     }).then(d => {
         return (d.data);

@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { ResponseAPI } from "./Interface";
 
 export const CreateRoom = (password: string): Promise<ResponseAPI> => {
-    return axios.post(environment.api + '/api/rooms', {password}, {
+    return axios.post(environment.api + '/rooms', {password}, {
         withCredentials: true
     }).then(d => {
         return (d.data);
@@ -11,7 +11,7 @@ export const CreateRoom = (password: string): Promise<ResponseAPI> => {
 };
 
 export const CountRooms = (): Promise<ResponseAPI> => {
-    return axios.get(environment.api + '/api/rooms/count', {
+    return axios.get(environment.api + '/rooms/count', {
         withCredentials: true
     }).then(d => {
         return (d.data);
@@ -19,7 +19,7 @@ export const CountRooms = (): Promise<ResponseAPI> => {
 };
 
 export const JoinRoom = (uuid: string, password: string): Promise<ResponseAPI> => {
-    return axios.put(environment.api + '/api/rooms', {uuid, password}, {
+    return axios.put(environment.api + '/rooms', {uuid, password}, {
         withCredentials: true
     }).then(d => {
         return (d.data);
@@ -27,7 +27,7 @@ export const JoinRoom = (uuid: string, password: string): Promise<ResponseAPI> =
 };
 
 export const GetRoomInfo = (uuid: string): Promise<ResponseAPI> => {
-    return axios.get(environment.api + '/api/rooms/' + uuid, {
+    return axios.get(environment.api + '/rooms/' + uuid, {
         withCredentials: true
     }).then(d => {
         return (d.data);

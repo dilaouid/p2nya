@@ -77,7 +77,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       if (Notification.permission !== 'denied' && author.uuid !== this.me.uuid && document.visibilityState !== 'visible') {
         const favicon: any = document.querySelector('#favicon');
         favicon.href = './assets/img/favicon_notif.ico';
-        const n = new Notification('Nouveau message de ' + author.username, { body: picture ? "A envoyé une image" : message, icon: environment.api + '/api/users/picture/' + author.uuid, silent: true });
+        const n = new Notification('Nouveau message de ' + author.username, { body: picture ? "A envoyé une image" : message, icon: environment.api + '/users/picture/' + author.uuid, silent: true });
         document.addEventListener('visibilitychange', function() {
           if (document.visibilityState === 'visible') {
             favicon.href = 'favicon.ico';

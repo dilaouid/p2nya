@@ -51,7 +51,7 @@ export class ChatroomModalEditProfileComponent implements OnInit, AfterViewInit 
       this.alert.display = true;
       this.alert.message = d.message;
       this.updateProfilPicture.emit(this.me.uuid);
-      this.img.nativeElement.src = environment.api + '/api/users/picture/' + this.me.uuid + '?t=' + new Date().getTime();
+      this.img.nativeElement.src = environment.api + '/users/picture/' + this.me.uuid + '?t=' + new Date().getTime();
 
       // If the user updated the profile picture : live reload for every users in the room
       if (this.profilePicture) this.socket.emit('update-picture', this.me.uuid);

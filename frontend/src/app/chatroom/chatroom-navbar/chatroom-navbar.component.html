@@ -15,7 +15,7 @@
 
             <ul class="navbar-nav me-auto">
                 <li *ngFor="let user of users; let first = first" class="nav-item navItemChatRoom">
-                    <img (blur)="first" [attr.user]="user.uuid" src="{{api}}/api/users/picture/{{user.uuid}}" class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first" #userlist/>
+                    <img (blur)="first" [attr.user]="user.uuid" src="{{api}}/users/picture/{{user.uuid}}" class="profilPictureTop" (click)="first && open(editProfile)" [class.yourProfilPicture]="first" #userlist/>
                 </li>
             </ul>
 
