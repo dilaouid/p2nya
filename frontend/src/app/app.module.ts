@@ -22,7 +22,7 @@ import { FormsModule }   from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatroomModalEmojisComponent } from './chatroom/chatroom-modal-emojis/chatroom-modal-emojis.component';
 
-const config: SocketIoConfig = { url: environment.api, options: {withCredentials: true} };
+const config: SocketIoConfig = { url: environment.ws, options: {withCredentials: true} };
 @NgModule({
   declarations: [
     AppComponent,
