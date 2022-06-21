@@ -15,7 +15,7 @@ interface JoinRoomBody {
 };
 
 /* Count all the active rooms ( where attributes to changes [todo] ) */
-rooms.get('/count', isAuthentified, async (req: Request, res: Response): Promise<Response> => {
+rooms.get('/count', async (req: Request, res: Response): Promise<Response> => {
     const count = await db.Room.count().catch(e => {
         return (0);
     });
