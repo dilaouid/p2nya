@@ -4,10 +4,11 @@ import { createUser } from "./initial/Token";
 import { verifyToken, writeToken } from "../utils/cookies";
 
 export const isAuthentified = async (req: Request, res: Response, next): Promise<void> => {
-    const validToken: boolean = await verifyToken(req.cookies?.token, req.clientIp, res);
+    const ip = process.env.MODE === 'production' ? req.header('x-forwarded-for')?.split(',')[0] : req.clientIp;
+    const validToken: boolean = await verifyToken(req.cookies?.token, ip, res);
     if (validToken === false) {
         res.clearCookie('token', { domain: process.env.DOMAIN_NAME, secure: true, sameSite: false, httpOnly: false });
-        await createUser(req.clientIp).then(async (data) => {
+        await createUser(ip).then(async (data) => {
             const token = await writeToken(data);
             res.cookie('token',
                 token,
