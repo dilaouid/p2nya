@@ -46,7 +46,7 @@ io.on('connection', async (socket): Promise<void> => {
     socket.on('join', async (uuid: string) => {
         const userUUID: string = await getUserUUIDByHandshake(socket.handshake.headers.cookie);
         const joinedUser = await getUserByUUID(userUUID, ['username']);
-        if (!joinedUser) return ;
+        if (!joinedUser) return;
         socket.leave(`room-${previousUuid}`);
         socket.join(`room-${uuid}`);
         socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID, joinedUser.username);
@@ -108,9 +108,13 @@ io.on('connection', async (socket): Promise<void> => {
         });
 
         // When leaving the room
-        socket.on('disconnect', async () => {
-            socket.broadcast.to(`room-${uuid}`).emit('leave', userUUID);
-            socket.leave(`room-${uuid}`);
+        socket.on('disconnect', async (reason) => {
+            if (reason === "io server disconnect") {
+              socket.connect();
+            } else {
+              socket.broadcast.to(`room-${uuid}`).emit('leave', userUUID);
+              socket.leave(`room-${uuid}`);
+            }
         });
     });
 });
