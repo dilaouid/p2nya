@@ -20,6 +20,7 @@ import { ChatroomModalNotYetComponent } from './chatroom/chatroom-modal-not-yet/
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule }   from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ChatroomModalEmojisComponent } from './chatroom/chatroom-modal-emojis/chatroom-modal-emojis.component';
 
 const config: SocketIoConfig = { url: environment.ws, options: {withCredentials: true} };
@@ -48,7 +49,7 @@ const config: SocketIoConfig = { url: environment.ws, options: {withCredentials:
     FormsModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
