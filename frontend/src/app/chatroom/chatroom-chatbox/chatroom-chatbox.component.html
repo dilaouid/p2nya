@@ -25,7 +25,7 @@
                 <p class="fw-light text-black-50 sendDateMessage">{{ message.date }}</p>
             </div>
             <div class="col-10 align-self-stretch">
-                <p class="text-dark message" *ngIf="message.picture === false" [innerHTML]="message.content">{{ message.content }}</p>
+                <p class="text-dark" *ngIf="message.picture === false" [innerHTML]="message.content">{{ message.content }}</p>
                 <img class="thumbnailPictureChat" src="{{ message.content }}" *ngIf="message.picture === true">
             </div>
         </div>

@@ -8,6 +8,7 @@ import { getUserUUIDByHandshake } from './utils/rooms';
 import { mw } from 'request-ip';
 import api from './API/routes';
 import { Server } from "http";
+import * as linkify from 'linkifyjs';
 import e = require('cors');
 
 require('dotenv').config();
@@ -57,6 +58,11 @@ io.on('connection', async (socket): Promise<void> => {
           // version seriously !!
           const bbCodeMatch = /\[(b|i|u|s)\](.*?)\[\/\1\]/gs;
           const XSSMatch = /[<]*<[\s\u200B]*script[\s\u200B]*>.*[/]*[<]*<[\s\u200B]*\/[\s\u200B]*script[\s\u200B]*>/ig;
+          const find:any[] = linkify.find(content);
+          find.map( (el) => {
+              content = content.replace(el.value, `<a class="link-info" target="_blank" href="${el.href}">${el.value}</a>`);
+          })
+          
 
           let type: string = '';
           let substr = 0;
