@@ -61,7 +61,11 @@ export class ChatroomModalEmojisComponent implements OnInit {
     reader.onload = (_event) => {
       this.emojis[this.editEmojiPictureIndex].base64 = reader.result?.toString() || '';
     }
-  }
+  };
+
+  updateAlias(index: number, e: any) {
+    this.emojis[index].alias = e.target.value;
+  };
 
   submit() {
     this.displayAlert = false;

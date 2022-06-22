@@ -9,7 +9,7 @@
             <img #emojiPreview id="emoji-{{index}}" class="emojiTemplate" src="{{ emoji.base64 }}">
         </div>
         <div class="col-6 text-center align-self-center">
-            <input class="form-control-sm addEmojiAlias" type="text" value="{{ emoji.alias }}">
+            <input class="form-control-sm addEmojiAlias" type="text" value="{{ emoji.alias }}" (keyup)="updateAlias(index, $event)">
         </div>
         <div class="col-auto align-self-center" *ngIf="!last">
             <button (click)="removeEmoji(index)" class="btn btn-primary" type="button">

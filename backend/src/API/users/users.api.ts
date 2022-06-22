@@ -1,16 +1,21 @@
 import express, { Request, Response } from "express";
-import { v4 as uuidv4 } from 'uuid';
 import { send } from "../../utils/response";
 import * as fs from 'fs-extra';
 import { getUserID, getUserUUID, isAuthentified } from "../mw";
 import { deleteIfExists, getExtensionFile } from "../../utils/files";
 import db from "../../Sequelize/models";
 
+const sharp = require('sharp');
 const users = express();
 interface UpdateUser {
     username: string;
     picture: string | undefined | null;
 };
+
+interface Emojis {
+    alias: string;
+    base64: string;
+}
 
 /* Return the profile picture of a specific user */
 users.get('/picture/:uuid', isAuthentified, (req: Request, res: Response): void => {
@@ -100,6 +105,26 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
         });
         return send(200, "Le profil a été modifié avec succès !", { updatedProfilePicture: update.picture !== null, extension: ext }, res);
     });
+});
+
+/* Check if emoji is valid or not. If so, resize it to avoid big data through sockets */
+users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
+    const emojis: Emojis[] = req.body;
+    if (!emojis.length) return send(400, 'No emojis sent', [], res);
+    for (let i = 0; i < emojis.length; i++) {
+        const el: Emojis = emojis[i];
+        el.alias = el.alias?.trim();
+        if (el.alias.length < 3) return send(400, "L'alias de votre emoji est trop court (trois caractères minimum", i, res);
+        if (el.alias.charAt(0) !== ':') el.alias = ':' + el.alias;
+        if (el.alias.charAt(el.alias.length - 1) !== ':') el.alias = el.alias + ':';
+        const uri = el.base64.split(';base64,').pop()
+        const buff = Buffer.from(uri, 'base64');
+        const b = await sharp(buff).resize(30).png().toBuffer().catch(e => {
+            return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
+        });
+        el.base64 = 'data:image/png;base64,' + b.toString('base64');
+    }
+    return send(200, 'OK', emojis, res); 
 });
 
 export default users;
