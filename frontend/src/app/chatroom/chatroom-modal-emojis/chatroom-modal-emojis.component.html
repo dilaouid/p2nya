@@ -3,28 +3,21 @@
     <button (click)="closeModal()" type="button" class="btn-close" aria-label="Fermer"></button>
 </div>
 <div class="modal-body" id="modalEmojiBody">
-    <div class="row g-0 addEmojiModalRow" *ngFor="let emoji of emojis; let index = index">
-        <div class="col-auto align-self-center">
-            <img class="emojiTemplate" src="{{ emoji.base64 }}">
+    <input accept="image/*" type="file" style="display: none;" #uploadEmoji  (change)="updatePreviewEmojiPicture(uploadEmoji.files)">
+    <div class="row g-0 addEmojiModalRow" *ngFor="let emoji of emojis; let index = index; let last = last">
+        <div class="col-auto align-self-center" (click)="updateEmojiPicture(index)">
+            <img #emojiPreview id="emoji-{{index}}" class="emojiTemplate" src="{{ emoji.base64 }}">
         </div>
         <div class="col-6 text-center align-self-center">
             <input class="form-control-sm addEmojiAlias" type="text" value="{{ emoji.alias }}">
         </div>
-        <div class="col-auto align-self-center">
+        <div class="col-auto align-self-center" *ngIf="!last">
             <button (click)="removeEmoji(index)" class="btn btn-primary" type="button">
                 <i class="fas fa-trash"></i>
             </button>
         </div>
-    </div>
-    <div class="row g-0 addEmojiModalRow">
-        <div class="col-auto align-self-center">
-            <img class="emojiTemplate" src="./assets/img/emojis/template.webp">
-        </div>
-        <div class="col-6 text-center align-self-center">
-            <input class="form-control-sm addEmojiAlias" type="text">
-        </div>
-        <div class="col-auto align-self-center">
-        <button class="btn btn-info" type="button" (click)="addEmoji()">
+        <div class="col-auto align-self-center" *ngIf="last">
+            <button class="btn btn-info" type="button" (click)="addEmoji()">
                 <i class="fas fa-plus-circle"></i>
             </button>
         </div>
@@ -33,5 +26,5 @@
 </div>
 <div class="modal-footer">
     <button (click)="closeModal()" class="btn btn-light" type="button">Fermer</button>
-    <button class="btn btn-primary" type="button">Sauvegarder</button>
+    <button class="btn btn-primary" type="button" (click)="submit()">Sauvegarder</button>
 </div>
