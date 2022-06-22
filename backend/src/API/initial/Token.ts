@@ -38,14 +38,13 @@ const suffix: Array<string> = [
     'Fighter'
 ];
 
-export const createUser = (ip: string): Promise<UserAttributes> => {
+export const createUser = (): Promise<UserAttributes> => {
     const pickedSuffix: string = suffix[Math.floor(Math.random() * suffix.length)];
     const pickedPrefix: string = prefix[Math.floor(Math.random() * prefix.length)];
     const randomNumber: number = Math.floor(Math.random() * (100 - 12 + 1)) + 12;
     return db.User.create({
         uuid: uuidv4(),
         username: pickedPrefix + pickedSuffix + randomNumber,
-        ip: ip,
         inRoom: false,
         lastActive: new Date()
     }).catch(e => {

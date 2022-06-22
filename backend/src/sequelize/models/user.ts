@@ -4,7 +4,6 @@ import { Model } from 'sequelize';
 export interface UserAttributes {
   id: number;
   uuid: string;
-  ip: string;
   username: string;
   inRoom: boolean;
   lastActive: Date;
@@ -19,7 +18,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
      */
     id!: number;
     uuid!: string;
-    ip!: string;
     username!: string
     inRoom!: boolean;
     lastActive!: Date;
@@ -39,7 +37,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
     },
-    ip: DataTypes.STRING,
     username: DataTypes.STRING,
     inRoom: DataTypes.TINYINT,
     lastActive: DataTypes.DATE

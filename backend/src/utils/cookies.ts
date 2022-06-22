@@ -10,24 +10,7 @@ interface DecodedToken {
 };
 
 /* Verify if a token is valid or not , and acts consequently */
-export async function verifyToken (token: string, ip: string, res: Response): Promise<boolean> {
-    // Give a token according to the user IP
-    if (process.env.IP_CHECK !== '0') {
-        const userWithSameIp: any = await db.User.findOne({where: {ip: ip}});
-
-        /* If the user IP is already registered in the database , pick up this registered user instead 
-        of creating a new one */
-        if (userWithSameIp) {
-            userWithSameIp.lastActive = new Date();
-            await userWithSameIp.save();
-            const token = await writeToken(userWithSameIp);
-            res.cookie('token', token, { maxAge: 2 * 60 * 60 * 1000, domain: process.env.DOMAIN_NAME, secure: process.env.MODE == 'development' ? false : true,
-                        sameSite: process.env.MODE == 'development' ? true : false,
-                        httpOnly: false });
-            return true;
-        }
-    }
-
+export async function verifyToken (token: string, res: Response): Promise<boolean> {
     return verify(token, process.env.SECRET, async function (err, decoded: DecodedToken) {
         if (err || !decoded?.uuid || !decoded?.id)
             return (false);
