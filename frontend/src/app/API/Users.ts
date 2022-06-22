@@ -7,6 +7,11 @@ interface EditUserInput {
     picture: string | undefined | null;
 }
 
+interface Emoji {
+    alias: string;
+    base64: string;
+}
+
 const url = environment.api + '/users';
 
 export const InitUser = (): Promise<ResponseAPI> => {
@@ -27,6 +32,14 @@ export const GetMe = (): Promise<any> => {
 
 export const EditUser = (input: EditUserInput) => {
     return axios.put(url, input, {
+        withCredentials: true
+    }).then(d => {
+        return (d.data);
+    });
+};
+
+export const ManageEmojis = (emojis: Emoji[]) => {
+    return axios.post(url + '/emoji', emojis, {
         withCredentials: true
     }).then(d => {
         return (d.data);
