@@ -43,32 +43,37 @@ app.get('*', (req: Request, res: Response): Response => {
 /* [ [[ SOCKETS.IO ]] ] */
 io.on('connection', async (socket): Promise<void> => {
     let previousUuid: string;
+    
     // Join a specific room
     socket.on('join', async (uuid: string) => {
         const userUUID: string = await getUserUUIDByHandshake(socket.handshake.headers.cookie);
         const joinedUser = await getUserByUUID(userUUID, ['username']);
-        if (!joinedUser) return;
+        const roomWithThisID = await db.Room.findByPk(uuid, {attribute: ['id']});
+        if (!joinedUser || !roomWithThisID) return;
         socket.leave(`room-${previousUuid}`);
         socket.join(`room-${uuid}`);
         socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID, joinedUser.username);
         previousUuid = uuid;
 
         socket.on('message', (uuid: string, content: string, picture?: boolean) => {
-          // First phase of testing - no emoji managment and security checks yet -- Do no take this
-          // version seriously !!
           const bbCodeMatch = /\[(b|i|u|s)\](.*?)\[\/\1\]/gs;
           const XSSMatch = /[<]*<[\s\u200B]*script[\s\u200B]*>.*[/]*[<]*<[\s\u200B]*\/[\s\u200B]*script[\s\u200B]*>/ig;
+
+          // Replace all links by real <a>
           const find:any[] = linkify.find(content);
           find.map( (el) => {
               content = content.replace(el.value, `<a class="link-info" target="_blank" href="${el.href}">${el.value}</a>`);
           })
           
 
-          let type: string = '';
+          let type: string = ''; // Type of the message ( asmr | picture | message )
           let substr = 0;
 
           if (!picture) {
+            // If there is no message, stop here
             if (content === null || content?.trim()?.length === 0) return;
+
+            // Parse all the message to beautify it and protect from XSS injections
             if (content.substring(content.length - 15, content.length) === '<div><br></div>')
               substr = 15;
             content = content?.trim()?.substring(0, content.length - substr);
