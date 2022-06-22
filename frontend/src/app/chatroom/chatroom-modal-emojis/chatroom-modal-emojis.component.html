@@ -3,25 +3,33 @@
     <button (click)="closeModal()" type="button" class="btn-close" aria-label="Fermer"></button>
 </div>
 <div class="modal-body" id="modalEmojiBody">
+    <div class="row g-0 addEmojiModalRow" *ngFor="let emoji of emojis; let index = index">
+        <div class="col-auto align-self-center">
+            <img class="emojiTemplate" src="{{ emoji.base64 }}">
+        </div>
+        <div class="col-6 text-center align-self-center">
+            <input class="form-control-sm addEmojiAlias" type="text" value="{{ emoji.alias }}">
+        </div>
+        <div class="col-auto align-self-center">
+            <button (click)="removeEmoji(index)" class="btn btn-primary" type="button">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
     <div class="row g-0 addEmojiModalRow">
         <div class="col-auto align-self-center">
-            <img class="noEmojiTemplateModal" src="./assets/img/emojis/template.webp">
+            <img class="emojiTemplate" src="./assets/img/emojis/template.webp">
         </div>
         <div class="col-6 text-center align-self-center">
             <input class="form-control-sm addEmojiAlias" type="text">
         </div>
         <div class="col-auto align-self-center">
-            <button class="btn btn-primary trashBtnEmojiRow" type="button">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-        <div class="col-auto align-self-center">
-            <button class="btn btn-info newBtnEmojiRow" type="button">
+        <button class="btn btn-info" type="button" (click)="addEmoji()">
                 <i class="fas fa-plus-circle"></i>
             </button>
         </div>
     </div>
-    <div class="alert alert-danger" role="alert"></div>
+    <div *ngIf="displayAlert" class="alert alert-danger" role="alert"></div>
 </div>
 <div class="modal-footer">
     <button (click)="closeModal()" class="btn btn-light" type="button">Fermer</button>

@@ -4,13 +4,14 @@
   
 #modalEmojiBody {
     height: 360px;
+    overflow-y: scroll;
 }
 
 .addEmojiModalRow {
     margin-bottom: 12px;
 }
 
-.noEmojiTemplateModal {
+.emojiTemplate {
     width: 37px;
     cursor: pointer;
 }
@@ -28,6 +29,11 @@
 .trashBtnEmojiRow {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+}
+
+.notLast {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 .newBtnEmojiRow {
