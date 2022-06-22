@@ -7,6 +7,12 @@ interface Emoji {
   base64: string;
 }
 
+interface Alert {
+  display: boolean;
+  message: string;
+  type: string;
+}
+
 @Component({
   selector: 'app-chatroom-modal-emojis',
   templateUrl: './chatroom-modal-emojis.component.html',
@@ -16,7 +22,7 @@ export class ChatroomModalEmojisComponent implements OnInit {
 
   emojis!: Emoji[];
   lastEmojiElement: number = 0;
-  displayAlert: boolean = false;
+  alert: Alert = {display: false, message: '', type:'danger'};
   @ViewChildren('emojiPreview') emojiPreview!: QueryList<ElementRef>;
   @ViewChild('uploadEmoji') uploadEmoji!: ElementRef;
   editEmojiPictureIndex: number = 0;
@@ -68,11 +74,13 @@ export class ChatroomModalEmojisComponent implements OnInit {
   };
 
   submit() {
-    this.displayAlert = false;
+    this.alert.display = false;
     ManageEmojis(this.emojis).then(d => {
-      console.log(d);
+      this.alert = {display: true, message: 'Les emojis ont bien été mis à jour !', type: 'success'}
+      localStorage.removeItem('emoji');
+      localStorage.setItem('emoji', JSON.stringify(d.data));
     }).catch(e => {
-      this.displayAlert = true;
+      this.alert = {display: true, message: 'Une erreur est survenue', type: 'danger'}
       console.log(e);
     });
   };
