@@ -122,7 +122,7 @@ users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
         const uri = el.base64.split(';base64,').pop()
         const buff = Buffer.from(uri, 'base64');
         await jimp.read(buff).then(async image => {
-            image.resize(30, 30);
+            image.resize(50, 50);
             if (fileExtension === 'gif') {
                 el.base64 = await image.getBufferAsync('image/gif').then(data => { return 'data:' + image.getMIME() + ';base64,' + data.toString('base64')});
             } else {

@@ -5,12 +5,12 @@ import { ResponseAPI } from "./Interface";
 interface EditUserInput {
     username: string;
     picture: string | undefined | null;
-}
+};
 
 interface Emoji {
     alias: string;
     base64: string;
-}
+};
 
 const url = environment.api + '/users';
 
