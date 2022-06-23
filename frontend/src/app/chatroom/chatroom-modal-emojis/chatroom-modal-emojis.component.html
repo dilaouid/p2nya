@@ -11,13 +11,13 @@
         <div class="col-6 text-center align-self-center">
             <input class="form-control-sm addEmojiAlias" type="text" value="{{ emoji.alias }}" (keyup)="updateAlias(index, $event)">
         </div>
-        <div class="col-auto align-self-center" *ngIf="!last">
-            <button (click)="removeEmoji(index)" class="btn btn-primary" type="button">
+        <div class="col-auto align-self-center">
+            <button *ngIf="emojis.length > 1" [class.trashBtnEmojiRow]="last" (click)="removeEmoji(index)" class="btn btn-primary" type="button">
                 <i class="fas fa-trash"></i>
             </button>
         </div>
         <div class="col-auto align-self-center" *ngIf="last">
-            <button class="btn btn-info" type="button" (click)="addEmoji()">
+            <button [class.newBtnEmojiRow]="emojis.length > 1" class="btn btn-info" type="button" (click)="addEmoji()">
                 <i class="fas fa-plus-circle"></i>
             </button>
         </div>
