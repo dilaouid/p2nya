@@ -139,7 +139,12 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   }
 
   writeMessage(event: any): void {
-    this.message = event.target.innerHTML?.trim();
+    if (event.which === 13) {
+      event.preventDefault();
+      this.send();
+    } else {
+      this.message = event.target.innerHTML?.trim();
+    }
   };
 
   scrollToBottom(): void {
@@ -151,6 +156,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   };
 
   send() {
+    if (this.load) return;
     const localEmojis = localStorage.getItem('emoji');
     this.message = this.message?.trim();
     this.message = this.message.replace('&nbsp;', '');
