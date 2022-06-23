@@ -26,5 +26,8 @@
 </div>
 <div class="modal-footer">
     <button (click)="closeModal()" class="btn btn-light" type="button">Fermer</button>
-    <button class="btn btn-primary" type="button" (click)="submit()">Sauvegarder</button>
+    <button [disabled]="load" class="btn btn-primary" type="button" (click)="submit()">
+        <span *ngIf="load" class="spinner-grow spinner-grow-sm" role="status"></span>
+        <span *ngIf="!load">Sauvegarder</span>
+    </button>
 </div>

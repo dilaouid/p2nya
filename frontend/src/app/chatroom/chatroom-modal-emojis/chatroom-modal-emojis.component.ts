@@ -25,6 +25,7 @@ export class ChatroomModalEmojisComponent implements OnInit {
   alert: Alert = {display: false, message: '', type:'danger'};
   @ViewChildren('emojiPreview') emojiPreview!: QueryList<ElementRef>;
   @ViewChild('uploadEmoji') uploadEmoji!: ElementRef;
+  load: boolean = false;
   editEmojiPictureIndex: number = 0;
 
   constructor(private modalService: NgbModal) { }
@@ -75,6 +76,7 @@ export class ChatroomModalEmojisComponent implements OnInit {
 
   submit() {
     this.alert.display = false;
+    this.load = true;
     ManageEmojis(this.emojis).then(d => {
       this.alert = {display: true, message: 'Les emojis ont bien été mis à jour !', type: 'success'}
       localStorage.removeItem('emoji');
@@ -83,6 +85,7 @@ export class ChatroomModalEmojisComponent implements OnInit {
       this.alert = {display: true, message: 'Une erreur est survenue', type: 'danger'}
       console.log(e);
     });
+    this.load = false;
   };
 
 }
