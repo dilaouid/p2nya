@@ -5,7 +5,6 @@ import { getUserID, getUserUUID, isAuthentified } from "../mw";
 import { deleteIfExists, getExtensionFile } from "../../utils/files";
 import db from "../../Sequelize/models";
 
-const sharp = require('sharp');
 const jimp = require('jimp');
 
 const users = express();
@@ -130,6 +129,7 @@ users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
                 el.base64 = await image.getBase64Async(image.getMIME());
             }
         }).catch(e => {
+            console.log(e);
             return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
         });
     }

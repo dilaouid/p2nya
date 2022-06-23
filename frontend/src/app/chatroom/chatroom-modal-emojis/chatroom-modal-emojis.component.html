@@ -3,7 +3,7 @@
     <button (click)="closeModal()" type="button" class="btn-close" aria-label="Fermer"></button>
 </div>
 <div class="modal-body" id="modalEmojiBody">
-    <input accept="image/*" type="file" style="display: none;" #uploadEmoji  (change)="updatePreviewEmojiPicture(uploadEmoji.files)">
+    <input accept="image/apng, image/gif, image/jpeg, image/png" type="file" style="display: none;" #uploadEmoji  (change)="updatePreviewEmojiPicture(uploadEmoji.files)">
     <div class="row g-0 addEmojiModalRow" *ngFor="let emoji of emojis; let index = index; let last = last">
         <div class="col-auto align-self-center" (click)="updateEmojiPicture(index)">
             <img #emojiPreview id="emoji-{{index}}" class="emojiTemplate" src="{{ emoji.base64 }}">
