@@ -117,12 +117,20 @@ users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
         if (el.alias.length < 3) return send(400, "L'alias de votre emoji est trop court (trois caractères minimum", i, res);
         if (el.alias.charAt(0) !== ':') el.alias = ':' + el.alias;
         if (el.alias.charAt(el.alias.length - 1) !== ':') el.alias = el.alias + ':';
+        const fileExtension = getExtensionFile(el.base64);
         const uri = el.base64.split(';base64,').pop()
         const buff = Buffer.from(uri, 'base64');
-        const b = await sharp(buff).resize(30).png().toBuffer().catch(e => {
-            return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
-        });
-        el.base64 = 'data:image/png;base64,' + b.toString('base64');
+        var b;
+        if (fileExtension === 'gif') {
+            b = await sharp(buff, {animated: true}).resize(30).gif().toBuffer().catch(e => {
+                return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
+            });
+        } else {
+            b = await sharp(buff).resize(30).png().toBuffer().catch(e => {
+                return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
+            });
+        }
+        el.base64 = `data:image/${fileExtension === 'gif' ? 'gif' : 'png'};base64,${b.toString('base64')}`;
     }
     return send(200, 'OK', emojis, res); 
 });
