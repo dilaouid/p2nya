@@ -153,6 +153,10 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
     const localEmojis = localStorage.getItem('emoji');
     this.message = this.message?.trim();
     this.message = this.message.replace('&nbsp;', '');
+    if (this.message === '/clear') {
+      this.history = [];
+      return;
+    }
     if (localEmojis) this.message = convertLocalEmojis(this.message, JSON.parse(localEmojis));
     this.message = convertAliasToEmojis(this.message);
     if (this.message.length === 0) return;

@@ -97,9 +97,6 @@ io.on('connection', async (socket): Promise<void> => {
               content = '𝙄 𝙣𝙚𝙚𝙙 𝙮𝙤𝙪𝙧 𝙖𝙩𝙩𝙚𝙣𝙩𝙞𝙤𝙣';
             else
               content = content.substring(5, content.length);
-          } else if (content.substring(0, 6) === '/clear') {
-            socket.emit('clear');
-            return;
           } else if (!picture) {
             type = 'message';
           } else type = 'image'
