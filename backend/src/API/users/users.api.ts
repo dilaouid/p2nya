@@ -6,6 +6,8 @@ import { deleteIfExists, getExtensionFile } from "../../utils/files";
 import db from "../../Sequelize/models";
 
 const sharp = require('sharp');
+const jimp = require('jimp');
+
 const users = express();
 interface UpdateUser {
     username: string;
@@ -120,17 +122,16 @@ users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
         const fileExtension = getExtensionFile(el.base64);
         const uri = el.base64.split(';base64,').pop()
         const buff = Buffer.from(uri, 'base64');
-        var b;
-        if (fileExtension === 'gif') {
-            b = await sharp(buff, {animated: true}).resize(30).gif().toBuffer().catch(e => {
-                return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
-            });
-        } else {
-            b = await sharp(buff).resize(30).png().toBuffer().catch(e => {
-                return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
-            });
-        }
-        el.base64 = `data:image/${fileExtension === 'gif' ? 'gif' : 'png'};base64,${b.toString('base64')}`;
+        await jimp.read(buff).then(async image => {
+            image.resize(30, 30);
+            if (fileExtension === 'gif') {
+                el.base64 = await image.getBufferAsync('image/gif').then(data => { return 'data:' + image.getMIME() + ';base64,' + data.toString('base64')});
+            } else {
+                el.base64 = await image.getBase64Async(image.getMIME());
+            }
+        }).catch(e => {
+            return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
+        });
     }
     return send(200, 'OK', emojis, res); 
 });

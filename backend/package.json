@@ -22,6 +22,7 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
+    "@jimp/gif": "^0.16.1",
     "@types/request-ip": "0.0.37",
     "@types/sequelize": "^4.28.13",
     "body-parser": "^1.20.0",
@@ -31,6 +32,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "fs-extra": "^10.1.0",
+    "jimp": "^0.16.0",
     "jsonwebtoken": "^8.5.1",
     "linkifyjs": "^3.0.5",
     "mysql2": "^2.3.3",
