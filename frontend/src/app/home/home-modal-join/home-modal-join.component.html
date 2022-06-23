@@ -20,5 +20,8 @@
 </div>
 <div class="modal-footer shadow" id="joinModalFooter">
     <button class="btn btn-danger shadow" data-bss-hover-animate="jello" type="button" (click)='close()'>Fermer</button>
-    <button class="btn btn-info shadow" data-bss-hover-animate="pulse" type="button" [disabled]="!enabledButton" (click)="submit()">Toc toc&nbsp;😼</button>
+    <button class="btn btn-info shadow" data-bss-hover-animate="pulse" type="button" [disabled]="!enabledButton || load == true" (click)="submit()">
+        <span *ngIf="load" class="spinner-border spinner-border-sm" role="status"></span>
+        <span *ngIf="!load">Toc toc 😼</span>
+    </button>
 </div>

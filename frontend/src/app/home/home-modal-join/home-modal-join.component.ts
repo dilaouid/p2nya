@@ -13,6 +13,7 @@ export class HomeModalJoinComponent {
 
   enabledButton: boolean;
   displayAlert: boolean;
+  load: boolean = false;
   
   password!: InputValidation;
   roomID!: InputValidation;
@@ -59,12 +60,15 @@ export class HomeModalJoinComponent {
   submit() {
     if ( !this.checkLength() ) {
       this.displayAlert = true;
+      return;
     } else this.displayAlert = false;
+    this.load = true;
     JoinRoom(this.roomID.value, this.password.value).then(a => {
       this.close();
       this.route.navigateByUrl(`/room/${this.roomID.value}`);
     }).catch(e => {
       this.displayAlert = true;
+      this.load = false;
       console.log(e);
     });
   };
