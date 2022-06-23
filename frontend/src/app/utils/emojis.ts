@@ -1,3 +1,8 @@
+interface Emoji {
+    alias: string;
+    base64: string;
+};
+
 const emojis = [
     {
         name: [':angel:', 'O:)', '(a)', '(A)'],
@@ -114,3 +119,13 @@ export const convertAliasToEmojis = (message: string): string => {
     });
     return (message);
 };
+
+export const convertLocalEmojis = (message: string, emoji: Emoji[]): string => {
+    console.log(emoji);
+    
+    emoji.map ( (el:any) => {
+        if (message.includes(el.alias))
+            message = message.replace(el.alias, `<img src="${el.base64}" class="emoji">`)
+    });
+    return (message);
+}
