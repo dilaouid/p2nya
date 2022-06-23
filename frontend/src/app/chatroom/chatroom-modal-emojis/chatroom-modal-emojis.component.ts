@@ -82,7 +82,7 @@ export class ChatroomModalEmojisComponent implements OnInit {
       localStorage.removeItem('emoji');
       localStorage.setItem('emoji', JSON.stringify(d.data));
     }).catch(e => {
-      this.alert = {display: true, message: 'Une erreur est survenue', type: 'danger'}
+      this.alert = {display: true, message: e.response.data.message, type: 'danger'}
       console.log(e);
     });
     this.load = false;

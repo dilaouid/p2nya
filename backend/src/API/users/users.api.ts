@@ -110,12 +110,14 @@ users.put('/', isAuthentified, async (req: Request, res: Response):Promise<Respo
 
 /* Check if emoji is valid or not. If so, resize it to avoid big data through sockets */
 users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
-    const emojis: Emojis[] = req.body;
-    if (!emojis.length) return send(400, 'No emojis sent', [], res);
+    const emojisRaw: Emojis[] = req.body;
+    const emojis = emojisRaw.filter( (el, i) => { return el.alias.length > 0 && el.base64 != './assets/img/emojis/template.webp' })
+    var error = false;
+    if (!emojis.length) return send(400, 'Aucun emoji envoyé', [], res);
     for (let i = 0; i < emojis.length; i++) {
         const el: Emojis = emojis[i];
         el.alias = el.alias?.trim();
-        if (el.alias.length < 3) return send(400, "L'alias de votre emoji est trop court (trois caractères minimum", i, res);
+        if (el.alias.length < 2) return send(400, "L'alias de votre emoji est trop court (deux caractères minimum", i, res);
         if (el.alias.charAt(0) !== ':') el.alias = ':' + el.alias;
         if (el.alias.charAt(el.alias.length - 1) !== ':') el.alias = el.alias + ':';
         const fileExtension = getExtensionFile(el.base64);
@@ -130,10 +132,12 @@ users.post('/emoji', isAuthentified, async (req: Request, res: Response) => {
             }
         }).catch(e => {
             console.log(e);
+            error = true;
             return send(400, "Une image envoyé est incorrecte ou inexistante", i, res);
         });
     }
-    return send(200, 'OK', emojis, res); 
+    if (!error)
+        return send(200, 'OK', emojis, res); 
 });
 
 export default users;
