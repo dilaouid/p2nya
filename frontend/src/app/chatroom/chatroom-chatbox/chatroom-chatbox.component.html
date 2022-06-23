@@ -43,8 +43,9 @@
         <input accept="image/*" type="file" style="display: none;" (change)="sendThumb(thumb.files)" #thumb>
     </div>
     <div class="col-1">
-        <button (click)="thumb.click()" class="btn btn-info btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center chatBtnMessage" id="sendThumb">
-            <i class="fas fa-paperclip btnIconSend"></i>
+        <button [disabled]="load" (click)="thumb.click()" class="btn btn-info btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center chatBtnMessage" id="sendThumb">
+            <span *ngIf="load" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <i *ngIf="!load" class="fas fa-paperclip btnIconSend"></i>
         </button>
     </div>
     <div class="col-3">

@@ -31,6 +31,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   message: string = '';
   history: MessagesHistory[] = [];
   timestamp: number = new Date().getTime();
+  load: boolean = false;
   @Input() uuid!: string | null;
   @Input() users!: any;
   @Input() me!: any;
@@ -56,6 +57,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
 
     this.socket.on('message-sent', (message: string, author: UserInformation, picture: boolean) => {
       if (!picture) picture = false;
+      if (picture && author.uuid === this.me.uuid) this.load = false;
       
       const length = this.history.length;
 
@@ -127,12 +129,11 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       alert('Le fichier doit faire au maximum 5 MB');
       return;
     }
+    this.load = true;
     var reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
       const b64 = reader.result?.toString()?.trim();
-      console.log(b64);
-      
       this.socket.emit('message', this.uuid, b64, true);
     }
   }
