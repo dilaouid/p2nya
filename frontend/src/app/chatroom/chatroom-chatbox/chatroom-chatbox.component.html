@@ -49,8 +49,9 @@
         </button>
     </div>
     <div class="col-3">
-        <button class="btn btn-success btn-lg chatBtnMessage" id="sendMsg" (click)="send()">
-            <i class="fas fa-location-arrow btnIconSend"></i>
+        <button [disabled]="load" class="btn btn-success btn-lg chatBtnMessage" id="sendMsg" (click)="send()">
+            <span *ngIf="load" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <i *ngIf="!load" class="fas fa-location-arrow btnIconSend"></i>
         </button>
     </div>
 </div>
