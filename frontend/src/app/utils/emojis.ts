@@ -65,12 +65,12 @@ const emojis = [
         img: './assets/img/emojis/not_convinced.png'
     },
     {
-        name: [':omg:', ':o', ':O', ':-o', ':-O'],
-        img: './assets/img/emojis/omg.png'
+        name: [':party:', '#:-o'],
+        img: './assets/img/emojis/party.gif'
     },
     {
-        name: [':party:', '<:o)'],
-        img: './assets/img/emojis/party.gif'
+        name: [':omg:', ':o', ':O', ':-O', ':-o'],
+        img: './assets/img/emojis/omg.png'
     },
     {
         name: [':roll:', '*-)'],
@@ -114,18 +114,16 @@ export const convertAliasToEmojis = (message: string): string => {
     emojis.map ( (el:any) => {
         for (let k in el.name) {
             if (message.includes(el.name[k]))
-                message = message.replace(el.name[k], `<img src="${el.img}" class="emoji">`)
+                message = message.split(el.name[k]).join(`<img src="${el.img}" class="emoji">`);
         }
     });
     return (message);
 };
 
 export const convertLocalEmojis = (message: string, emoji: Emoji[]): string => {
-    console.log(emoji);
-    
     emoji.map ( (el:any) => {
         if (message.includes(el.alias))
-            message = message.replace(el.alias, `<img src="${el.base64}" class="emoji">`)
+            message = message.split(el.alias).join(`<img src="${el.base64}" class="emoji">`);
     });
     return (message);
 }
