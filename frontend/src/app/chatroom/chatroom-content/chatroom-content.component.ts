@@ -38,6 +38,7 @@ export class ChatroomContentComponent implements OnInit {
     this.inCall = [];
     this.username = '';
     this.route.paramMap.subscribe( (params) => { this.uuid = params.get('id') });
+    Notification.requestPermission();
   };
 
   ngOnInit(): void {
