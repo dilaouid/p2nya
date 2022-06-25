@@ -9,7 +9,6 @@ interface RoomAttributes {
   timeStamp: Date;
   users: string;
   usersInVocal: string;
-  lastAuthor: string;
   lastMessageTime: Date;
 };
 
@@ -25,7 +24,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
     timeStamp!: Date;
     users!: string;
     usersInVocal!: string;
-    lastAuthor!: string;
     lastMessageTime!: Date;
   };
   Room.init({
@@ -49,10 +47,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
     },
     usersInVocal: {
       type: DataTypes.STRING
-    },
-    lastAuthor: {
-      type: DataTypes.STRING,
-      defaultValue: 0
     },
     lastMessageTime: {
       type: DataTypes.DATE
