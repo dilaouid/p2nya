@@ -19,6 +19,7 @@ export class ChatroomNavbarComponent implements OnInit {
 
   closeResult = '';
   api: string;
+  isWriting: string[] = [];
 
   @Input() users: any[] | undefined;
   @Input() username!: string;

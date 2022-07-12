@@ -32,3 +32,11 @@
 .yourProfilPicture {
     opacity: 100;
 }
+
+.isWriting {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    margin-left: -46px;
+    margin-top: 4px;
+}
