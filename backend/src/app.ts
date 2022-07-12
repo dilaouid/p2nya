@@ -134,6 +134,7 @@ io.on('connection', async (socket): Promise<void> => {
               socket.connect();
             } else {
               socket.broadcast.to(`room-${uuid}`).emit('leave', userUUID);
+              socket.to(`room-${uuid}`).emit('stop-writing', userUUID);
               socket.leave(`room-${uuid}`);
             }
         });
