@@ -39,6 +39,13 @@ export class ChatroomNavbarComponent implements OnInit {
         if (el.uuid === uuid) el.username = username;
       });
     });
+    this.socket.on('is-writing', (uuid: string) => {
+      this.isWriting.push(uuid);
+      
+    });
+    this.socket.on('stop-writing', (uuid: string) => {
+      this.isWriting = this.isWriting.filter( (el, i) => { return el !== uuid });
+    });
   }
 
   open(content: any) {

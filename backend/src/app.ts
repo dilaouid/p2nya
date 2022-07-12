@@ -102,6 +102,7 @@ io.on('connection', async (socket): Promise<void> => {
           } else type = 'image'
           socket.broadcast.to(`room-${uuid}`).emit('notification', type);
           io.to(`room-${uuid}`).emit('message-sent', content, {uuid: userUUID, username: joinedUser.username}, picture);
+          socket.to(`room-${uuid}`).emit('stop-writing', userUUID);
         });
 
         // Socket on user updating their profile picture
@@ -114,6 +115,18 @@ io.on('connection', async (socket): Promise<void> => {
           joinedUser.username = username?.trim();
           io.to(`room-${uuid}`).emit('username-updated', userUUID, joinedUser.username);
         });
+
+        // Socket on user typing a message
+        socket.on('user-writing', (userUUID: string) => {
+          socket.to(`room-${uuid}`).emit('is-writing', userUUID);
+        });
+
+        // Socket on user stop typing a message
+        socket.on('user-stop-writing', (userUUID: string) => {
+          socket.to(`room-${uuid}`).emit('stop-writing', userUUID);
+        });
+
+
 
         // When leaving the room
         socket.on('disconnect', async (reason) => {

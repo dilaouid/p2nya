@@ -32,6 +32,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   history: MessagesHistory[] = [];
   timestamp: number = new Date().getTime();
   load: boolean = false;
+  writing: boolean = false;
   @Input() uuid!: string | null;
   @Input() users!: any;
   @Input() me!: any;
@@ -144,6 +145,13 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       this.send();
     } else {
       this.message = event.target.innerHTML?.trim();
+      if (!this.writing && this.message.length > 0) {
+        this.writing = true;
+        this.socket.emit('user-writing', this.me.uuid);
+      } else if (this.writing && this.message.length === 0) {
+        this.writing = false;
+        this.socket.emit('user-stop-writing', this.me.uuid);
+      }
     }
   };
 
@@ -171,6 +179,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
     if (this.message.length === 0) return;
     
     // Need to store emojis :-°
+    this.socket.emit('user-stop-writing', this.me.uuid);
     this.socket.emit('message', this.uuid, this.message.replace('&nbsp;', ' '), false);
     this.inp.nativeElement.innerText = '';
     this.message = '';
