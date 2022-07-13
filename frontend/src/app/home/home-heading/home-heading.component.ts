@@ -9,6 +9,7 @@ import { CountRooms } from 'src/app/API/Rooms';
 export class HomeHeadingComponent implements OnInit {
   
   /* How many opened room */
+  loading: boolean = true;
   room!: number;
 
   constructor() { }
@@ -16,6 +17,7 @@ export class HomeHeadingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const apiCountRooms = await CountRooms();
     this.room = apiCountRooms.data[0];
+    this.loading = false;
   };
 
 }

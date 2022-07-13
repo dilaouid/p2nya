@@ -3,7 +3,10 @@
         <div class="col-md-12" id="introduction">
             <img data-bs-toggle="tooltip" data-bss-tooltip="" data-bss-hover-animate="bounce" id="cat" src="assets/img/cat.png" title="Nya!">
             <h1>Bienvenue sur p2nya !<br></h1>
-            <p>Sur <span style="font-weight: bold;">p2nya</span>, vous pouvez chatter à deux ou à plusieurs, dans un salon en peer-to-peer !<br>Tout est gratuit, vous pouvez ajouter les emojis que vous désirez avec une photo de profil animée si ça vous chante (oui, gratuitement&nbsp;👀)<br><br>Vous pouvez même jouer à des jeux ! Pour l'instant, seul le huit américain est disponible, mais plus à venir !<br>Tout est en peer-to-peer (renseignez vous sur ce que c'est, ça en vaut le coup d'œil !), donc rien n'est stocké sur mes<br>serveurs. Des discussions confidentielles, mais top secrètes et irrécupérables ! Un peu comme la vraie vie quoi !&nbsp;🙃<br><br>Alors, commencez l'expérience dès maintenant, en créant ou rejoignant un salon !<br><br>Il y a actuellement <span style="font-weight: bold;color: var(--bs-warning);">{{ room }}</span>&nbsp;salon(s) actif(s)</p>
+            <p>Sur <span style="font-weight: bold;">p2nya</span>, vous pouvez chatter à deux ou à plusieurs, dans un salon en peer-to-peer !<br>Tout est gratuit, vous pouvez ajouter les emojis que vous désirez avec une photo de profil animée si ça vous chante (oui, gratuitement&nbsp;👀)<br><br>Vous pouvez même jouer à des jeux ! Pour l'instant, seul le huit américain est disponible, mais plus à venir !<br>Tout est en peer-to-peer (renseignez vous sur ce que c'est, ça en vaut le coup d'œil !), donc rien n'est stocké sur mes<br>serveurs. Des discussions confidentielles, mais top secrètes et irrécupérables ! Un peu comme la vraie vie quoi !&nbsp;🙃<br><br>Alors, commencez l'expérience dès maintenant, en créant ou rejoignant un salon !<br><br>Il y a actuellement 
+                <span *ngIf="loading == true" class="spinner-border spinner-border-sm text-warning" role="status"></span>
+                <span *ngIf="loading == false" style="font-weight: bold;color: var(--bs-warning);">{{ room }}</span>
+                salon(s) actif(s)</p>
         </div>
     </div>
 </div>
