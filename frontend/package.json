@@ -22,8 +22,8 @@
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.10.2",
     "axios": "^0.27.2",
-    "bootstrap": "^5.1.3",
     "ngx-socket-io": "^4.2.0",
+    "peerjs": "^1.4.6",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
