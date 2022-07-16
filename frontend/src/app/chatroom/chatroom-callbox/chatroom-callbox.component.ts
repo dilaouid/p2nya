@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { loadExternalScript } from 'src/app/Services/load';
 
 @Component({
   selector: 'app-chatroom-callbox',
@@ -16,6 +17,7 @@ export class ChatroomCallboxComponent implements OnInit {
 
   constructor(private modalService: NgbModal) {
     this.api = environment.api;
+    loadExternalScript("https://cdn.metered.ca/sdk/video/1.4.3/sdk.min.js");
   }
 
   ngOnInit(): void { }
