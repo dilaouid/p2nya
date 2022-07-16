@@ -45,7 +45,11 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
                     privacy: 'private',
                     autoJoin: true,
                     enableRecording: false, // please, keep it at false. user privacy is #1. F*** you if you think otherwise
-                    audioOnlyRoom: true
+                    audioOnlyRoom: true,
+                    enableChat: false,
+                    enableScreenSharing: false,
+                    joinVideoOn: false,
+                    showInviteBox: false
                 },
                 params: {
                     secretKey: process.env.METERED_SECRET
