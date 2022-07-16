@@ -1,5 +1,6 @@
 import express, { Request, Response, Application } from "express";
 import bodyParser from "body-parser";
+import axios from 'axios';
 import { Op } from "sequelize";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
@@ -154,17 +155,28 @@ io.on('connection', async (socket): Promise<void> => {
 new CronJob(
 	'*/5 * * * *',
 	async () => {
-    const t = new Date().getTime();
-    const thirtyMinutes = 1800000;
-    await db.Room.destroy({
+    const t: number = new Date().getTime();
+    const thirtyMinutes: number = 1800000;
+    db.Room.findAll({
+      attributes: ['id', 'timeStamp'],
       where: {
         timeStamp: {
+          // Finding the rooms created more than 30mn ago
           [Op.lte]: new Date(t - thirtyMinutes)
         }
       }
-    }).catch(e => {
-      console.log(e);
-    });
+    }).then( (data) => {
+      data.map( (el, i) => {
+        /// Delete the room in the Metered API
+        axios.delete(process.env.METERED_DOMAIN + '/' + el.id, {
+          params: {
+            secretKey: process.env.METERED_SECRET
+          }
+        });
+        /// Delete the room in the db
+        el.destroy();
+      });
+    })
   },
 	null,
 	true,
