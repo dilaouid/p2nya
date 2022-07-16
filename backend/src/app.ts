@@ -159,7 +159,7 @@ new CronJob(
     await db.Room.destroy({
       where: {
         timeStamp: {
-          [Op.gte]: new Date(t - thirtyMinutes)
+          [Op.lte]: new Date(t - thirtyMinutes)
         }
       }
     }).catch(e => {
