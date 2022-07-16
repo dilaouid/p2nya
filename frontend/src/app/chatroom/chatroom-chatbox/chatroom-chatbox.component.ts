@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, QueryLis
 import { Socket } from 'ngx-socket-io';
 import { updateProfilPictureLive } from 'src/app/utils/helpers';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 import { convertAliasToEmojis, convertLocalEmojis } from 'src/app/utils/emojis';
 
 interface UserInformation {
@@ -41,7 +42,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
   @ViewChild('msgBox') private msgBox!: ElementRef;
   api: string = environment.api;
 
-  constructor(private socket: Socket) { }
+  constructor(private socket: Socket, private route: Router) { }
 
   ngAfterViewChecked() {        
     this.scrollToBottom();        
@@ -56,6 +57,12 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       document.execCommand('insertText', false, text);
     });
 
+    /* When the room is destroyed after 30mn, redirect all the users in the homepage */
+    this.socket.on('destroyed-room', () => {
+      this.route.navigateByUrl(`/`);
+    });
+
+    /* Receive a message */
     this.socket.on('message-sent', (message: string, author: UserInformation, picture: boolean) => {
       if (!picture) picture = false;
       if (picture && author.uuid === this.me.uuid) this.load = false;
@@ -102,14 +109,17 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
       this.scrollToBottom();
     });
 
+    /* Clear all your chat history (only to the one who've asked for it) */
     this.socket.on('clear', () => {
       this.history = [];
     })
 
+    /* Update the profile picture to all the connected users */
     this.socket.on('picture-updated', (uuid: string) => {
       updateProfilPictureLive(uuid, this.profilPicture);
     });
 
+    /* Update the username to all the connected users */
     this.socket.on('username-updated', (uuid: string, username: string) => {
       if (this.me.uuid === uuid) this.me.username = username;
       this.history.map( (el, i: number) => {

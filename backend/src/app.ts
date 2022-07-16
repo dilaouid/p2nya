@@ -1,5 +1,6 @@
 import express, { Request, Response, Application } from "express";
 import bodyParser from "body-parser";
+import { Op } from "sequelize";
 import cookieParser from "cookie-parser";
 import db from "./Sequelize/models"
 import { send } from "./utils/response";
@@ -7,6 +8,7 @@ import { getUserByUUID } from "./utils/users";
 import { getUserUUIDByHandshake } from './utils/rooms';
 import { mw } from 'request-ip';
 import api from './API/routes';
+import { CronJob } from 'cron';
 import { Server } from "http";
 import * as linkify from 'linkifyjs';
 import e = require('cors');
@@ -55,7 +57,16 @@ io.on('connection', async (socket): Promise<void> => {
         socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID, joinedUser.username);
         previousUuid = uuid;
 
-        socket.on('message', (uuid: string, content: string, picture?: boolean) => {
+        socket.on('message', async (uuid: string, content: string, picture?: boolean) => {
+          io.in(`room-${uuid}`).emit('destroyed-room');
+          const roomWithThisID = await db.Room.findByPk(uuid, {attribute: ['id']});
+          if (!roomWithThisID) {
+            socket.leave(`room-${uuid}`);
+            socket.broadcast.to(`room-${uuid}`).emit('leave', userUUID);
+            socket.to(`room-${uuid}`).emit('destroyed-room');
+            return;
+          }
+
           const bbCodeMatch = /\[(b|i|u|s)\](.*?)\[\/\1\]/gs;
           const XSSMatch = /[<]*<[\s\u200B]*script[\s\u200B]*>.*[/]*[<]*<[\s\u200B]*\/[\s\u200B]*script[\s\u200B]*>/ig;
 
@@ -126,8 +137,6 @@ io.on('connection', async (socket): Promise<void> => {
           socket.to(`room-${uuid}`).emit('stop-writing', userUUID);
         });
 
-
-
         // When leaving the room
         socket.on('disconnect', async (reason) => {
             if (reason === "io server disconnect") {
@@ -140,6 +149,27 @@ io.on('connection', async (socket): Promise<void> => {
         });
     });
 });
+
+/* Delete all room 30 minutes after the creation */
+new CronJob(
+	'*/5 * * * *',
+	async () => {
+    const t = new Date().getTime();
+    const thirtyMinutes = 1800000;
+    await db.Room.destroy({
+      where: {
+        timeStamp: {
+          [Op.gte]: new Date(t - thirtyMinutes)
+        }
+      }
+    }).catch(e => {
+      console.log(e);
+    });
+  },
+	null,
+	true,
+  'Europe/Paris'
+);
 
 /** [ LISTENING ON PORT ] */
 db.sequelize.sync().then( () => {
