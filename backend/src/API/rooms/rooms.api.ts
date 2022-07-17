@@ -2,8 +2,8 @@ import express, { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
 import { send } from "../../utils/response";
 import { getUserID, isAuthentified } from "../mw";
-import axios from 'axios';
 import db from "../../Sequelize/models";
+import { CreateRoom } from "../../utils/metered";
 
 const rooms = express();
 interface NewRoomBody {
@@ -28,7 +28,7 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
     try {
         const body: NewRoomBody = req.body;
         const id: number = await getUserID(req.cookies.token);
-        const roomID = uuidv4();
+        const roomID: string = uuidv4();
         body.password = body.password?.trim();
         if (body.password?.length < 3 && body.password?.length > 30)
             return send(400, 'Invalid password', [], res);
@@ -36,30 +36,13 @@ rooms.post('/', isAuthentified, async (req: Request, res: Response): Promise<Res
             id: roomID,
             password: body.password,
             users: id
-        }).then(d => {
-            axios({
-                method: 'post',
-                url: process.env.METERED_DOMAIN,
-                data: {
-                    roomName: roomID,
-                    privacy: 'private',
-                    autoJoin: false,
-                    enableRecording: false, // please, keep it at false. user privacy is #1. F*** you if you think otherwise
-                    audioOnlyRoom: true,
-                    enableChat: false,
-                    enableScreenSharing: false,
-                    joinVideoOn: false,
-                    showInviteBox: false
-                },
-                params: {
-                    secretKey: process.env.METERED_SECRET
-                }
-            }).then(d => {
-                return send(200, 'Created Room', {id: roomID, metered: d.data}, res);
-            }).catch(e => {
+        }).then( async (d) => {
+            const createMetricRoom: boolean = await CreateRoom(roomID);
+            if (!createMetricRoom) {
                 d.destroy();
-                return send(400, 'Error Occured', e, res);
-            });
+                return send(400, 'Error Occured', [], res); 
+            }
+            return send(200, 'Created Room', { id: roomID }, res); 
         }).catch(e => {
             console.log(e);
             return send(400, 'Error Occured', [], res);
