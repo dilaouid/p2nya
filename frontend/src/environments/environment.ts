@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   api: 'http://localhost:8080/api',
   ws: 'http://localhost:8080',
-  metered: 'https://<appname>.metered.live/api/v1/room'
+  metered: 'https://<appname>.metered.live/'
 };
 
 /*
