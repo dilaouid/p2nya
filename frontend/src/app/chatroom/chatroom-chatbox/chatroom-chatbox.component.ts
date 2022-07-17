@@ -4,22 +4,8 @@ import { updateProfilPictureLive } from 'src/app/utils/helpers';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { convertAliasToEmojis, convertLocalEmojis } from 'src/app/utils/emojis';
-
-interface UserInformation {
-  uuid: string;
-  username: string;
-};
-
-interface MessageStack {
-  date: string;
-  content: string;
-  picture: boolean;
-};
-
-interface MessagesHistory {
-  author: UserInformation;
-  stack: MessageStack[];
-};
+import { UserInformation } from 'src/app/Interfaces/User';
+import { MessagesHistory } from 'src/app/Interfaces/Message';
 
 @Component({
   selector: 'app-chatroom-chatbox',

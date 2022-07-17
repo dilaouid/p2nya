@@ -3,17 +3,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { GetRoomInfo } from 'src/app/API/Rooms';
 import { GetMe } from 'src/app/API/Users';
 import { Socket } from 'ngx-socket-io';
+import { UserInformation } from 'src/app/Interfaces/User';
+import { Me } from 'src/app/Interfaces/User';
 
-interface UserInformation {
-  uuid: string;
-  username: string;
-};
-
-interface Me {
-  id: number;
-  uuid: string;
-  username: string;
-};
 
 @Component({
   selector: 'app-chatroom-content',

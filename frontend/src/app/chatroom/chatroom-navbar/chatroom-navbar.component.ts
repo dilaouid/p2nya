@@ -3,12 +3,7 @@ import { environment } from 'src/environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Socket } from 'ngx-socket-io';
 import { updateProfilPictureLive } from '../../utils/helpers'
-
-interface Me {
-  id: number;
-  uuid: string;
-  username: string;
-};
+import { Me } from 'src/app/Interfaces/User';
 
 @Component({
   selector: 'app-chatroom-navbar',
