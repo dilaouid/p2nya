@@ -30,7 +30,9 @@
               "src/assets/css/bootstrap.quartz.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/metered.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -97,7 +99,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/metered.min.js"
+            ]
           }
         }
       }
