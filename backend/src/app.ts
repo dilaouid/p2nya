@@ -168,7 +168,7 @@ new CronJob(
     }).then( (data) => {
       data.map( (el, i) => {
         /// Delete the room in the Metered API
-        axios.delete(process.env.METERED_DOMAIN + '/' + el.id, {
+        axios.delete(process.env.METERED_DOMAIN + '/room/' + el.id, {
           params: {
             secretKey: process.env.METERED_SECRET
           }
