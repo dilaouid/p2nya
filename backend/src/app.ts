@@ -171,6 +171,8 @@ new CronJob(
           params: {
             secretKey: process.env.METERED_SECRET
           }
+        }).catch(e => {
+          console.log(e);
         });
         /// Delete the room in the db
         el.destroy();
