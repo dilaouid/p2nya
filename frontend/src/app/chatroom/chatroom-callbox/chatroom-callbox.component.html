@@ -6,11 +6,12 @@
     <div class="row justify-content-center topRoxCallBox">
         <div class="col-auto" *ngFor="let user of inCall;">
             <div [class.notJoinedCall]="!userInCall" class="profilPictureCall" style="background-image: url('{{api}}/users/picture/{{user}}');"></div>
+            <audio #audio autoplay></audio>
         </div>
     </div>
     <div class="row g-0 text-center BtnRowCallBox">
         <div class="col">
-            <button class="btn btn-success shadow joinCallBtn" data-bss-hover-animate="pulse" type="button" (click)="open(notYet)">
+            <button class="btn btn-success shadow joinCallBtn" data-bss-hover-animate="pulse" type="button" (click)="join()">
                 <i class="fas fa-phone-alt"></i> Rejoindre le salon vocal 
             </button>
         </div>

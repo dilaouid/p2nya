@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { send } from "../../utils/response";
 import { getUserID, isAuthentified } from "../mw";
 import db from "../../Sequelize/models";
-import { CreateRoom } from "../../utils/metered";
+import { CreateRoom, GenerateToken, ValidateToken } from "../../utils/metered";
 
 const rooms = express();
 interface NewRoomBody {
@@ -103,8 +103,9 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
     });
 
     // If the room does not exists, or if the user is not inside of it, return a 404 (security reason)
-    if (!room || room?.users.includes(userId) === false) return send(404, 'No Room Found', [], res);
-    
+    const RoomToken: string = await GenerateToken(uuid);
+    if (!room || !RoomToken || room?.users.includes(userId) === false) return send(404, 'No Room Found', [], res);
+    await ValidateToken(RoomToken);
     // Otherwise, print the uuid and not the id of the users (security reason)
     room.usersInVocal = room.usersInVocal ? room.usersInVocal.split('%').map(i => Number(i)) : [];
     room.users = room.users.split('%').map(i => Number(i));
@@ -121,7 +122,7 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
         });
         room.usersInVocal[j] = room.users[i];
     }
-    return send(200, 'OK', room, res);
+    return send(200, 'OK', {...room.dataValues, accessToken: RoomToken}, res);
 });
 
 export default rooms;

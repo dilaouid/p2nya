@@ -23,21 +23,23 @@ export const CreateRoom = async(roomID: string): Promise<boolean> => {
         }).then( (d:AxiosResponse) => {
             return (true);
         }).catch( (e: AxiosError) => {
+            console.error(e);
             return (false);
         });
     } catch(e) {
-        console.log(e);
+        console.error(e);
         return (false);
     }
 };
 
-export const GenerateToken = async (): Promise<string|boolean> => {
+export const GenerateToken = async (roomID: string): Promise<string> => {
     try {
         return await axios({
             method: 'post',
             url: process.env.METERED_DOMAIN + '/token',
             data: {
-                globalToken: true
+                roomName: roomID,
+                isAdmin: false
             },
             params: {
                 secretKey: process.env.METERED_SECRET
@@ -45,11 +47,11 @@ export const GenerateToken = async (): Promise<string|boolean> => {
         }).then( (d: AxiosResponse) => {
             return (d.data.token);
         }).catch( (e: AxiosError) => {
-            return (false);
+            return '';
         });
     } catch(e) {
         console.log(e);
-        return (false);
+        return '';
     }
 };
 

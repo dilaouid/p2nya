@@ -21,6 +21,7 @@ export class ChatroomContentComponent implements OnInit {
   inCall: string[];
   userInCall: boolean;
   room: any;
+  accessToken!: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private socket: Socket) {
     this.uuid = '';
@@ -47,6 +48,7 @@ export class ChatroomContentComponent implements OnInit {
       this.room = d.data;
       this.users = this.room.users;
       this.inCall = this.room.usersInVocal
+      this.accessToken = this.room.accessToken;
       this.userInCall = this.inCall.includes(this.users[0].uuid);
       this.socket.emit('join', this.uuid);
     }).catch(e => {
