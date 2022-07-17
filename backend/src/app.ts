@@ -59,12 +59,11 @@ io.on('connection', async (socket): Promise<void> => {
         previousUuid = uuid;
 
         socket.on('message', async (uuid: string, content: string, picture?: boolean) => {
-          io.in(`room-${uuid}`).emit('destroyed-room');
           const roomWithThisID = await db.Room.findByPk(uuid, {attribute: ['id']});
           if (!roomWithThisID) {
             socket.leave(`room-${uuid}`);
             socket.broadcast.to(`room-${uuid}`).emit('leave', userUUID);
-            socket.to(`room-${uuid}`).emit('destroyed-room');
+            io.in(`room-${uuid}`).emit('destroyed-room');
             return;
           }
 
