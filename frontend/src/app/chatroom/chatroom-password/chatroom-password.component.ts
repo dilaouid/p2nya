@@ -29,14 +29,17 @@ export class ChatroomPasswordComponent implements OnInit {
   };
 
   submitPassword() {
-    this.loading = true;
-    JoinRoom(this.uuid, this.password).then(d => {
-      this.GetRoom(true);
-      this.passwordRequired = false;
-    }).catch(e => {
-      this.loading = false;
-      this.printAlert = true;
-    });
+    if (this.loading) return;
+    else {
+      this.loading = true;
+      JoinRoom(this.uuid, this.password).then(d => {
+        this.GetRoom(true);
+        this.passwordRequired = false;
+      }).catch(e => {
+        this.loading = false;
+        this.printAlert = true;
+      });
+    }
   }
 
   ngOnInit(): void {
