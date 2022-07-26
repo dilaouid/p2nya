@@ -16,6 +16,7 @@ export class ChatroomPasswordComponent implements OnInit {
   
   printAlert: boolean = false;
   password: string = '';
+  loading: boolean = false;
 
   constructor(private router: Router, private socket: Socket) {
     this.uuid = '';
@@ -28,11 +29,12 @@ export class ChatroomPasswordComponent implements OnInit {
   };
 
   submitPassword() {
+    this.loading = true;
     JoinRoom(this.uuid, this.password).then(d => {
       this.GetRoom(true);
       this.passwordRequired = false;
     }).catch(e => {
-      console.log(e);
+      this.loading = false;
       this.printAlert = true;
     });
   }
