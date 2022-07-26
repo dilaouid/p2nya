@@ -124,8 +124,11 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
         }).catch(e => {
             console.log(e);
         });
-        room.usersInVocal[j] = room.users[i];
+        if (room.users[i])
+            room.usersInVocal[j] = room.users[i];
     }
+    room.users = room.users.filter(el => el != undefined);
+    room.usersInVocal = room.usersInVocal.filter(el => el != undefined);
     return send(200, 'OK', {...room.dataValues, accessToken: RoomToken}, res);
 });
 
