@@ -1,4 +1,7 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Socket } from 'ngx-socket-io';
+import { JoinRoom } from 'src/app/API/Rooms';
 
 @Component({
   selector: 'app-chatroom-password',
@@ -9,11 +12,12 @@ export class ChatroomPasswordComponent implements OnInit {
 
   @Input() uuid: string;
   @Input() passwordRequired: boolean;
+  @Input() GetRoom: any;
   
   printAlert: boolean = false;
   password: string = '';
 
-  constructor() {
+  constructor(private router: Router, private socket: Socket) {
     this.uuid = '';
     this.passwordRequired = true;
   }
@@ -22,6 +26,16 @@ export class ChatroomPasswordComponent implements OnInit {
     let input = event.target.value;
     this.password = input?.trim();
   };
+
+  submitPassword() {
+    JoinRoom(this.uuid, this.password).then(d => {
+      this.GetRoom(true);
+      this.passwordRequired = false;
+    }).catch(e => {
+      console.log(e);
+      this.printAlert = true;
+    });
+  }
 
   ngOnInit(): void {
   }

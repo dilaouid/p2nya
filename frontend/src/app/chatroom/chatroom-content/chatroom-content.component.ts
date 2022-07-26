@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { GetRoomInfo, JoinRoom } from 'src/app/API/Rooms';
+import { GetRoomInfo } from 'src/app/API/Rooms';
 import { GetMe } from 'src/app/API/Users';
 import { Socket } from 'ngx-socket-io';
 import { UserInformation } from 'src/app/Interfaces/User';
@@ -16,8 +16,8 @@ import { Me } from 'src/app/Interfaces/User';
 export class ChatroomContentComponent implements OnInit {
   me: Me;
   username: string;
-  uuid: string;
-  users: UserInformation[];
+  uuid: string = '';
+  users!: UserInformation[];
   inCall: string[];
   userInCall: boolean;
   room: any;
@@ -25,8 +25,6 @@ export class ChatroomContentComponent implements OnInit {
   passwordRequired: boolean|null = null;
 
   constructor(private route: ActivatedRoute, private router: Router, private socket: Socket) {
-    this.uuid = '';
-    this.users = [];
     this.userInCall = false;
     this.me = {id: 0, uuid: '', username: ''};
     this.inCall = [];
@@ -35,8 +33,7 @@ export class ChatroomContentComponent implements OnInit {
     Notification.requestPermission();
   };
 
-  FillDataRoom(d: any) {
-    this.passwordRequired = false;
+  FillDataRoom(d:any) {
     this.room = d.data;
     this.users = this.room.users;
     this.inCall = this.room.usersInVocal
@@ -45,8 +42,22 @@ export class ChatroomContentComponent implements OnInit {
     this.socket.emit('join', this.uuid);
   };
 
-  askPassword(): void {
-    this.passwordRequired = true;
+  GetRoom(refresh: boolean) {
+    GetRoomInfo(this.uuid + '').then(d => {
+      if (d.message === 'NOTIN') {
+        this.passwordRequired = true;
+      } else {
+        if (refresh == true) {
+          window.location.reload();
+        } else {
+          this.passwordRequired = false;
+          this.FillDataRoom(d);
+        }
+      }
+    }).catch(e => {
+      console.log(e);
+      this.router.navigate(['/']);
+    });
   }
 
   ngOnInit(): void {
@@ -59,15 +70,7 @@ export class ChatroomContentComponent implements OnInit {
       this.router.navigate(['/']);
     });
 
-    GetRoomInfo(this.uuid + '').then(d => {
-      if (d.message === 'NOTIN') {
-        this.askPassword();
-      } else {
-        this.FillDataRoom(d);
-      }
-    }).catch(e => {
-      this.router.navigate(['/']);
-    });
+    this.GetRoom(false);
 
     this.socket.on('joined', (uuid: string, username: string) => {
       const i = this.users.findIndex(o => {
