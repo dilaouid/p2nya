@@ -22,6 +22,7 @@ import { FormsModule }   from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ChatroomModalEmojisComponent } from './chatroom/chatroom-modal-emojis/chatroom-modal-emojis.component';
+import { ChatroomPasswordComponent } from './chatroom/chatroom-password/chatroom-password.component';
 
 const config: SocketIoConfig = { url: environment.ws, options: {withCredentials: true} };
 @NgModule({
@@ -40,7 +41,8 @@ const config: SocketIoConfig = { url: environment.ws, options: {withCredentials:
     ChatroomChatboxComponent,
     ChatroomModalEditProfileComponent,
     ChatroomModalNotYetComponent,
-    ChatroomModalEmojisComponent
+    ChatroomModalEmojisComponent,
+    ChatroomPasswordComponent
   ],
   imports: [
     BrowserModule,

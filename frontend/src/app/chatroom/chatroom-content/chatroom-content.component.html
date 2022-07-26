@@ -1,3 +1,6 @@
+<app-chatroom-password *ngIf="passwordRequired == true" [passwordRequired]="passwordRequired" [uuid]="uuid"></app-chatroom-password>
+
+<div *ngIf="passwordRequired === false">
 <app-chatroom-navbar [users]="users" [username]="username" [me]="me"></app-chatroom-navbar>
 
 <div class="container-fluid containerChatRoom">
@@ -21,4 +24,5 @@
     <app-chatroom-chatbox [me]="me" [uuid]="uuid" [users]="users" class="col" data-aos="fade-left" data-aos-delay="200" data-aos-once="true"></app-chatroom-chatbox>
     <!-- End: right side -->
 <!-- End: CONTENT -->
+</div>
 </div>
