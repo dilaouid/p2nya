@@ -172,7 +172,7 @@ new CronJob(
             secretKey: process.env.METERED_SECRET
           }
         }).catch(e => {
-          console.log(e);
+          console.log('Cannot delete element from METERED (maybe room does not exists?)');
         });
         /// Delete the room in the db
         el.destroy();
