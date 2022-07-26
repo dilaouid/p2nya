@@ -46,7 +46,7 @@ export class ChatroomContentComponent implements OnInit {
   };
 
   askPassword(): void {
-
+    this.passwordRequired = true;
   }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class ChatroomContentComponent implements OnInit {
     GetRoomInfo(this.uuid + '').then(d => {
       if (d.message === 'NOTIN') {
         this.askPassword();
-      } else if (d.data?.length > 0) {
+      } else {
         this.FillDataRoom(d);
       }
     }).catch(e => {
