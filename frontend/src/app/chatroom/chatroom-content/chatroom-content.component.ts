@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { GetRoomInfo } from 'src/app/API/Rooms';
+import { GetRoomInfo, JoinRoom } from 'src/app/API/Rooms';
 import { GetMe } from 'src/app/API/Users';
 import { Socket } from 'ngx-socket-io';
 import { UserInformation } from 'src/app/Interfaces/User';
@@ -16,12 +16,13 @@ import { Me } from 'src/app/Interfaces/User';
 export class ChatroomContentComponent implements OnInit {
   me: Me;
   username: string;
-  uuid: string | null;
+  uuid: string;
   users: UserInformation[];
   inCall: string[];
   userInCall: boolean;
   room: any;
   accessToken!: string;
+  passwordRequired: boolean|null = null;
 
   constructor(private route: ActivatedRoute, private router: Router, private socket: Socket) {
     this.uuid = '';
@@ -30,9 +31,23 @@ export class ChatroomContentComponent implements OnInit {
     this.me = {id: 0, uuid: '', username: ''};
     this.inCall = [];
     this.username = '';
-    this.route.paramMap.subscribe( (params) => { this.uuid = params.get('id') });
+    this.route.paramMap.subscribe( (params) => { this.uuid = params.get('id') || '' });
     Notification.requestPermission();
   };
+
+  FillDataRoom(d: any) {
+    this.passwordRequired = false;
+    this.room = d.data;
+    this.users = this.room.users;
+    this.inCall = this.room.usersInVocal
+    this.accessToken = this.room.accessToken;
+    this.userInCall = this.inCall.includes(this.users[0].uuid);
+    this.socket.emit('join', this.uuid);
+  };
+
+  askPassword(): void {
+
+  }
 
   ngOnInit(): void {
 
@@ -45,12 +60,11 @@ export class ChatroomContentComponent implements OnInit {
     });
 
     GetRoomInfo(this.uuid + '').then(d => {
-      this.room = d.data;
-      this.users = this.room.users;
-      this.inCall = this.room.usersInVocal
-      this.accessToken = this.room.accessToken;
-      this.userInCall = this.inCall.includes(this.users[0].uuid);
-      this.socket.emit('join', this.uuid);
+      if (d.message === 'NOTIN') {
+        this.askPassword();
+      } else if (d.data?.length > 0) {
+        this.FillDataRoom(d);
+      }
     }).catch(e => {
       this.router.navigate(['/']);
     });

@@ -104,7 +104,11 @@ rooms.get('/:uuid', isAuthentified, async (req: Request, res: Response): Promise
 
     // If the room does not exists, or if the user is not inside of it, return a 404 (security reason)
     const RoomToken: string = await GenerateToken(uuid);
-    if (!room || !RoomToken || room?.users.includes(userId) === false) return send(404, 'No Room Found', [], res);
+    if (!room || !RoomToken) { 
+        return send(404, 'No Room Found', [], res);
+    } else if (room?.users.includes(userId) === false) {
+        return send(200, 'NOTIN', [], res)
+    }
     await ValidateToken(RoomToken);
     // Otherwise, print the uuid and not the id of the users (security reason)
     room.usersInVocal = room.usersInVocal ? room.usersInVocal.split('%').map(i => Number(i)) : [];
