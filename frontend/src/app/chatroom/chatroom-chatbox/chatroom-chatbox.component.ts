@@ -175,7 +175,7 @@ export class ChatroomChatboxComponent implements OnInit, AfterViewChecked {
     if (this.message.length === 0) return;
     
     this.socket.emit('user-stop-writing', this.me.uuid);
-    this.socket.emit('message', this.uuid, this.message.replace('&nbsp;', ' '), false);
+    this.socket.emit('message', this.message.replace('&nbsp;', ' '), false);
     this.inp.nativeElement.innerText = '';
     this.message = '';
     this.writing = false;

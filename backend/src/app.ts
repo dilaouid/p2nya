@@ -50,15 +50,22 @@ io.on('connection', async (socket): Promise<void> => {
     // Join a specific room
     socket.on('join', async (uuid: string) => {
         const userUUID: string = await getUserUUIDByHandshake(socket.handshake.headers.cookie);
-        const joinedUser = await getUserByUUID(userUUID, ['username']);
-        const roomWithThisID = await db.Room.findByPk(uuid, {attribute: ['id']});
+        const joinedUser = await getUserByUUID(userUUID, ['username', 'id']);
+        const roomWithThisID = await db.Room.findOne({
+          where: {
+            id: uuid,
+            users: {
+              [Op.or]: [{ [Op.substring]: `%${joinedUser.id}%` }, { [Op.substring]: `${joinedUser.id}%` }, { [Op.substring]: `%${joinedUser.id}` }, { [Op.eq]: joinedUser.id }]
+            }
+          }, attributes: ['id']
+        });
         if (!joinedUser || !roomWithThisID) return;
         socket.leave(`room-${previousUuid}`);
         socket.join(`room-${uuid}`);
         socket.broadcast.to(`room-${uuid}`).emit('joined', userUUID, joinedUser.username);
         previousUuid = uuid;
 
-        socket.on('message', async (uuid: string, content: string, picture?: boolean) => {
+        socket.on('message', async (content: string, picture?: boolean) => {
           const roomWithThisID = await db.Room.findByPk(uuid, {attribute: ['id']});
           if (!roomWithThisID) {
             socket.leave(`room-${uuid}`);
